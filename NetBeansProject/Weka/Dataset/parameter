@@ -1,0 +1,10 @@
+3 10 ./Dataset/yhu-YN10.csv SimpleLogistic -I 0 -M 500 -H 50 -W 0.0
+3 10 ./Dataset/yhu-YN09.csv SimpleLogistic -I 0 -M 500 -H 50 -W 0.0
+3 10 ./Dataset/yhu-YN08.csv SimpleLogistic -I 0 -M 500 -H 50 -W 0.0
+3 10 ./Dataset/yhu-YN07.csv SimpleLogistic -I 0 -M 500 -H 50 -W 0.0
+3 10 ./Dataset/yhu-YN06.csv SimpleLogistic -I 0 -M 500 -H 50 -W 0.0 
+3 10 ./Dataset/yhu-YN05.csv SimpleLogistic -I 0 -M 500 -H 50 -W 0.0
+3 10 ./Dataset/yhu-YN04.csv SimpleLogistic -I 0 -M 500 -H 50 -W 0.0
+3 10 ./Dataset/yhu-YN03.csv SimpleLogistic -I 0 -M 500 -H 50 -W 0.0
+3 10 ./Dataset/yhu-YN02.csv SimpleLogistic -I 0 -M 500 -H 50 -W 0.0
+3 10 ./Dataset/yhu-YN01.csv SimpleLogistic -I 0 -M 500 -H 50 -W 0.0

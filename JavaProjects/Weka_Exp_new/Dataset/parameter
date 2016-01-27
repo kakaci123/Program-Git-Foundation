@@ -1,0 +1,1 @@
+3 10 ./Dataset/sts_T6_TF.csv SimpleLogistic -I 0 -M 500 -H 50 -W 0.0

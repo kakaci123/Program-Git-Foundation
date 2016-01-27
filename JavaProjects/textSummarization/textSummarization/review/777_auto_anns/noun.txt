@@ -1,0 +1,5 @@
+62 14 
+17 2 hotel staff 
+19 3 drink breakfast choice 
+17 5 room lot toiletries size room 
+9 4 class facility service way 

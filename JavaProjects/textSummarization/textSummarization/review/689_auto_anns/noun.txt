@@ -1,0 +1,5 @@
+49 11 
+23 3 review hotel choice 
+12 5 benefit hotel location room pool 
+7 2 amount noise 
+7 1 hotel 

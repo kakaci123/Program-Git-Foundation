@@ -1,0 +1,4 @@
+review_777_0_90	subj
+review_777_91_212	subj
+review_777_213_307	subj
+review_777_308_366	obj

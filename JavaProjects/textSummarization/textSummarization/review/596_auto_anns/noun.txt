@@ -1,0 +1,8 @@
+121 28 
+27 7 choice drink snack room drink voucher bar 
+13 4 room kitchenette area bed 
+19 4 breakfast hotel waffle touch 
+21 5 drink charge day bar drink 
+15 2 pool tub 
+12 3 hotel place shopping 
+14 3 hotel staff everything 

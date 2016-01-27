@@ -1,0 +1,16 @@
+232 53 
+27 7 choice drink snack room drink voucher bar 
+13 4 room kitchenette area bed 
+19 4 breakfast hotel waffle touch 
+21 5 drink charge day bar drink 
+15 2 pool tub 
+12 3 hotel place shopping 
+14 3 hotel staff everything 
+23 3 review hotel choice 
+12 5 benefit hotel location room pool 
+7 2 amount noise 
+7 1 hotel 
+17 2 hotel staff 
+19 3 drink breakfast choice 
+17 5 room lot toiletries size room 
+9 4 class facility service way 
