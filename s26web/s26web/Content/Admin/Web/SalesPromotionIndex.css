@@ -1,0 +1,89 @@
+﻿.category_table {
+    border: 0px;
+    margin-bottom: 5px;
+}
+
+    .category_table .category_table_title {
+        border: 0px;
+        text-align: left;
+        vertical-align: middle;
+        width: 50px;
+    }
+
+    .category_table .category_table_content {
+        border: 0px;
+        vertical-align: middle;
+        position: relative;
+        top: 2px;
+    }
+
+        .category_table .category_table_content ul {
+            padding: 0px;
+            margin: 0px;
+        }
+
+            .category_table .category_table_content ul li {
+                background-color: lightgray !important;
+                border-bottom: 1px solid black;
+                border-radius: 0px;
+            }
+
+                .category_table .category_table_content ul li label {
+                    padding: 3px !important;
+                    color: black;
+                }
+
+.content .showdata .item1 {
+    width: 10%;
+    width: 10%;
+}
+
+.content .showdata .item2 {
+    width: 15%;
+    min-width: 15%;
+}
+
+.content .showdata .item3 {
+    width: 10%;
+    width: 10%;
+}
+
+.content .showdata .item4 {
+    width: 13%;
+    min-width: 5%;
+}
+
+.content .showdata .item5 {
+    width: 7%;
+    min-width: 10%;
+}
+
+.content .showdata .item6 {
+    width: 10%;
+    min-width: 10%;
+}
+
+.content .showdata .item7 {
+    width: 10%;
+    min-width: 10%;
+}
+
+.content .showdata .item8 {
+    width: 10%;
+    min-width: 10%;
+}
+
+.content .showdata .item9 {
+    width: 10%;
+    min-width: 10%;
+}
+
+.content .showdata .item10 {
+    width: 5%;
+    min-width: 5%;
+}
+
+.content .showdata .item11 {
+    width: 5%;
+    min-width: 5%;
+}

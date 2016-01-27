@@ -1,0 +1,135 @@
+@import url(http://fonts.googleapis.com/css?family=Fauna+One|Muli);
+#mainform {
+	width:960px;
+	margin:20px auto;
+	padding-top:20px;
+	font-family: 'Fauna One', serif;
+	display:block;
+}
+h2 {
+	margin-left: 65px;
+	text-shadow:1px 0px 3px gray;
+}
+h3 {
+	font-size:16px;
+	text-align:left;
+	color:#555;
+}
+#onclick {
+	padding:3px;
+	color:green;
+	cursor:pointer;
+	padding:5px 5px 5px 15px;
+	width:70px;
+	color:white;
+	background-color:#123456;
+	box-shadow:1px 1px 5px grey;
+	border-radius:3px;
+}
+b {
+	font-size:18px;
+	text-shadow:1px 0px 3px gray;
+}
+#popup {
+	padding-top:80px;
+}
+.form {
+	
+	padding:20px;
+	
+	font-size:14px;
+	font-weight:bold;
+	width:350px;
+	margin:20px 250px 0 35px;
+	float:left;
+}
+
+input[type=button] {
+	background-color:#123456;
+	border:1px solid white;
+	font-family: 'Fauna One', serif;
+	font-Weight:bold;
+	font-size:18px;
+	color:white;
+	width:49%;
+}
+/*textarea {
+	width:100%;
+	height:80px;
+	margin-top:5px;
+	border-radius:3px;
+	padding:5px;
+	resize:none;
+}*/
+#contactdiv {
+	opacity:0.5;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	background: #000;
+	display: none;
+}
+#logindiv {
+	
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	background:#000000\9;
+	background:rgba(0,0,0,0.8) ;
+	display: none;
+	z-index:9999999;
+}
+#login, #contact {
+	width:670px;
+	height:422px;
+	margin:0 auto;
+	background:url(/images/index_POPUP.png) no-repeat;
+	font-family: 'Fauna One', serif;
+	position: relative;
+	z-index:99999;
+	/*border: 5px solid rgb(90, 158, 181);*/
+}
+#login {
+	left: 50%;
+	top: 50%;
+	margin-left:-335px;
+	margin-top:-211px;
+}
+.img {
+	float: right;
+	margin-top: -23px;
+	margin-right: -10px;
+	cursor:pointer;
+}
+#contact {
+	left: 50%;
+	top: 50%;
+	margin-left:-210px;
+	margin-top:-255px;
+}
+/*http://www.formget.com/jquery-popup-form/*/
+/*Incoming search terms:
+onload popup jquery
+jquery popup onload
+jquery popup on page load
+onload jquery popup
+jquery onload popup
+lightbox popup on page load
+onload popup
+popup jquery onload
+colorbox onload
+onload lightbox popup jquery
+onload lightbox popup
+popup onload
+jquery lightbox popup on page load
+onload popup lightbox
+popup on page load
+colorbox popup on page load
+popup onload jquery
+open colorbox on page load
+jquery image popup on page load
+jquery colorbox onload*/

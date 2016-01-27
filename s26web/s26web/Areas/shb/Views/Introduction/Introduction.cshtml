@@ -1,0 +1,118 @@
+﻿@model s26web.Areas.shb.Models.IntroductionModel.IntroductionModelShow
+
+@{
+    int err = 0;
+    if (TempData["err"] != null)
+    {
+        err = (int)TempData["err"];
+    }
+    string temp_dir = "Introduction";
+    if (ViewData["temp_dir"] != null)
+    {
+        temp_dir = ViewData["temp_dir"].ToString();
+    }
+}
+<script type="text/javascript">
+    var CKEDITOR_BASEPATH = '@s26web.Models.Method.RootPath/Scripts/plugin/ckeditor/';
+    var temp_dir = '@temp_dir';
+</script>
+
+@Scripts.Render("~/js/Admin_Introduction")
+@Styles.Render("~/css/AdminContent")
+
+<div class="big_title">@ViewBag.Title</div>
+
+@if (err == 1)
+{
+    @:找不到資料!
+}
+else
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>@ViewBag.Title</legend>
+
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Title)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Title)
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Content)<br />
+                <ul>
+                    @if (@ViewBag.cate == 14)
+                    {
+                        <li><--course_name--> 課程報名人姓名(限在課程樣板使用)</li>
+                        <li><--course_title--> 課程名稱(限在課程樣板使用)</li>
+                        <li><--course_count--> 報名人數(限在課程樣板使用)</li>
+                        <li><--course_address--> 課程地點(限在課程樣板使用)</li>
+                        <li><--course_time--> 課程時間(限在課程樣板使用)</li>
+                    }
+                    else if (@ViewBag.cate == 15 || @ViewBag.cate == 16 || @ViewBag.cate == 17 || @ViewBag.cate == 18
+                            || @ViewBag.cate == 19 || @ViewBag.cate == 20 || @ViewBag.cate == 21)
+                    {
+                        <li><--orders_number--> 訂單編號(限在訂購樣板使用)</li>
+                        <li><--orders_date--> 訂單日期(限在訂購樣板使用)</li>
+                        <li><--orders_store--> 宅配店家(限在訂購樣板使用)</li>
+                        <li><--orders_sendstore--> 出貨店家(限在訂購樣板使用)</li>
+                        <li><--orders_detail--> 您的訂單明細(限在訂購樣板使用)</li>
+                        <li><--orders_name--> 訂購人(限在訂購樣板使用)</li>
+                        <li><--orders_address--> 收件地址(限在訂購樣板使用)</li>
+                        <li><--orders_phone--> 聯絡電話(限在訂購樣板使用)</li>
+                        <li><--orders_email--> 電子信箱(限在訂購樣板使用)</li>
+                        <li><--orders_time--> 送貨時間(限在訂購樣板使用)</li>
+                        <li><--remark--> 備註(限在訂購樣板使用)</li>
+                    }
+                    else
+                    {
+
+                        <li><--user_name--> 使用者姓名</li>
+                        <li><--user_mobile--> 使用者手機號碼</li>
+                        <li><--user_password--> 使用者密碼(限在查詢時使用)</li>
+                    }
+                </ul>
+
+
+
+            </div>
+            <div class="editor-field">
+                @*@Html.TextAreaFor(model => model.Content, new { @class = "ckeditor" })*@
+                @Html.TextAreaFor(model => model.Content, new { style = "width: 60%" })
+                @Html.ValidationMessageFor(model => model.Content)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.CreateTime)
+            </div>
+            <div class="editor-field">
+                @Html.DisplayFor(model => model.CreateTime)
+                @Html.ValidationMessageFor(model => model.CreateTime)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.UpdateTime)
+            </div>
+            <div class="editor-field">
+                @Html.DisplayFor(model => model.UpdateTime)
+                @Html.ValidationMessageFor(model => model.UpdateTime)
+            </div>
+
+            <p>
+                <input type="submit" value="儲存" />
+            </p>
+            @if (err == 2)
+            {
+                <div class="error">儲存失敗!</div>
+            }
+        </fieldset>
+    }
+}

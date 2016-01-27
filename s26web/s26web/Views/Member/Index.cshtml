@@ -1,0 +1,80 @@
+﻿@model s26web.Models.VolunteersModel.VolunteersShowEdit
+@{
+    ViewBag.Title = "Index";
+    string brand_str = "";
+    
+    if(Model.NowBrand == 1)
+    { brand_str = "懷孕中"; }
+    else if (Model.NowBrand == 2)
+    { brand_str = "使用S-26產品"; }
+    else if (Model.NowBrand == 3)
+    { brand_str = "全母乳餵哺"; }
+    else if (Model.NowBrand == 4)
+    { brand_str = "其他"; }
+    
+}
+
+<div id="main_wrapper">
+    <div id="main">
+        <div class="main_content_d">
+            <h2>會員資料</h2>
+            <ul class="member_btn">
+                <li><a class="nav_icon01" href="/Member/Edit">編輯會員資料</a></li>
+                <li><a class="nav_icon02" href="/Member/Premiums_Exchange">兌換贈品紀錄</a></li>
+                <li><a class="nav_icon03" href="/Member/Delivery_Exchange">宅配訂購紀錄</a></li>
+            </ul>
+            <table class="member_info_table">
+                <thead>
+                    <tr>
+                        <td width="252"></td>
+                        <td width="536"></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="member_info_left">@Html.DisplayNameFor(model => model.Name)</td>
+                        <td class="member_info_right">@Html.DisplayFor(model => model.Name)</td>
+                    </tr>
+                    <tr>
+                        <td class="member_info_left">@Html.DisplayNameFor(model => model.BabyBirthday)</td>
+                        <td class="member_info_right">@Convert.ToString(string.Format("{0:yyyy/MM/dd}", Model.BabyBirthday))</td>
+                    </tr>
+                    <tr>
+                        <td class="member_info_left">哺乳狀況</td>
+                        <td class="member_info_right">@brand_str</td>
+                    </tr>
+                    <tr>
+                        <td class="member_info_left">@Html.DisplayNameFor(model => model.Email)</td>
+                        <td class="member_info_right">@Html.DisplayFor(model => model.Email)</td>
+                    </tr>
+                    <tr>
+                        <td class="member_info_left">累積金幣</td>
+                        <td class="member_info_right">
+                            <p>共累積<span>@Html.DisplayFor(model => model.Point) <span class="money_m"></span> </span> </p>
+                            @foreach(var item in Model.Point_List)
+                            { <p> @Convert.ToString(string.Format("{0:yyyy/MM/dd}", item.SendTime))&nbsp;&nbsp;@Html.DisplayFor(model => item.Category_Name) - 
+                            <span>@Html.DisplayFor(model => item.Point) <span class="money_m"></span> </span> </p>}
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="member_info_left">@Html.DisplayNameFor(model => model.CreateTime)</td>
+                        <td class="member_info_right">@Html.DisplayFor(model => model.CreateTime)</td>
+                    </tr>
+                    <tr>
+                        <td class="member_info_left">最近一次編輯時間</td>
+                        <td class="member_info_right">@Html.DisplayFor(model => model.UpdateTime)</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="pd"></div>
+</div>
+

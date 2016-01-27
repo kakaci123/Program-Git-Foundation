@@ -1,0 +1,120 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset='utf-8'/> 
+    <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+    More info: h5bp.com/b/378 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>@Page.Title</title>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+
+  @* More info about SquishIt from http://www.codethinked.com/squishit-the-friendly-aspnet-javascript-and-css-squisher *@
+  
+  @Html.Raw(SquishIt.Framework.Bundle.Css()
+                    .Add(Url.Content("~/Content/themes/base/jquery.ui.all.css"))
+                    .Add(Url.Content("~/Content/MvcWithStyle/normalize.css"))
+                    .Add(Url.Content("~/Content/MvcWithStyle/grids.css"))
+                    .Add(Url.Content("~/Content/mvcwithstyle.less"))
+                    //.ForceRelease() // Uncomment when in debug to force minification
+                    .Render("~/Content/style_#.css"))
+ <![if !IE]>
+  @Html.Raw(SquishIt.Framework.Bundle.Css()
+                    .Add(Url.Content("~/Content/MvcWithStyle/mediaqueries.less"))
+                    //.ForceRelease() // Uncomment when in debug to force minification
+                    .Render("~/Content/mediaqueries_#.css"))
+  <![endif]> 
+  @Html.Raw(SquishIt.Framework.Bundle.JavaScript()
+                    .Add(Url.Content("~/Scripts/jquery-1.7.1.js"))
+                    .Add(Url.Content("~/Scripts/jquery-ui-1.8.17.min.js"))
+                    .Add(Url.Content("~/Scripts/modernizr-2.0.6.min.js"))
+                    .Add(Url.Content("~/Scripts/polyfill.js"))
+                    .Add(Url.Content("~/Scripts/jquery.unobtrusive-ajax.js"))
+                    .Add(Url.Content("~/Scripts/jquery.validate.js"))
+                    .Add(Url.Content("~/Scripts/jquery.validate.unobtrusive.js"))
+                    .Add(Url.Content("~/Scripts/AjaxLogin.js"))
+                    .Add(Url.Content("~/Scripts/plugins.js"))
+                    //.ForceRelease() // Uncomment when in debug to force minification
+                    .Render("~/Scripts/combined_#.js")) 
+
+    @RenderSection("HeadContent", false)
+</head>
+
+<body id="@this.ViewContext.View.GetRazorViewIdentifier()">
+    <div id="container">
+        <header role="banner">
+            <section>
+                <a href="/">
+                    <img alt="MVC With Style" src="@Url.Content("~/Content/images/mvcwithstyle.png")"/>
+                    <hgroup>
+                        
+                        <h1>MVC With Style</h1>
+                        <h2>Assisting Design Challenged Developers Blunder into Awesomeness</h2>
+                    </hgroup>
+                </a> 
+                <div id="logindisplay">
+                    @Html.Partial("_LogOnPartialWithStyle")
+                </div>
+            </section>
+        </header>
+
+        <nav role="navigation">
+            <ul id="menu">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("About", "About", "Home")</li>
+                <li>@Html.ActionLink("MVC with Style Example", "Index", "Example")</li>
+-               <li>@Html.ActionLink("Grid Example", "Grid", "Example")</li>
+            </ul>
+        </nav>
+
+        <div id="main" role="main">
+            @RenderBody()
+        </div>
+        <footer role="contentinfo">
+            <section>
+                <section id="contactinfo" class="vcard">
+                    <div class="contactdetails">
+                        <div class="org">MVC With Style</div>
+                        <div class="tel">(434) 000-0000</div>
+                        <div class="email"><a href="mailto:email@user.com">email@user.com</a></div>
+                    </div>
+                
+                    <div class="adr">
+                        <div class="street-address">Everywhere St.</div>
+                        <div class="extended-address">Suite 1</div>
+                        <span class="locality">Somewhere</span>,
+                        <span class="region">VA</span>
+                        <span class="postal-code">20000</span>
+                    </div>
+                </section>
+                <section id="socialmedia">
+                    <a href="http://www.facebook.com" class="facebook">Facebook</a>
+                    <a href="http://www.twitter.com" class="twitter">Twitter</a>
+                    <a href="https://plus.google.com/" class="googleplus">Google Plus</a>
+                    <a href="/" class="mailinglist">Mailing List</a>
+                    <a href="/" class="rss">RSS</a>
+                </section>
+            </section>
+        </footer>
+    </div>
+    <script>
+        $('#menu li a').each(function () {
+            if ($(this).attr('href') == '@(Request.Url.LocalPath)') {
+                $(this).parent('li').addClass('active');
+            }
+        });
+    </script>
+	
+  <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
+       mathiasbynens.be/notes/async-analytics-snippet -->
+  <script>
+      var _gaq = [['_setAccount', 'UA-XXXXX-X'], ['_trackPageview']];
+      (function (d, t) {
+          var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+          g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
+          s.parentNode.insertBefore(g, s)
+      } (document, 'script'));
+  </script>
+</body>
+</html>

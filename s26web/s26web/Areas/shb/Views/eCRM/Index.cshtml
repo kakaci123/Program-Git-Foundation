@@ -1,0 +1,50 @@
+﻿@using s26web.Models;
+@model List<s26web.Areas.shb.Models.CRMModel.CRMMemberInfo>
+
+@{
+    ViewBag.Title = "e-CRM管理";
+    string err = "";
+    if (TempData["err"] != null && TempData["err"] != "")
+    {
+        err = TempData["err"] as string;
+    }
+}
+@Styles.Render("~/css/AdminECRM")
+@if (err != "")
+{
+    @: 操作失敗；錯誤代碼：@err。
+}
+else
+{
+    using (Html.BeginForm())
+    {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="big_title">@ViewBag.Title</div>
+    <div class="showdata">
+        <div id="data_area">
+            <form action="@s26web.Models.Method.RootPath/shb/Member" id="action" method="post">
+                @foreach (var item in Model)
+                {
+                    <ul class="data">
+                        <li class="item1">@Html.DisplayFor(modelItem => item.CategoryName)：</li>
+                        <li class="item2">客戶人員名稱</li>
+                        <li class="item3">
+                            <input type="text" class="InuptBox" name="item.UserNamelist"  value="@item.UserName">
+                        </li>
+                        <li class="item4">FB首頁網址</li>
+                        <li class="item5">
+                            <input type="text" class="InuptBox" name="item.FBUrllist" value="@item.FBUrl" >
+                        </li>
+                    </ul>
+                }
+            </form>
+        </div>
+        <br />
+        <div>
+            <input type="submit" value="確認修改" onclick="return confirm('確定修改?')" />
+        </div>
+    </div>
+    }
+}

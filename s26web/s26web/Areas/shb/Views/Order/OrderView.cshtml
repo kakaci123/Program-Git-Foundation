@@ -1,0 +1,157 @@
+﻿@using s26web.Models;
+@model s26web.Areas.shb.Models.OrdersModel.OrdersModelShow
+@{
+    List<s26web.Areas.shb.Models.OrdersModel.MyList> OrdersProductOption = null;
+    List<s26web.Areas.shb.Models.OrdersModel.MyList> OrdersStatesOption = null;
+
+    if (ViewData["OrdersProductOption"] != null)
+    {
+        OrdersProductOption = ViewData["OrdersProductOption"] as List<s26web.Areas.shb.Models.OrdersModel.MyList>;
+    }
+
+    if (ViewData["OrdersStatesOption"] != null)
+    {
+        OrdersStatesOption = ViewData["OrdersStatesOption"] as List<s26web.Areas.shb.Models.OrdersModel.MyList>;
+    }
+}
+
+@Styles.Render("~/css/AdminOrdersView")
+@Scripts.Render("~/js/AdminOrdersView")
+
+<div class="big_title">@ViewBag.Title</div>
+@using (Html.BeginForm())
+{ <div id="OrderInfo" class="showdata">
+    <div>
+        <ul class="data">
+            <li class="item1">
+                @Html.DisplayNameFor(model => model.Osid)</li>
+            <li class="item2">
+                @Html.DisplayFor(model => model.Osid)
+                @Html.HiddenFor(model => model.Osid)
+            </li>
+            <li class="item3">
+                @Html.DisplayNameFor(model => model.OrdersStates)</li>
+            <li class="item4">
+                @for (int i = 0; i < OrdersStatesOption.Count(); i++)
+                {
+                    if (OrdersStatesOption[i].Id == Model.OrdersStates)
+                    {
+                    @Html.RadioButtonFor(model => OrdersStatesOption, OrdersStatesOption[i].Id, new { @id = OrdersStatesOption[i].Id, @class = "StatesOption", @name = "select", @checked = "checked" })
+                    }
+                    else
+                    {
+                    @Html.RadioButtonFor(model => OrdersStatesOption, OrdersStatesOption[i].Id, new { @id = OrdersStatesOption[i].Id, @class = "StatesOption", @name = "select" })
+                    }
+                    @OrdersStatesOption[i].Name
+                }
+                @Html.HiddenFor(model => model.OrdersStates, new { @id = "OrdersStatesTemp" })
+            </li>
+        </ul>
+
+        <ul class="data">
+            <li class="item1">
+                @Html.DisplayNameFor(model => model.Vol_Name)</li>
+            <li class="item2">
+                @Html.DisplayFor(model => model.Vol_Name)</li>
+            <li class="item3">
+                @Html.DisplayNameFor(model => model.Vol_Mobile)</li>
+            <li class="item4">
+                @Html.DisplayFor(model => model.Vol_Mobile)</li>
+        </ul>
+        <ul class="data">
+            <li class="item1">
+                @Html.DisplayNameFor(model => model.SharePoint)</li>
+            <li class="item2">
+                @Html.DisplayFor(model => model.SharePoint)分享點數300點贈送</li>
+            <li class="item3">
+                @Html.DisplayNameFor(model => model.OrdersTime)</li>
+            <li class="item4">
+                @Model.OrdersTime.AddHours(8).ToString("yyyy/MM/dd HH:mm:ss")</li>
+        </ul>
+    </div>
+    </div>
+    <div id="OrderList" class="ordersdetail">
+        <div>
+            <ul class="title">
+                <li class="item1">@Html.DisplayNameFor(model => model.OrdersProductName)</li>
+                <li class="item2">@Html.DisplayNameFor(model => model.OrdersProductContent)</li>
+                <li class="item3">@Html.DisplayNameFor(model => model.Price)</li>
+                <li class="item4">@Html.DisplayNameFor(model => model.Quantity)</li>
+                <li class="item5">@Html.DisplayNameFor(model => model.TotalPrice)</li>
+            </ul>
+        </div>
+        <div>
+            <ul class="data">
+                <li class="item1">@Html.DisplayFor(model => model.OrdersProductName)</li>
+                <li class="item2">@Html.DisplayFor(model => model.OrdersProductContent)</li>
+                <li class="item3">@Html.DisplayFor(model => model.Price)元</li>
+                <li class="item4">@Html.DisplayFor(model => model.Quantity)箱</li>
+                <li class="item5">@Html.DisplayFor(model => model.TotalPrice)元</li>
+            </ul>
+        </div>
+    </div>
+    <div id="ReciveInfo" class="showdata">
+        <div>
+            <ul class="data">
+                <li class="item1">
+                    @Html.DisplayNameFor(model => model.Name)</li>
+                <li class="item2">
+                    @Html.DisplayFor(model => model.Name)</li>
+                <li class="item3">
+                    @Html.DisplayNameFor(model => model.Mobile)</li>
+                <li class="item4">
+                    @Html.DisplayFor(model => model.Mobile)</li>
+            </ul>
+            <ul class="data">
+                <li class="item1">
+                    @Html.DisplayNameFor(model => model.Address)</li>
+                <li class="item2">
+                    <label>@Html.DisplayFor(model => model.CityName)@Html.DisplayFor(model => model.AreaName)@Html.DisplayFor(model => model.Address)</label>
+                </li>
+            </ul>
+            <ul class="data">
+                <li class="item1">
+                    @Html.DisplayNameFor(model => model.Remarks)</li>
+                <li class="item2">
+                    @Html.DisplayFor(model => model.Remarks)</li>
+            </ul>
+        </div>
+    </div>
+    <div id="InoviceInfo" class="showdata">
+        <div>
+            <ul class="data">
+                <li class="item1">
+                    @Html.DisplayNameFor(model => model.RecieptCategory)</li>
+                <li class="item2">
+                    @Html.DisplayFor(model => model.RecieptCategory)</li>
+                <li class="item3">
+                    @Html.DisplayNameFor(model => model.RecieptName)</li>
+                <li class="item4">
+                    @Html.DisplayFor(model => model.RecieptName)</li>
+            </ul>
+            <ul class="data">
+                <li class="item1">
+                    @Html.DisplayNameFor(model => model.RecieptNo)</li>
+                <li class="item2">
+                    @Html.DisplayFor(model => model.RecieptNo)</li>
+            </ul>
+        </div>
+    </div>
+    <div id="memo" class="showdata">
+        <div>
+            <ul class="data">
+                <li class="item1">
+                    @Html.DisplayNameFor(model => model.UpdateUserName)</li>
+                <li class="item2">
+                    @Html.DisplayFor(model => model.UpdateUserName)</li>
+            </ul>
+        </div>
+    </div>
+    <hr />
+    <div style="text-align: right">
+        <form>
+            <input type="submit" value="更新訂單" id="Update_Button" formaction="/shb/Order/UpdateOrder" />
+        </form>
+        <input type="submit" value="取消" id="Cancel_Button" formaction="/shb/Order" />
+    </div>
+}

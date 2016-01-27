@@ -1,0 +1,155 @@
+﻿@model Template.Models.ExampleViewModel 
+@{
+    ViewBag.Title = "Example Page";
+}
+<article id="page-content">
+    <h2>Thanks for using MVC With Style!</h2>
+    <section class="half">
+        <h4>What is MVC With Style?</h4>
+        <p>MVC With Style is a template package that allows developers to create a good looking site with minimal effort. 
+            The package is built on top of HTML5 Boilerplace, takes advantage of LESS CSS to allow for easy modifications, 
+            utilizes editor templates to add HTML5 form functionality and much, much more. </p>
+    
+    </section>
+    <section class="one-quarter border-left">
+        <p><strong>Features include:</strong></p>
+        <ul>
+            <li>HTML5 Forms</li>
+            <li>LESS CSS</li>
+            <li>Flexible Grid</li>
+            <li>Adaptive Rendering</li>
+            <li>Styling!</li>
+        </ul>
+    </section>
+    
+    <section class="one-quarter">
+        <p><strong><em>"Speed up your development time by reducing time spent theming."</em></strong></p>
+        <a href="http://mvcwithstyle.com"class="button">For more information visit mvcwithstyle.com</a>
+        
+    </section>
+    <hr />
+    <section class="half">
+        @using (Html.BeginForm())
+        {
+            <form>
+
+                <fieldset class="show">
+                    <legend>Example form</legend>
+                    <ol class="above">
+                        <li class="inline">
+                            @Html.LabelFor(m => m.StartDate)
+                            @Html.EditorFor(m => m.StartDate)
+                            @Html.ValidationMessageFor(m => m.StartDate)
+                        </li>
+                        <li class="inline">
+                            @Html.LabelFor(m => m.EndDate)
+                            @Html.EditorFor(m => m.EndDate)
+                            @Html.ValidationMessageFor(m => m.EndDate)
+                        </li>
+                        <li class="long">
+                            @Html.LabelFor(m => m.Address)
+                            @Html.EditorFor(m => m.Address)
+                            @Html.ValidationMessageFor(m => m.Address)
+                        </li>
+                        <li class="inline">
+                            @Html.LabelFor(m => m.City)
+                            @Html.EditorFor(m => m.City)
+                            @Html.ValidationMessageFor(m => m.City)
+                        </li>
+                        <li class=" inline short">
+                            @Html.LabelFor(m => m.State)
+                            @Html.EditorFor(m => m.State)
+                            @Html.ValidationMessageFor(m => m.State)
+                        </li>
+                        <li class="inline short">
+                            @Html.LabelFor(m => m.Zip)
+                            @Html.EditorFor(m => m.Zip)
+                            @Html.ValidationMessageFor(m => m.Zip)
+                        </li>
+                       <li class="long">
+                            @Html.LabelFor(m => m.Description)
+                            @Html.EditorFor(m => m.Description)
+                            @Html.ValidationMessageFor(m => m.Description)
+                        </li>
+                        <li class="checkbox">
+                            @Html.LabelFor(m => m.AddToList)
+                            @Html.CheckBoxFor(m => m.AddToList)
+                            @Html.ValidationMessageFor(m => m.AddToList)
+                        </li>
+
+                    </ol>
+                    <input type="submit" name="send" value="Send it">
+                </fieldset>
+            </form>
+        }
+    </section>
+    <section class="half">
+          @using (Html.BeginForm())
+        {
+            <form>
+
+                <fieldset>
+                    <legend>Example form</legend>
+                    <ol>
+                         <li>
+                            @Html.LabelFor(m => m.Name)
+                            @Html.EditorFor(m => m.Name)
+                            @Html.ValidationMessageFor(m => m.Name)
+                        </li>
+                        <li>
+                            @Html.LabelFor(model => model.Gender)
+                            <ol>
+                                <li class="inline">
+                                    @Html.RadioButtonFor(m => m.Gender, "Female") Female
+                                </li>
+                                <li class="inline">
+                                    @Html.RadioButtonFor(m => m.Gender, "Male") Male
+                                </li>
+                            </ol>
+                            @Html.ValidationMessageFor(model => model.Gender)
+                        </li>
+                        <li class="clear-left">
+                            @Html.LabelFor(m => m.URL)
+                            @Html.EditorFor(m => m.URL) 
+                            @Html.ValidationMessageFor(m => m.URL)
+                        </li>
+                       
+                        <li>
+                            @Html.LabelFor(m => m.Email)
+                            @Html.EditorFor(m => m.Email)
+                            @Html.ValidationMessageFor(m => m.Email)
+                        </li>
+                        <li>   
+                            @Html.LabelFor(m => m.Phone)
+                            @Html.EditorFor(m => m.Phone)  
+                            @Html.ValidationMessageFor(m => m.Phone)
+                        </li>                         
+                    </ol>
+                    <input type="submit" name="send" value="Send it">
+                </fieldset>
+            </form>
+        }
+        <table cellspacing="0">
+            <tr>
+                <th>Header</th>
+                <th>Header</th>
+                <th>Header</th>
+            </tr>
+            <tr>
+                <td>Data</td>
+                <td>Data</td>
+                <td>Data</td>
+            </tr>
+            <tr class="odd">
+                <td>Data</td>
+                <td>Data</td>
+                <td>Data</td>
+            </tr>
+            <tr>
+                <td>Data</td>
+                <td>Data</td>
+                <td>Data</td>
+            </tr>
+        </table>
+    </section>
+</article>

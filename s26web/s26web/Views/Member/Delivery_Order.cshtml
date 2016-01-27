@@ -1,0 +1,94 @@
+﻿@model s26web.Areas.shb.Models.OrdersModel.OrdersModelShow
+@{
+    ViewBag.Title = "Delivery_Order";
+    string remark = "";
+    if(Model.Remarks == null)
+    { remark = "---"; }
+    else
+    {remark = Model.Remarks;}
+}
+
+<div id="main_wrapper">
+    <div id="main">
+        <div class="main_content_d">
+            <h2>
+                會員資料
+                <p>宅配訂購記錄</p>
+            </h2>
+            <table width="800" class="delivery_table">
+                <thead>
+                    <tr>
+                        <td width="138"></td>
+                        <td width="170"></td>
+                        <td width="93"></td>
+                        <td width="125"></td>
+                        <td width="133"></td>
+                        <td width="113"></td>
+
+                    </tr>
+                </thead>
+                <thead>
+                    <tr>
+                        <td>訂購日期</td>
+                        <td>訂購商品</td>
+                        <td>組數</td>
+                        <td>單項小計</td>
+                        <td>金額總計</td>
+                        <td>處理狀態</td>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Convert.ToString(string.Format("{0:yyyy/MM/dd}", Model.OrdersTime))</td>
+                        <td align="left" valign="middle" class="golden">@Html.DisplayFor(model => model.OrdersProductName) </td>
+                        <td>@Html.DisplayFor(model => model.Quantity)組</td>
+                        <td>$@Html.DisplayFor(model => model.Price)/組</td>
+                        <td>$@Html.DisplayFor(model => model.TotalPrice)</td>
+                        <td class="red">@Html.DisplayFor(model => model.States)</td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <table class="delivery_order_table">
+                <thead>
+                    <tr>
+                        <td width="206"></td>
+                        <td width="582"></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="member_info_left">收件人</td>
+                        <td class="member_info_right">@Html.DisplayFor(model => model.Name)</td>
+                    </tr>
+                    <tr>
+                        <td class="member_info_left">收件人手機</td>
+                        <td class="member_info_right">@Html.DisplayFor(model => model.Mobile)</td>
+                    </tr>
+                    <tr>
+                        <td class="member_info_left">收件人地址</td>
+                        <td class="member_info_right">@Html.DisplayFor(model => model.CityName)@Html.DisplayFor(model => model.AreaName)@Html.DisplayFor(model => model.Address)</td>
+                    </tr>
+                    <tr>
+                        <td class="member_info_left">發票格式</td>
+                        <td class="member_info_right">@Html.DisplayFor(model => model.RecieptCategory)</td>
+                    </tr>
+                    <tr>
+                        <td class="member_info_left">備註</td>
+                        <td class="member_info_right">@remark</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+            <a class="btn_bottom" href="Javascript:history.go(-1)">回列表頁</a>
+        </div>
+    </div>
+    <div class="pd"></div>
+</div>
+

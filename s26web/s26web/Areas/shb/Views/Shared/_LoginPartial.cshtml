@@ -1,0 +1,19 @@
+﻿@*if (Request.Cookies.AllKeys.Contains(lluminate.Models.Method.CookieName_Admin))*@
+@if (s26web.Models.Method.Is_Login_Admin(Request.Cookies))
+{
+    <ul>
+        @{
+    //FormsIdentity ticket = (FormsIdentity )User.Identity;
+    FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(Request.Cookies[s26web.Models.Method.CookieName_Admin].Value);
+        }
+
+        <li>您好，@ticket.UserData.Split(',')[0]!</li>
+        <li> @Html.ActionLink("登出", "LogOff", "Member")</li>
+    </ul>
+}
+else
+{
+    <ul>
+        <li>@Html.ActionLink("登入", "Login", "Member", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

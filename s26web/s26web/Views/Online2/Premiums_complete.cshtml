@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Premiums_complete";
+    int Point = 0;
+    if (ViewData["Point"] != null)
+    {
+        Point = (int)ViewData["Point"];
+    }
+}
+
+<div id="main_wrapper">
+    <div id="main">
+        <div class="main_content_r">
+            <h2>促銷碼兌換點數</h2>
+            <div class="complete">
+                <p class="icon_text">您已完成點數兌換 <span class="icon"></span> </p>
+                <div class="line_de"></div>
+                <p class="icon_bottom">
+                    您已完成點數兌換，<br>
+                    此次您獲得點數 @Point 點。<br>
+                    如有任何問題，歡迎與您的ECRM專屬營養師聯繫。<br />
+                </p>
+            </div>
+            <div class="blank_a"></div>
+        </div>
+    </div>
+</div>
+

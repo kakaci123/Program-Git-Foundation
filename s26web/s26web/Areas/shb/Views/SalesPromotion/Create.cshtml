@@ -1,0 +1,53 @@
+﻿@model s26web.Areas.shb.Models.SalesPromotionModel.SalesPromotionModelShow
+@{
+    ViewBag.Title = "Create";
+}
+@Scripts.Render("~/js/AdminSalesPromotionIndex")
+@Scripts.Render("~/css/AdminSalesPromotionIndex")
+@Scripts.Render("~/js/Admin_Introduction")
+@Styles.Render("~/css/AdminContent")
+@using (Html.BeginForm("Create", "SalesPromotion", FormMethod.Post, new { @id = "Point_form", @enctype = "multipart/form-data", name = "form1" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>新增促銷碼活動</legend>
+
+        <div class="editor-label">
+            <span style="color:red;">*</span>@Html.LabelFor(model => model.Code)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Code, new { style = "width: 300px;" })
+            @Html.ValidationMessageFor(model => model.Code)
+        </div>
+        <div class="editor-label">
+            <span style="color:red;">*</span>@Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name, new { style = "width: 300px;" })
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <div class="editor-label">
+            <span style="color:red;">*</span>@Html.LabelFor(model => model.Point)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Point, new { style = "width: 300px;" })
+            @Html.ValidationMessageFor(model => model.Point)
+        </div>
+        <div class="editor-label">
+            <span style="color:red;">*</span>@Html.LabelFor(model => model.Deadline)
+        </div>
+        <div class="editor-field">
+            <input type="text" name="Deadline" id="Deadline" class="date_search" value="" style="width:300px" required />
+        </div>
+
+        <p>
+            <input type="submit" value="確定送出" onclick="Create()" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("回列表頁", "Index")
+</div>

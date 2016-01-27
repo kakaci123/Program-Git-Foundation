@@ -1,0 +1,99 @@
+﻿@model s26web.Areas.shb.Models.ExchangeGiftModel.InsertExchangeGift
+
+@{
+    string err = "";
+    string vol_mobile = "";
+    string vol_id = "";
+    List<s26web.Areas.shb.Models.ExchangeGiftModel.GiftList> ExchangeGiftStatesOption = null;
+    if (ViewData["Vol_Mobile"] != null)
+    {
+        vol_mobile = (string)ViewData["Vol_Mobile"];
+    }
+    if (ViewData["Vol_Id"] != null)
+    {
+        vol_id = (string)ViewData["Vol_Id"];
+    }
+    if (ViewData["ExchangeGiftOption"] != null)
+    {
+        ExchangeGiftStatesOption = ViewData["ExchangeGiftOption"] as List<s26web.Areas.shb.Models.ExchangeGiftModel.GiftList>;
+    }
+    if (TempData["err"] != null)
+    {
+        err = (string)TempData["err"];
+    }
+}
+
+@Styles.Render("~/css/AdminContent")
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/js/AddressAjax")
+<div class="big_title">@Html.ActionLink("贈品兌換管理", "/") > 輸入會員手機 > @ViewBag.Title</div>
+
+@if (TempData["err"] != null)
+{
+    <script>alert('@err');</script>       
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>新增資料</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Vol_Mobile, new { @class = "labelform" })：
+            <input type="text" readonly="true" value="@vol_mobile" />
+            @Html.ValidationMessageFor(model => model.Vol_Mobile)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name, new { @class = "labelform" })：
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Mobile, new { @class = "labelform" })：
+            @Html.EditorFor(model => model.Mobile)
+            @Html.ValidationMessageFor(model => model.Mobile)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Address, new { @class = "labelform" })：
+            @Html.Raw(Html.DropList("CityId", s26web.Models.CityArea.Get_City_Select(0, false)))
+            @Html.Raw(Html.DropList("AreaId", s26web.Models.CityArea.Get_Area_Select(0, 0, false, false)))
+            @Html.EditorFor(model => model.Address)
+            @Html.ValidationMessageFor(model => model.Address)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.GiftId, new { @class = "labelform" })：
+            @for (int i = 0; i < ExchangeGiftStatesOption.Count(); i++)
+            {
+                var temp = ExchangeGiftStatesOption[i];
+                if (temp.MemberType.Contains(vol_id) && temp.Amount > 0)
+                {
+                @Html.RadioButtonFor(model => model.GiftId, temp.Id, new { @id = temp.Id, @class = "GiftOption", @name = "select" })
+                }
+                else
+                {
+                @Html.RadioButtonFor(model => model.GiftId, temp.Id, new { @id = temp.Id, @class = "GiftOption", @name = "select", @disabled = "disabled" })
+                }
+                if (temp.Amount > 0)
+                {
+                <label>@temp.Name S幣： @temp.Point 元</label>  
+                }
+                else
+                {
+                <label>@temp.Name S幣： @temp.Point 元 (已兌換完畢)</label>  
+                }
+            }
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Remark, new { @class = "labelform" })：
+            @Html.EditorFor(model => model.Remark)
+            @Html.ValidationMessageFor(model => model.Remark)
+        </div>
+        <p style="text-align: right">
+            <input type="submit" id="Insert_button" value="確認送出" class="ml" onclick="return confirm('確定送出?')" />
+            @Html.ActionLink("取消", "Index", null, null, new { @id = "Cancel_Button" })
+        </p>
+    </fieldset>
+}

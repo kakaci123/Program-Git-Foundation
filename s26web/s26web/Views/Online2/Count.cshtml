@@ -1,0 +1,94 @@
+﻿@model s26web.Areas.shb.Models.SalesCodeModel.SalesCodeModelShow
+@using s26web.Areas.shb.Models
+@{
+    ViewBag.Title = "Index";
+    int Code_Error = 0;
+    if (ViewData["Code_Error"] != null)
+    {
+        Code_Error = (int)ViewData["Code_Error"];
+    }
+
+    string Code = null;
+    if (ViewData["Code"] != null)
+    {
+        Code = ViewData["Code"] as string;
+    }
+    int VolunteersId = @s26web.Models.Method.Get_UserId2(Request.Cookies, Session);
+}
+<script src="~/Scripts/Front/Count.js"></script>
+
+@if (Code_Error == -1)
+{
+    <script>
+        $(function () {
+            $(".Code_Repeat ").css("display", "block");
+
+        });
+        function Hide() {
+            if ($("#Code").val() != null) {
+                $(".Code_Repeat").css("display", "None");
+                return false;
+            }
+        }
+    </script>
+}
+else if (Code_Error == -2)
+{
+    <script>
+        $(function () {
+            $(".Code_Error").css("display", "block");
+        });
+        function Hide() {
+            if ($("#Code").val() != null) {
+                $(".Code_Error").css("display", "None");
+                return false;
+            }
+        }
+    </script>
+}
+else
+{
+
+}
+<div id="main_wrapper">
+    <div id="main">
+        <div class="main_content_d">
+            <h2>
+                促銷碼兌換點數
+            </h2>
+            @using (Html.BeginForm("Count", "Online2", FormMethod.Post, new { @id = "Point_form", @enctype = "multipart/form-data", name = "form1" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(model => model.VolunteersId, new { @Value = @VolunteersId })
+                <table width="430" class="delivery_table">
+                    <tr>
+                        <td>請在以下文字方框輸入促銷碼，進行點數兌換</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="title">
+                                輸入促銷碼
+                                <input name="Code" id="Code" placeholder="請輸入促銷碼" type="text" size="50" value="@Code" onmouseout="Hide()" maxlength="14" required />
+                                <font class="Check" style="color:red;display:none;font-weight:bold">
+                                    <br>
+                                    請輸入促銷碼。
+                                </font>
+                                <font class="Code_Repeat" style="color:red;display:none;font-weight:bold">
+                                    <br>
+                                    您輸入的促銷碼，已經兌換過。
+                                </font>
+                                <font class="Code_Error" style="color:red;display:none;font-weight:bold">
+                                    <br>
+                                    您輸入的促銷碼錯誤。
+                                </font>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+                <input type="submit" value="進行兌換" class="btn_bottom" style="cursor:pointer" onclick="Check()">
+            }
+        </div>
+    </div>
+    <div class="blank_a"></div>
+</div>

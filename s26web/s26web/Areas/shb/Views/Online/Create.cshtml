@@ -1,0 +1,99 @@
+﻿@model s26web.Areas.shb.Models.OnlineModel.OnlineModelShow
+@{
+    ViewBag.Title = "Create";
+    string temp_dir = "Online";
+    if (ViewData["temp_dir"] != null)
+    {
+        temp_dir = ViewData["temp_dir"].ToString();
+
+    }
+}
+@Scripts.Render("~/js/AdminOnlineIndex")
+@Scripts.Render("~/css/AdminOnlineIndex")
+@Scripts.Render("~/js/Admin_Introduction")
+@Styles.Render("~/css/AdminContent")
+<script type="text/javascript">
+    var CKEDITOR_BASEPATH = '@s26web.Models.Method.RootPath/Scripts/plugin/ckeditor/';
+    var temp_dir = '@temp_dir';
+</script>
+@using (Html.BeginForm("Create", "Online", FormMethod.Post, new { @id = "Point_form", @enctype = "multipart/form-data", name = "form1" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>新增線上活動</legend>
+        <div class="editor-label">
+            <span style="color:red;">*</span>@Html.LabelFor(model => model.Type)
+        </div>
+        <div class="editor-field">
+            @foreach (var i in ViewBag.Get_Type)
+            {
+                <input type="checkbox" value="@i.Id" name="Typelist" /> @i.Name
+            }
+        </div>
+
+        <div class="editor-label">
+            <span style="color:red;">*</span>@Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name, new { style = "width: 300px;" })
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <div class="editor-label">
+            <span style="color:red;">*</span>@Html.LabelFor(model => model.Content)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Content, new { @class = "ckeditor" })
+            @Html.ValidationMessageFor(model => model.Content)
+        </div>
+        <div class="editor-label">
+            <span style="color:red;">*</span>@Html.LabelFor(model => model.Banner_PC) ( PC版 )
+        </div>
+        <div class="editor-field">
+            <div class="clear"></div><input type="file" name="Banner_PC" id="Banner_PC" class="upload" accept="image/*" /><br />
+        </div>
+
+        <div class="editor-label">
+            <span style="color:red;">*</span>@Html.LabelFor(model => model.Banner_Mobile) ( Mobile版 )
+        </div>
+        <div class="editor-field">
+            <div class="clear"></div><input type="file" name="Banner_Mobile" id="Banner_Mobile" class="upload" accept="image/*" /><br />
+        </div>
+        <div class="editor-label">
+            <span style="color:red;">*</span>@Html.LabelFor(model => model.Url)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Url, new { style = "width: 300px;" })
+            @Html.ValidationMessageFor(model => model.Url)
+        </div>
+
+        <div class="editor-label">
+            <span style="color:red;">*</span>@Html.LabelFor(model => model.StartTime)
+        </div>
+        <div class="editor-field">
+            <input type="text" name="StartTime" id="StartTime" class="date_search" value="" style="width:300px" required />
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EndTime)
+        </div>
+        <div class="editor-field">
+            <input type="text" name="EndTime" id="EndTime" class="date_search" value="" style="width:300px" /><font style="color:red"> ( 不填寫則代表永不下線 )</font>
+        </div>
+        <div class="editor-label">
+            <span style="color:red;">*</span>@Html.LabelFor(model => model.Display)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Display) <label>顯示</label>
+            @Html.ValidationMessageFor(model => model.Display)
+        </div>
+
+        <p>
+            <input type="submit" value="確定送出" onclick="Create()" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("回列表頁", "Index")
+</div>

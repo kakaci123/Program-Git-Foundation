@@ -1,0 +1,29 @@
+﻿.content .showdata .item1
+{
+    width: 20%;
+    min-width: 20%;
+}
+
+.content .showdata .item2
+{
+    width: 25%;
+    min-width: 25%;
+}
+
+.content .showdata .item3
+{
+    width: 15%;
+    min-width: 15%;
+}
+
+.content .showdata .item4
+{
+    width: 9%;
+    min-width: 9%;
+}
+
+.content .showdata .item5
+{
+    width: 25%;
+    min-width: 25%;
+}

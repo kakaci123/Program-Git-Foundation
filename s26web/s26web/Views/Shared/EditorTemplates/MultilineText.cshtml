@@ -1,0 +1,16 @@
+﻿@{
+    var placeholder = string.Empty;
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("PlaceHolder"))
+    {
+        placeholder = ViewData.ModelMetadata.AdditionalValues["PlaceHolder"] as string;
+    }
+}
+
+@if (ViewData.ModelMetadata.IsRequired)
+{
+    @Html.TextArea("", ViewData.TemplateInfo.FormattedModelValue.ToString(), 0, 0, new { @class = "text-box multi-line", placeholder = placeholder, required = "required" })
+}
+else
+{
+   @Html.TextArea("", ViewData.TemplateInfo.FormattedModelValue.ToString(), 0, 0, new { @class = "text-box multi-line", placeholder = placeholder })
+}

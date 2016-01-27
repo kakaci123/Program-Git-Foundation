@@ -1,0 +1,239 @@
+﻿@using s26web.Models;
+@model List<s26web.Models.VolunteersModel.VolunteersShow>
+@{
+    ViewBag.Title = "會員管理";
+    int p = 1;
+
+    int storeid = 0;
+    if (ViewData["storeid"] != null)
+    {
+        storeid = (int)ViewData["storeid"];
+    }
+
+    int smspoint = 0;
+    if (ViewData["point"] != null)
+    {
+        smspoint = (int)ViewData["point"];
+    }
+    if (ViewData["sendmail"] == "success")
+    {
+        <script>alert("簡訊已寄出");</script>
+    }
+    if (ViewData["sendmail"] == "successes")
+    {
+        <script>alert("簡訊與信件皆已寄出");</script>
+    }
+    else if (ViewData["sendmail"] == "fail")
+    {
+        <script>alert("簡訊寄送失敗，請稍後在試。");</script>
+    }
+    if (ViewData["sendmail"] == "successmail")
+    {
+        <script>alert("信件已寄出");</script>
+    }
+    if (ViewData["p"] != null)
+    {
+        p = (int)ViewData["p"];
+    }
+
+    string keyword = "";
+    if (ViewData["keyword"] != null)
+    {
+        keyword = ViewData["keyword"] as string;
+    }
+
+    DateTime? create_time_start = ViewData["create_time_start"] as DateTime?;
+    DateTime? create_time_end = ViewData["create_time_end"] as DateTime?;
+    DateTime? enable_time_start = ViewData["enable_time_start"] as DateTime?;
+    DateTime? enable_time_end = ViewData["enable_time_end"] as DateTime?;
+    string ct_start = "";
+    string ct_end = "";
+    string en_start = "";
+    string en_end = "";
+    int status = 0;
+    int NowBrand = 0;
+    bool NotchangeBrand = false;
+    string status_str = "";
+    string NowBrand_str = "";
+    if (ViewData["status"] != null)
+    {
+        status = (int)ViewData["status"];
+    }
+    if (ViewData["NowBrand"] != null)
+    {
+        NowBrand = (int)ViewData["NowBrand"];
+    }
+    if (ViewData["NotchangeBrand"] != null)
+    {
+        NotchangeBrand = (bool)ViewData["NotchangeBrand"];
+    }
+    if (create_time_start != null)
+    {
+        ct_start = create_time_start.Value.ToString("yyyy/MM/dd HH:mm:ss");
+    }
+    if (create_time_end != null)
+    {
+        ct_end = create_time_end.Value.ToString("yyyy/MM/dd HH:mm:ss");
+    }
+    if (enable_time_start != null)
+    {
+        en_start = enable_time_start.Value.ToString("yyyy/MM/dd HH:mm:ss");
+    }
+    if (enable_time_end != null)
+    {
+        en_end = enable_time_end.Value.ToString("yyyy/MM/dd HH:mm:ss");
+    }
+
+    string err = "";
+    if (TempData["err"] != null && TempData["err"] != "")
+    {
+        err = TempData["err"] as string;
+    }
+
+}
+@Styles.Render("~/css/AdminVolunteersIndex")
+@Scripts.Render("~/js/AdminVolunteersIndex")
+@Scripts.Render("~/Scripts/jQuery/jquery.transit.min.js")
+@if (err != "")
+{
+    @: 操作失敗；錯誤代碼：@Html.Raw(err)
+}
+else
+{
+<div class="big_title">@ViewBag.Title</div>
+<div class="func_item">
+        <ul>
+            <li>@Html.ActionLink("新增", "Create")</li>
+            <li>@Html.ActionLink("帳號啟用通知簡訊", "SMSConfirm")</li>
+            <li>@Html.ActionLink("會員審核失敗簡訊", "SMSFailed1")</li>
+            <li>@Html.ActionLink("會員忘記密碼簡訊", "SMSPassword")</li>
+        </ul>
+    <ul>
+        <li>@Html.ActionLink("宅配訂購通知Email", "OrderEmail")</li>
+        <li>@Html.ActionLink("宅配狀態變更為已出貨", "DeliveryEmail")</li>
+        <li>@Html.ActionLink("贈品寄送狀態變更為已寄送", "DeliveryGiftEmail")</li>
+        <li>@Html.ActionLink("系統手動發送點數給會員", "CountEmail")</li>
+
+    </ul>
+</div>
+<div class="search">
+    <form action="" id="search" method="" name="cond">
+        <label>會員身分: </label>
+        <label>
+            <input type="radio" value="0" name="NowBrand" @if (NowBrand == 0) { <text> checked </text>      } />ALL
+        </label>
+        <label>
+            <input type="radio" value="1" name="NowBrand" @if (NowBrand == 1){ <text> checked </text>     } />懷孕中
+        </label>
+        <label>
+            <input type="radio" value="2" name="NowBrand" @if (NowBrand == 2){ <text> checked </text>     } />使用S-26產品
+        </label>
+        <label>
+            <input type="radio" value="3" name="NowBrand" @if (NowBrand == 3){ <text> checked </text>     } />全母乳餵哺
+        </label>
+        <label>
+            <input type="radio" value="4" name="NowBrand" @if (NowBrand == 4) { <text> checked </text>      } />其他
+        </label>
+        <br />
+        <label>尚未變更身分: </label>
+        <label>
+            <input type="checkbox" value="true" name="NotchangeBrand" @if (NotchangeBrand){ <text> checked </text>} />預產期已超過今日的會員
+        </label>
+        <br />
+        <label>審核狀態: </label>
+        <label>
+            <input type="radio" value="0" name="status" @if (status == 0) { <text> checked </text>    } />ALL
+        </label>
+        <label>
+            <input type="radio" value="1" name="status" @if (status == 1) { <text> checked </text>   } />審核中
+        </label>
+        <label>
+            <input type="radio" value="2" name="status" @if (status == 2) { <text> checked </text>   } />審核通過
+        </label>
+        <label>
+            <input type="radio" value="3" name="status" @if (status == 3) { <text> checked </text>   } />審核未通過
+        </label>
+        <br />
+        <label for="create_time_start">加入會員時間: </label>
+        <input type="text" name="create_time_start" id="create_time_start" class="date_search" value="@ct_start" /> ~
+        <input type="text" name="create_time_end" id="create_time_end" class="date_search" value="@ct_end" />
+        <br />
+        <label for="keyword">關鍵字: </label>
+        <input type="text" name="keyword" id="keyword" value="@keyword" />
+        <label style="color: #c00000;">(搜尋欄位：姓名、手機、Email)</label>
+        <br />
+        <label>eCRM: </label>
+        @Html.DropDownList("CategorySelectList", "ALL")
+        <br />
+        <br />
+        <input type="submit" value="查詢" id="search_button" onclick="searchdata();">
+        <input type="submit" value="匯出" id="search_button" onclick="exportexcel();">
+    </form>
+</div>
+
+<div class="showdata">
+    <div>
+        <ul class="title">
+            <li class="check"><label><input type="checkbox" name="all" id="all" />全選</label></li>
+            <li class="item2">會員身分</li>
+            <li class="item2">@Html.DisplayNameFor(model => model[0].Name)</li>
+            <li class="item3">@Html.DisplayNameFor(model => model[0].Mobile)</li>
+            <li class="item4">@Html.DisplayNameFor(model => model[0].Email)</li>
+            <li class="item5">e-CRM</li>
+            <li class="item6">累積點數</li>
+            <li class="item7">已兌換</li>
+            <li class="item8">@Html.DisplayNameFor(model => model[0].Status)</li>
+            <li class="item9">@Html.DisplayNameFor(model => model[0].Memo)</li>
+            <li class="item10">編輯</li>
+        </ul>
+    </div>
+
+    <div id="data_area">
+        <form action="@s26web.Models.Method.RootPath/shb/Volunteers" id="action" method="post">
+
+            @foreach (var item in Model)
+            {
+                if (item.NowBrand == 1)
+                { NowBrand_str = "懷孕中"; }
+                if (item.NowBrand == 2)
+                { NowBrand_str = "使用S-26產品"; }
+                if (item.NowBrand == 3)
+                { NowBrand_str = "全母乳餵哺"; }
+                if (item.NowBrand == 4)
+                { NowBrand_str = "其他"; }
+                
+                if (item.Status == 1)
+                { status_str = "審核中"; }
+                else if (item.Status == 2)
+                { status_str = "通過"; }
+                else if (item.Status == 3)
+                { status_str = "未通過"; }
+                
+                <ul class="data" id="data_@item.Id">
+                    <li class="check"><label><input type="checkbox" name="item" class="delete" value="@Html.DisplayFor(modelItem => item.Id)" /></label></li>
+                    <li class="item2">@NowBrand_str</li>
+                    <li class="item2">@Html.DisplayFor(modelItem => item.Name)</li>
+                    <li class="item3">@Html.DisplayFor(modelItem => item.Mobile)</li>
+                    <li class="item4">@Html.DisplayFor(modelItem => item.Email)</li>
+                    <li class="item5">@Html.DisplayFor(modelItem => item.MemberNumberName)</li>
+                    <li class="item6">@Html.DisplayFor(modelItem => item.Point)</li>
+                    <li class="item7">已兌換</li>
+                    <li class="item8">@status_str</li>
+                    <li class="item9">@Html.DisplayFor(modelItem => item.Memo)</li>
+                    <li class="item10">@Html.ActionLink("編輯", "Edit", new { id = item.Id, p = p })</li>
+                </ul>
+            }
+            <div class="del_chk">
+                <div class="button">
+                    <select name="edit_action" id="edit_action">
+                        <option value="@s26web.Models.Method.RootPath/shb/Volunteers">處理動作</option>
+                        <option value="@s26web.Models.Method.RootPath/shb/Volunteers/Delete">刪除</option>
+                    </select>
+                    <input id="edit_action_sub" name="edit_action_sub" type="submit" value="送出" onclick="return confirm('確定送出?')" />
+                </div>
+                @Html.Partial("_PartialPage")
+            </div>
+        </form>
+    </div>
+</div>
+}

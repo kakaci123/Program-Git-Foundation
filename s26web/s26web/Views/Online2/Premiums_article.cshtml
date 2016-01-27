@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = "Premiums_article";
+}
+
+<div id="main_wrapper">
+    <div id="main">
+        <div class="main_content_d">
+            <h2>
+                兌換贈品
+                <p>您申請兌換的贈品如下</p>
+            </h2>
+            <table width="705" class="delivery_table">
+                <thead>
+                    <tr>
+                        <td width="208"></td>
+                        <td width="128"></td>
+                        <td width="169"></td>
+                        <td width="180"></td>
+                    </tr>
+                </thead>
+                <thead>
+                    <tr>
+                        <td>贈品名稱</td>
+                        <td>贈品圖片</td>
+                        <td>贈品說明</td>
+                        <td>所需金幣</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>S-26尿布墊</td>
+                        <td class="diapers_product"></td>
+
+                        <td>
+                            <a href="#inline2" class="fancybox">詳細說明</a>
+                            <div id="inline2">
+                                <h3>贈品說明</h3>
+                                <div class="inline2_left">
+                                    <ul>
+                                        贈品圖片
+                                    </ul>
+                                    <li></li>
+                                </div>
+                                <div class="inline2_right">
+                                    <ul>
+                                        詳細說明
+                                    </ul>
+                                    <li>
+                                        S-26專屬尿布墊S-26專屬尿布墊S-26專屬尿布墊
+                                        S-26專屬尿布墊S-26專屬尿布墊S-26
+                                        專屬尿布墊S-26專屬尿布墊S-26專屬尿布墊
+                                        S-26專屬尿布墊S-26專屬尿布墊S-26專屬尿布墊
+                                        <p></p>
+                                    </li>
+                                </div>
+                            </div>
+                        </td>
+                        <td>100 <span class="money_i"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="pd"></div>
+        <div class="main_content_d">
+            <h2>
+                <p>收件人資訊</p>
+            </h2>
+            <span class="box_head_reg"></span>
+            <!--line-->
+            <div class="reg">
+
+                <!--text wrapper-->
+                <div class="reg_text">
+                    <table width="600" border="0" align="center" valign="center" id="table_box">
+                        <tbody>
+                            <tr>
+                                <td><p class="cell">收件人</p></td>
+                                <td>
+                                    <span>
+                                        <input name="" id="box" placeholder="@s26web.Models.Method.Get_UserName(Request.Cookies, Session)" type="text" size="50" />
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><p class="cell">收件人手機</p></td>
+                                <td>
+                                    <span>
+                                        <input name="" id="box" placeholder="0912346789" type="text" size="50" />
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><p class="cell">收件人地址</p></td>
+                                <td>
+                                    <span class="year">105</span>
+                                    <select name="台北市" id="address">
+                                        <option>基隆市</option>
+                                        <option>花蓮市</option>
+                                        <option>台中市</option>
+                                    </select>
+                                    <select name="中山區" id="address">
+                                        <option>中山區</option>
+                                        <option>松山區</option>
+                                        <option>信義區</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><input name="" id="box" placeholder="請輸入您的地址" type="text" size="50" /></td>
+                            </tr>
+                            <tr>
+                                <td align="center" valign="top"><p class="cell">備註</p></td>
+                                <td>
+                                    <span>
+                                        <textarea name="" cols="" rows="6"></textarea>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="line"></div>
+                    <a class="btn_bottom" href="@s26web.Models.Method.RootPath/Online/Premiums_complete">確認兌換</a>
+                </div>
+
+            </div>
+            <div class="reg_footer"> </div>
+        </div>
+    </div>
+    <div class="pd"></div>
+</div>
+
+

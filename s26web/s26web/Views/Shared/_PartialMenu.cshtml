@@ -1,0 +1,33 @@
+﻿<div class="loginbar">
+    @if (s26web.Models.Method.Is_Login(Request.Cookies))
+    {
+    <!--登入-->
+        <a href="/Home/Index"><div id="logo"></div></a>
+        <ul class="header_top">
+            <a href="/Login/LogOff"> <li class="sal_fun_sbtn1">  </li></a>
+            <li class="sal_fun_sbtn"> <a href="#" target="_blank"></a> </li>
+            <li class="sal_fun_sbtn2"> <a href="#" target="_blank"></a> </li>
+        </ul>
+        <!-- Sliding Menu-->
+        <ul class="header_nav">
+            <li><a href="/Product/Index">&nbsp;產品介紹 &nbsp;|</a></li>
+            <li><a href="/Online2/Index">&nbsp;線上活動 &nbsp;|</a></li>
+            <li><a href="/Delivery/Index">&nbsp;宅配訂購 &nbsp;|</a></li>
+            <li><a href="/Premiums/Index">&nbsp;兌換贈品 &nbsp;|</a></li>
+            <li><a href="/Member/Index">&nbsp;會員專區 &nbsp;|</a></li>
+        </ul>
+        <!-- Sliding Menu end-->
+    }
+    else
+    {
+    <!--未登入-->
+        <a href="/Home/Index"><div id="logo"></div></a>
+        <ul class="header_top">
+            <a href="/Login/Index"> <li class="sal_fun_sbtn0">  </li></a>
+            <li class="sal_fun_sbtn"> <a href="#" target="_blank"></a> </li>
+            <li class="sal_fun_sbtn2"> <a href="#" target="_blank"></a> </li>
+        </ul>
+    }
+</div>
+
+

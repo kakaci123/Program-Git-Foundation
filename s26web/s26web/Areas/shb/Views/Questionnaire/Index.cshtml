@@ -1,0 +1,123 @@
+﻿@using s26web.Models;
+@model List<s26web.Areas.shb.Models.QuestionnaireModel.MainMenu>
+
+@{
+    string temp = "";
+    string err = "";
+
+    int p = 1;
+    if (ViewData["p"] != null)
+    {
+        p = (int)ViewData["p"];
+    }
+
+    string keyword = "";
+    if (ViewData["keyword"] != null)
+    {
+        keyword = ViewData["keyword"] as string;
+    }
+    DateTime? time_start = ViewData["create_time_start"] as DateTime?;
+    DateTime? time_end = ViewData["create_time_end"] as DateTime?;
+    string t_start = "";
+    string t_end = "";
+
+    if (time_start != null)
+    {
+        t_start = time_start.Value.ToString("yyyy/MM/dd HH:mm:ss");
+    }
+    if (time_end != null)
+    {
+        t_end = time_end.Value.ToString("yyyy/MM/dd HH:mm:ss");
+    }
+    if (TempData["err"] != null && TempData["err"] != "")
+    {
+        err = TempData["err"] as string;
+    }
+
+    IEnumerable<SelectListItem> listitems = null;
+    if (ViewData["Acitivity_List"] != null)
+    {
+        listitems = ViewData["Acitivity_List"] as IEnumerable<SelectListItem>;
+    }
+}
+
+@Styles.Render("~/css/AdminQuestionnaireIndex")
+@Scripts.Render("~/js/AdminQuestionnaireIndex")
+
+@if (err != "")
+{
+    @: 操作失敗；錯誤代碼：@err。
+}
+else
+{
+    <div class="big_title">@ViewBag.Title</div>
+
+    <div class="showdata">
+        <form action="/shb/Questionnaire" method="post" id="Export_Excel">
+            <div class="QueryMethod">
+                <label for="keyword">問卷送出時間: </label>
+                <input type="text" name="time_start" id="time_start" class="date_search" value="@t_start" />
+                 ~ 
+                <input type="text" name="time_end" id="time_end" class="date_search" value="@t_end" />
+                <br>
+                <label for="keyword">關鍵字: </label>
+                <input type="text" name="keyword" id="KeywordQuery" value="@keyword" />
+                <label style="color: #c00000;">( 會員姓名、手機、Eamil )</label>
+                <br>
+                <label for="keyword">問卷活動: </label>
+                @Html.DropDownList("Level", listitems)
+                <br />
+                <br />
+                <input type="submit" value="查詢" id="search_button">
+                &ensp;
+                <input type="submit" value="匯出" id="Export_Excel_Button" formaction="/shb/Questionnaire/Export3" />
+            </div>
+        </form>
+
+        <div style="text-align: right">總共 @Model.Count 份問卷資料</div>
+        <div>
+            <ul class="title">
+                <li class="item1">會員身份</li>
+                <li class="item2">會員姓名</li>
+                <li class="item3">手機號碼</li>
+                <li class="item4">Email</li>
+                <li class="item5">寶寶生日</li>
+                <li class="item6">問卷內容查看</li>
+                <li class="item7">問卷送出時間</li>
+            </ul>
+        </div>
+        <div id="data_area">
+            @foreach (var item in Model)
+            {
+                <ul class="data">
+                    <li class="item1">
+                        @if (item.vl.NowBrand == 1)
+                        {
+                            <text>懷孕中</text>
+                        }
+                        else if (item.vl.NowBrand == 2)
+                        {
+                            <text>使用S-26產品 </text>
+                        }
+                        else if (item.vl.NowBrand == 3)
+                        {
+                            <text>全母乳餵哺 </text>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.vl.BrandName)
+                        }
+                    </li>
+                    <li class="item2">@Html.DisplayFor(modelItem => item.vl.Name)</li>
+                    <li class="item3">@Html.DisplayFor(modelItem => item.vl.Mobile)</li>
+                    <li class="item4">@Html.DisplayFor(modelItem => item.vl.Email)</li>
+                    <li class="item5">@Html.DisplayFor(modelItem => item.vl.BabyBirthday)</li>
+                    <li class="item6">@Html.ActionLink("問卷查看", "AnswerView", new { id = item.qm.Id })</li>
+                    <li class="item7"> @item.qm.SubmitTime.AddHours(8).ToString("yyyy/MM/dd HH:mm:ss")</li>
+                </ul>
+            }
+        </div>
+        @Html.Partial("_PartialPage")
+    </div>
+
+}

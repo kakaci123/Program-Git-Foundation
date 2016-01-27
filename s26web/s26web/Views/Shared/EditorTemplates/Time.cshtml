@@ -1,0 +1,16 @@
+﻿@{
+    var placeholder = string.Empty;
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("PlaceHolder"))
+    {
+        placeholder = ViewData.ModelMetadata.AdditionalValues["PlaceHolder"] as string;
+    }
+}
+
+@if (ViewData.ModelMetadata.IsRequired)
+{
+    @Html.TextBox("", ViewData.TemplateInfo.FormattedModelValue, new { @class = "text-box single-line", type = "time", placeholder = placeholder, required = "required" })
+} 
+else 
+{
+   @Html.TextBox("", ViewData.TemplateInfo.FormattedModelValue, new { @class = "text-box single-line", placeholder = placeholder, type = "time" })
+}

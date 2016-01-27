@@ -1,0 +1,79 @@
+﻿@model List<s26web.Areas.shb.Models.OnlineModel.OnlineModelShow>
+@{
+    ViewBag.Title = "Index";
+    string err = "";
+    if (TempData["err"] != null && TempData["err"] != "")
+    {
+        err = TempData["err"] as string;
+    }
+    int p = 1;
+    if (ViewData["p"] != null)
+    {
+        p = (int)ViewData["p"];
+    }
+}
+@Styles.Render("~/css/AdminOnlineIndex")
+@Scripts.Render("~/js/AdminOnlineIndex")
+@if (err != "")
+{
+    @: 操作失敗；錯誤代碼：@Html.Raw(err)
+}
+else
+{
+    <div class="big_title">線上活動管理</div>
+    <div class="func_item">
+        <ul>
+            <li>@Html.ActionLink("新增線上活動", "Create")</li>
+        </ul>
+    </div>
+    <div class="showdata">
+        <div>
+            <ul class="title">
+                <li class="item1">@Html.DisplayNameFor(model => model[0].Name)</li>
+                <li class="item2">@Html.DisplayNameFor(model => model[0].Type)</li>
+                <li class="item3">@Html.DisplayNameFor(model => model[0].Banner_PC)</li>
+                <li class="item4">@Html.DisplayNameFor(model => model[0].Url)</li>
+                <li class="item5">@Html.DisplayNameFor(model => model[0].StartTime)</li>
+                <li class="item6">@Html.DisplayNameFor(model => model[0].EndTime)</li>
+                <li class="item7">前端顯示</li>
+                <li class="item8">編輯</li>
+                <li class="item9">刪除</li>
+                <li class="item10">@Html.DisplayNameFor(model => model[0].UpdateTime)</li>
+            </ul>
+        </div>
+
+        <div id="data_area">
+            <form action="@s26web.Models.Method.RootPath/shb/Online" id="action" method="post">
+
+                @foreach (var item in Model)
+                {
+                    item.Type = item.Type.Remove(item.Type.LastIndexOf(","), 1);
+                    <ul class="data" id="data_@item.Id">
+                        <li class="item1">@Html.DisplayFor(model => item.Name)</li>
+                        <li class="item2">@Html.DisplayFor(model => item.Type)</li>
+                        <li class="item3"><img src="@item.Banner_PC" style="width:160px;height:90px"></li>
+                        <li class="item4">
+                            <a href="@item.Url" target="_blank">@item.Url</a>
+                        </li>
+                        <li class="item5">@item.StartTime.ToString("yyyy/MM/dd HH:mm:ss")</li>
+                        <li class="item6">
+                            @if (item.EndTime != DateTime.Parse("0001/01/01 00:00:00"))
+                            {
+                                @item.EndTime.ToString("yyyy/MM/dd HH:mm:ss")
+                            }                           
+
+                        </li>
+                        <li class="item7">@Html.DisplayFor(model => item.Display)</li>
+                        <li class="item8">@Html.ActionLink("編輯", "Edit", new { id = item.Id, p = p })</li>
+                        <li class="item9">@Html.ActionLink("刪除", "Delete", new { Id = item.Id, p = p }, new { OnClick = "return confirm(\"確定要刪除?\")" })</li>
+                        <li class="item10">@item.UpdateTime.ToString("yyyy/MM/dd HH:mm:ss")</li>
+                    </ul>
+                }
+                <div class="del_chk">
+                    @Html.Partial("_PartialPage")
+                </div>
+            </form>
+        </div>
+    </div>
+}
+

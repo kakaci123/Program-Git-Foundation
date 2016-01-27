@@ -1,0 +1,150 @@
+﻿@model s26web.Models.VolunteersModel.LoginModel
+@if (TempData["err"] != null)
+{
+    <script>
+        alert('@TempData["err"].ToString()');
+    </script>
+}
+@{
+
+    int year = new int();
+    int month = new int();
+    int date = new int();
+}
+<!-- content ----------------------------->
+<div id="main_wrapper">
+    <div id="main">
+        <div class="main_content_r">
+            <!--sign in area-->
+            @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { @id = "login_form" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="sign_in">
+                    <div class="sign_top">
+                        <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl" />
+                        <h2> 會員登入</h2>
+                        <p class="vb">親愛的會員，歡迎您回來</p>
+                        <table width="440" border="0" id="table_box">
+                            <tbody>
+                                <tr>
+                                    <td width="147">
+                                        <p class="title">帳號</p>
+                                    </td>
+                                    <td width="443">
+                                        <span>
+                                            <input name="Mobile" id="box" placeholder="請輸入您的手機號碼" type="text" size="50" />
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    @*<td>
+                                        <p class="title">密碼</p>
+                                    </td>
+                                    <td>
+                                        <span>
+                                            <input name="Password" id="box" placeholder="請輸入您的密碼" type="password" size="50" />
+                                        </span>
+                                    </td>*@
+                                    <td>
+                                        <p class="title">寶寶生日</p>
+                                    </td>
+                                    <td>
+                                        <span>
+                                            <select name="year" class="b" data-val="@year" tabindex="2" style="background: #FFF; margin-left: 14px;"></select>
+                                            <span class="year">年</span>
+                                            <select name="month" class="default" data-val="@month" tabindex="2" style="background:#FFF"></select>
+                                            <span class="year">月</span>
+                                            <select name="date" class="default" data-val="@date" tabindex="2" style="background:#FFF"></select>
+                                            <span class="year">日</span>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td class="forgot"><a href="/Login/forgot_Sign_in"><span></span>忘記密碼</a></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    @*<a href="logging.html" class="sign_bottom">登入</a>*@
+                    <input type="submit" class="sign_bottom" style="cursor:pointer" onclick="return vaild();" value="登入" />
+                    <!--sign in area end-->
+                    <div class="pd"></div>
+                    <div class="pd"></div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- content end----------------------------->
+
+<script type="text/javascript">
+    $(function () {
+
+        var d = new Date();
+        var year = d.getFullYear();
+        addcount = 0;
+        amount = 1;
+        $(".b[name=year]").append(Get_Number(year - 7, year + 1, false));
+        $(".default[name=month]").append(Get_Number(1, 12, false));
+        var y = parseInt($("select[name=year] option:selected").val(), 10);
+        var m = parseInt($("select[name=month] option:selected").val(), 10);
+        $(".default[name=date]").append(Get_Number(1, Get_Days(y, m), false));
+
+        $(".b[name=year]").change(function () {
+            $(this).next().next().empty();
+            $(this).next().next().append(Get_Number(1, 12, false));
+            $(this).next().next().next().next().empty();
+            $(this).next().next().next().next().append(Get_Number(1, Get_Days(y, m), false));
+        });
+        $(".default[name=month]").change(function () {
+            y = parseInt($(this).prev().val(), 10);
+            m = parseInt($(this).val(), 10);
+            $(this).next().next().empty();
+            $(this).next().next().append(Get_Number(1, Get_Days(y, m), false));
+        });
+
+        function Get_Days(y, m) {
+            if (y % 4 == 0 && m == 2) {
+                return 29;
+            }
+            if (m == 2) {
+                return 28;
+            }
+            if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12) {
+                return 31;
+            }
+            if (m == 4 || m == 6 || m == 9 || m == 11) {
+                return 30;
+            }
+            return 0;
+        }
+
+        function Get_Number(start, end, select) {
+            var selected = "selected=\"selected\"";
+            var html = "<option value=\"\" " + (select == 0 ? selected : "") + ">請選擇</option>";
+            for (var i = start; i <= end; i++) {
+                html += "<option value=\"" + i + "\" " + (select == i ? selected : "") + ">" + i + "</option>";
+            }
+            return html;
+        }
+
+    }
+    );
+    function vaild() {
+        var alert_text = "";
+        if ($(".default[name=date]").val() == null | $(".default[name=date]").val() == "") {
+            alert_text += "請輸入寶寶生日\n";
+        }
+
+        if (alert_text != "") {
+            alert(alert_text);
+            return false;
+        }
+    };
+
+</script>
+

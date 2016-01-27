@@ -1,0 +1,63 @@
+﻿@model List<s26web.Areas.shb.Models.OnlineModel.OnlineModelShow>
+@{
+    ViewBag.Title = "Index";
+    DateTime Now = DateTime.UtcNow.AddHours(8);
+}
+
+<div id="main_wrapper">
+    <div id="main">
+        <div class="main_content_a">
+            <h2>線上活動</h2>
+            <!--LEFT-->
+            <div class="main_left">
+                <div class="main_content">
+                    <p class="photo_6"></p>
+                    <div class="main_content_text">
+                        <p class="blue">產後媽咪問卷大調查</p>
+                        <p class="text_a">
+                            只要填寫問券，並完成身份認證<br />
+                            就能獲得100<span class="money_m"></span>
+                        </p>
+                        <a href="@s26web.Models.Method.RootPath/Online2/Q_vouchers"><p class="btn">立即參與<span class="arrow"></span></p></a>
+                    </div>
+                </div>
+                @foreach (var item in Model)
+                {
+                    //如果沒輸入下線時間，就永遠顯示
+                    if (item.EndTime == DateTime.Parse("0001/01/01 00:00:00"))
+                    {
+                        string url = "http://" + Request.Url.Authority + @item.Banner_PC;
+                        <div class="main_content">
+                            <p class="photo_1"><img src="@url" style="margin-top:1px;"></p>
+                            <div class="main_content_title">
+                                <p class="blue">@item.Name</p>
+                                <p class="text_a">@Html.Raw(HttpUtility.HtmlDecode(item.Content))<span class="money_m"></span> </p>
+                                <a href="@s26web.Models.Method.RootPath/Online2/Count"><p class="btn">立即兌換<span class="arrow"></span></p></a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        //如果現在時間小於下線時間，就不顯示
+                        if (Now > item.EndTime.AddHours(8))
+                        {
+                            string url = "http://" + Request.Url.Authority + @item.Banner_PC;
+                            <div class="main_content">
+                                <p class="photo_1"><img src="@url" style="margin-top:1px;"></p>
+                                <div class="main_content_title">
+                                    <p class="text_a">@Html.Raw(HttpUtility.HtmlDecode(item.Content))<span class="money_m"></span> </p>
+                                    <a href="@s26web.Models.Method.RootPath/Online2/Count"><p class="btn">立即兌換<span class="arrow"></span></p></a>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                }
+            </div>
+
+        </div>
+
+        <!--LEFT  end-->
+        <div class="blank_m"></div>
+    </div>
+</div>

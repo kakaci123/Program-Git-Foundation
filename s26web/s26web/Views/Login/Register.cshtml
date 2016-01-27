@@ -1,0 +1,290 @@
+﻿    @model s26web.Models.VolunteersModel.RegisterModel
+    @{
+        
+        int year = new int();
+        int month = new int();
+        int date = new int();
+    }
+    <!-- Add jQuery library -->
+
+    <!-- Add fancyBox main JS and CSS files -->
+    <script type="text/javascript" src="~/Scripts/jQuery/jquery.fancybox.js?v=2.1.5"></script>
+    <script type="text/javascript" src="~/Scripts/Register.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/jquery.fancybox.css?v=2.1.5" media="screen" />
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.fancybox').fancybox();
+        });
+    </script>
+
+    <!-- content ----------------------------->
+    <div id="main_wrapper">
+        <div id="main">
+    @using (Html.BeginForm("Register", "Login", FormMethod.Post, new { @id = "register_from", @enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+            <div class="main_content_r">
+                <h2>
+                    會員註冊
+                    <p>以下欄位皆為必填</p>
+                </h2>
+                <!--top lin-->
+                <span class="box_head_reg"></span>
+
+                <!--line-->
+                <div class="reg">
+
+                    <!--text wrapper-->
+                    <div class="reg_text">
+                        <table width="600" border="0" align="center" valign="center" id="table_box">
+                            <tbody>
+                                <tr>
+                                    <td align="center" valign="middle">
+                                        <p class="cell">手機號碼</p>
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(model => model.Mobile, new { placeholder = "請輸入您的手機號碼", @class = "boxstyle" })
+                                        @Html.ValidationMessageFor(model => model.Mobile)
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td align="left" valign="top" class="filling">
+                                        <p class="cell_small">手機號碼將成為您的會員帳號，請核實填寫</p>
+                                    </td>
+                                </tr>
+
+                                @*<tr>
+                                    <td>
+                                        <p class="cell">密碼</p>
+                                    </td>
+                                    <td>
+                                        @Html.PasswordFor(model => model.Password, new { placeholder = "請輸入您的密碼", @class = "boxstyle" })
+                                        @Html.ValidationMessageFor(model => model.Password)
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td class="filling">
+                                        <p class="cell_small">密碼需為6個字元以上之數字加上英文字母</p>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="tire">
+                                        <p class="cell">確認密碼</p>
+                                    </td>
+                                    <td class="tire">
+                                        @Html.PasswordFor(model => model.ConfirmPassword, new { placeholder = "請輸入您的密碼", @class = "boxstyle" })
+                                        @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                                    </td>
+                                </tr>*@
+
+                                <tr>
+                                    <td class="tire">
+                                        <p class="cell">姓名</p>
+                                    </td>
+                                    <td class="tire">
+                                        @Html.TextBoxFor(model => model.Name, new { placeholder = "請輸入您的姓名", @class = "boxstyle" })
+                                        @Html.ValidationMessageFor(model => model.Name)
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <p class="cell">寶寶生日 / 預產期</p>
+                                    </td>
+                                    <td>
+                                        <select name="year" class="b" data-val="@year" tabindex="2"></select>
+                                        <span class="year">年</span>
+                                        <select name="month" class="default" data-val="@month" tabindex="2"></select>
+                                        <span class="year">月</span>
+                                        <select name="date" class="default" data-val="@date" tabindex="2"></select>
+                                        <span class="year">日</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td class="filling">
+                                        <p class="cell_small">請填寫您最近一個寶寶的生日/預產期</p>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="tire">
+                                        <p class="cell">E-mail</p>
+                                    </td>
+                                    <td class="tire">
+                                        <span>
+                                            @Html.TextBoxFor(model => model.Email, new { placeholder = "請輸入您的E-mail信箱", @class = "boxstyle" })
+                                            @Html.ValidationMessageFor(model => model.Email)
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="height:20px;">
+                                        <p class="cell">哺乳方式</p>
+                                    </td>
+                                    <td style="height:20px;">
+                                        <input name="Product" type="radio" id="male" value="2" checked />
+                                        <span class="note">母乳哺餵</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <input name="Product" type="radio" id="male" value="3" />
+                                        <span class="note">有意願或目前使用S-26配方產品</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <input name="Product" type="radio" id="male" value="4" />
+                                        <span class="note">使用他牌配方產品</span>
+                                        <span>
+                                            <input name="BrandName" id="box_Product" placeholder="請填入品牌名稱" type="text" size="20" />
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="birth" align="left" valign="top">
+                                        <p class="cell_c">身分確認<br />(兩種方式則一)</p>
+                                    </td>
+                                    <td>
+                                        <input name="ok" type="radio" id="rd_1" align="left" valign="top" value="上傳媽媽手冊、寶寶手冊" checked />
+                                        <span class="note">
+                                            上傳媽媽手冊、寶寶手冊&nbsp;&nbsp;
+                                            <label class="btn_m" id="upload">選擇照片
+                                                <input type="file" id="id_image_large" name="id_image" accept="image/*">
+                                            </label>
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td class="filling">
+                                        <p class="small">
+                                            <a href="#inline1" class="fancybox">提供媽媽和寶寶手冊示意圖</a>
+                                        </p>
+
+                                        <div id="inline1">
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <input name="ok" type="radio" id="rd_2" value="請輸入促銷代碼" />
+                                        <span class="note">請輸入促銷代碼</span>
+                                        <span>
+                                            <input name="SerialNo" id="box_ok" placeholder="請輸入促銷代碼" type="text" size="20" />
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="line"></div>
+
+                        <table border="0" align="center" valign="center" id="table_wrapper">
+                            <tr>
+                                <td class="check">
+                                    <input name="agree1" id="agree1" type="checkbox" value="" />
+                                    我已閱讀並同意<a href="~/Html/Privacy" target="_blank"><span class="blue">隱私權政策</span></a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="check">
+                                    <input name="agree2" id="agree2" type="checkbox" value="" />
+                                    我已閱讀並同意<a href="~/Html/TermsConditions" target="_blank"><span class="blue">使用條款</span></a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    @*<a class="btn_bottom" href="member_complete.html">下一步，送出資料</a>*@
+                                    <input type="submit" class="btn_bottom" onclick="return vaild();" value="下一步，送出資料" />
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+                <div class="reg_footer"> </div>
+                <div class="pd"></div>
+            </div>
+}
+        </div>
+    </div>
+
+<script type="text/javascript">
+    $(function () {
+        
+        var d = new Date();
+        var year = d.getFullYear();
+        addcount = 0;
+        amount = 1;
+        $(".b[name=year]").append(Get_Number(year - 7, year + 1, false));
+        $(".default[name=month]").append(Get_Number(1, 12, false));
+        var y = parseInt($("select[name=year] option:selected").val(), 10);
+        var m = parseInt($("select[name=month] option:selected").val(), 10);
+        $(".default[name=date]").append(Get_Number(1, Get_Days(y, m), false));
+
+        $(".b[name=year]").change(function () {
+            $(this).next().next().empty();
+            $(this).next().next().append(Get_Number(1, 12, false));
+            $(this).next().next().next().next().empty();
+            $(this).next().next().next().next().append(Get_Number(1, Get_Days(y, m), false));
+        });
+        $(".default[name=month]").change(function () {
+            y = parseInt($(this).prev().val(), 10);
+            m = parseInt($(this).val(), 10);
+            $(this).next().next().empty();
+            $(this).next().next().append(Get_Number(1, Get_Days(y, m), false));
+        });
+        
+        function Get_Days(y, m) {
+            if (y % 4 == 0 && m == 2) {
+                return 29;
+            }
+            if (m == 2) {
+                return 28;
+            }
+            if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12) {
+                return 31;
+            }
+            if (m == 4 || m == 6 || m == 9 || m == 11) {
+                return 30;
+            }
+            return 0;
+        }
+
+        function Get_Number(start, end, select) {
+            var selected = "selected=\"selected\"";
+            var html = "<option value=\"\" " + (select == 0 ? selected : "") + ">請選擇</option>";
+            for (var i = start; i <= end; i++) {
+                html += "<option value=\"" + i + "\" " + (select == i ? selected : "") + ">" + i + "</option>";
+            }
+            return html;
+        }
+        
+    }
+    )    
+        
+
+</script>
+    <!-- content end----------------------------->

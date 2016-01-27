@@ -1,0 +1,56 @@
+﻿@model List<s26web.Areas.shb.Models.ProductModel.ProductModelShow>
+@{
+    ViewBag.Title = "Index";
+    string err = "";
+    if (TempData["err"] != null && TempData["err"] != "")
+    {
+        err = TempData["err"] as string;
+    }
+    int p = 1;
+    if (ViewData["p"] != null)
+    {
+        p = (int)ViewData["p"];
+    }
+}
+@Styles.Render("~/css/AdminProductsIndex")
+@Scripts.Render("~/js/AdminProductsIndex")
+<div class="showdata">
+    <div>
+        <ul class="title">
+            <li class="item1">@Html.DisplayNameFor(model => model[0].Name)</li>
+            <li class="item2">@Html.DisplayNameFor(model => model[0].PictureLink)</li>
+            <li class="item3">@Html.DisplayNameFor(model => model[0].Content)</li>
+            <li class="item4">@Html.DisplayNameFor(model => model[0].Price)</li>
+            <li class="item5">@Html.DisplayNameFor(model => model[0].Point)</li>
+            <li class="item6">@Html.DisplayNameFor(model => model[0].Limit)</li>
+            <li class="item7">@Html.DisplayNameFor(model => model[0].Display)</li>
+            <li class="item8">編輯</li>
+            <li class="item9">@Html.DisplayNameFor(model => model[0].UpdateTime)</li>
+        </ul>
+    </div>
+
+    <div id="data_area">
+        <form action="@s26web.Models.Method.RootPath/shb/Volunteers" id="action" method="post">
+
+            @foreach (var item in Model)
+            {
+                
+                <ul class="data" id="data_@item.Id">
+                    <li class="item1">@Html.DisplayFor(model => item.Name)</li>
+                    <li class="item2">@Html.Raw(@item.PictureLink == "" ? "尚無" : "<img src=\"" + @item.PictureLink + "\" width=\"45\" height=\"45\" class=\"preview\"><br />") </li>
+                    <li class="item3">@Html.DisplayFor(model => item.Content)</li>
+                    <li class="item4">@Html.DisplayFor(model => item.Price)</li>
+                    <li class="item5">@Html.DisplayFor(model => item.Point)</li>
+                    <li class="item6">@Html.DisplayFor(model => item.Limit)</li>
+                    <li class="item7">@Html.DisplayFor(model => item.Display)</li>
+                    <li class="item8">@Html.ActionLink("編輯", "Edit", new { id = item.Id })</li>
+                    <li class="item9">@item.UpdateTime.ToString("yyyy/MM/dd HH:mm:ss")</li>
+                </ul>
+            }
+            <div class="del_chk">
+                @Html.Partial("_PartialPage")
+            </div>
+        </form>
+    </div>
+</div>
+

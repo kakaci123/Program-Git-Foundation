@@ -1,0 +1,61 @@
+﻿@model s26web.Areas.shb.Models.SalesCodeModel.SalesCodeModelShow
+@using s26web.Areas.shb.Models
+
+@{
+    ViewBag.Title = "Create";
+}
+@Scripts.Render("~/js/Admin_Introduction")
+@Styles.Render("~/css/AdminContent")
+<script>
+    function Check() {
+        if ($("#SalesPromotionId").val() == 0) {
+            $(".Check").css("display", "block");
+            return false;
+        }
+        else {
+            $(".Check").css("display", "None");
+        }
+        $("#SalesPromotionId").change(function () {
+            var sel = $('option:selected', this).val()
+            if (sel == 0) {
+                $(".Check").css("display", "block");
+            }
+            else {
+                $(".Check").css("display", "None");
+            }
+        });
+    }
+
+</script>
+@using (Html.BeginForm("Create", "SalesCode", FormMethod.Post, new { @id = "Point_form", @enctype = "multipart/form-data", name = "form1" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>新增促銷碼</legend>
+
+        <div class="editor-label">
+            <span style="color:red;">*</span>@Html.LabelFor(model => model.SalesPromotionId)
+        </div>
+        <div class="editor-field">
+            @Html.Raw(Html.DropList("SalesPromotionId", SalesCodeModel.Select_SalesPromotion(0, false)))
+            <font class="Check" style="color:red;display:none;font-weight:bold" >
+            促銷碼活動 欄位是必要項。</font>
+        </div>
+        <div class="editor-label">
+            <span style="color:red;">*</span>@Html.LabelFor(model => model.Code)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Code, new { style = "width: 300px;" })
+            @Html.ValidationMessageFor(model => model.Code)
+        </div>
+        <p>
+            <input type="submit" value="確定送出" onclick="Check()" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("回列表頁", "Index")
+</div>

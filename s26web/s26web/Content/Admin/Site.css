@@ -1,0 +1,272 @@
+﻿img {
+    border: 0px;
+}
+
+body {
+    margin: 0;
+    background-color: #FFFFFF; /*#EEE;*/
+}
+
+* {
+    font-family: 'Times New Roman';
+}
+
+header {
+    top: 0px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.header1 {
+    height: 30px;
+    width: 100%;
+    background-color: brown;
+}
+
+    .header1 .left {
+        float: left;
+        height: 100%;
+        position: relative;
+        top: 3px;
+    }
+
+        .header1 .left ul {
+            list-style: none;
+            top: 3px;
+            position: relative;
+            display: inline;
+        }
+
+            .header1 .left ul li {
+                display: inline;
+                margin-right: 10px;
+            }
+
+    .header1 .right {
+        float: right;
+        height: 100%;
+        padding-right: 20px;
+        position: relative;
+        top: 3px;
+    }
+
+        .header1 .right ul {
+            list-style: none;
+            display: inline;
+            position: relative;
+        }
+
+            .header1 .right ul li {
+                display: inline;
+                margin-right: 10px;
+                color: white;
+            }
+
+    .header1 ul li a,
+    .header1 ul li a:hover,
+    .header1 ul li a:link,
+    .header1 ul li a:active {
+        color: white;
+        text-decoration: none;
+    }
+
+.header2 {
+    width: 100%;
+    background-color: lightgoldenrodyellow;
+    margin-top: 0px;
+    padding-top: 10px;
+}
+
+    .header2 table {
+        margin: 0 auto;
+        padding: 0px;
+    }
+
+    .header2 .logo {
+        vertical-align: middle;
+        width: 60px;
+        display: table-cell;
+        /*padding-left: 30px;*/
+    }
+
+    .header2 .menu_item {
+        vertical-align: middle;
+        padding-left: 30px;
+        display: table-cell;
+        text-align: left;
+    }
+        /*.header2 .menu_item nav ul {
+            position: relative;
+            padding-right:30px;
+            list-style:none;
+
+        }
+            .header2 .menu_item nav ul li {
+                text-align:center;
+                font-size: 23px;
+                float:left;
+            }
+                .header2 .menu_item nav ul .green a,
+                .header2 .menu_item nav ul .green a:link,
+                .header2 .menu_item nav ul .green a:active{
+                    color:green;
+                    text-align:center;
+                    text-decoration: none;
+                }
+                .header2 .menu_item nav ul .green a:hover{
+                    color:black;
+                    text-align:center;
+                    text-decoration: none;
+                }
+                .header2 .menu_item nav ul .orange a,
+                .header2 .menu_item nav ul .orange a:link,
+                .header2 .menu_item nav ul .orange a:active{
+                    color:orange;
+                    text-align:center;
+                    text-decoration: none;
+                }
+                .header2 .menu_item nav ul .orange a:hover{
+                    color:black;
+                    text-align:center;
+                    text-decoration: none;
+                }
+                .header2 .menu_item nav ul .blue a,
+                .header2 .menu_item nav ul .blue a:link,
+                .header2 .menu_item nav ul .blue a:active{
+                    color:blue;
+                    text-align:center;
+                    text-decoration: none;
+                }
+                .header2 .menu_item nav ul .blue a:hover{
+                    color:black;
+                    text-align:center;
+                    text-decoration: none;
+                }*/
+        .header2 .menu_item nav ul .underline {
+            /*background-color:limegreen;*/
+            background-color: #d7b567;
+        }
+
+    .header2 .shared {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: right;
+    }
+
+        .header2 .shared ul {
+            list-style: none;
+            top: 3px;
+            position: relative;
+            display: inline;
+        }
+
+            .header2 .shared ul li {
+                display: inline;
+                margin-right: 10px;
+            }
+
+                .header2 .shared ul li img {
+                    height: 24px;
+                    width: 24px;
+                    border: 0px;
+                }
+
+    .header2 .register {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: right;
+        height: 100%;
+        width: 20%;
+        padding-right: 10px;
+    }
+
+        .header2 .register section {
+            width: 100%;
+        }
+
+        .header2 .register ul {
+            list-style: none;
+            display: inline;
+            top: 6px;
+            position: relative;
+        }
+
+            .header2 .register ul li {
+                display: inline;
+                margin-right: 10px;
+                color: black;
+            }
+
+                .header2 .register ul li a,
+                .header2 .register ul li a:hover,
+                .header2 .register ul li a:link,
+                .header2 .register ul li a:active {
+                    color: black;
+                    text-decoration: none;
+                }
+
+#body {
+    position: relative;
+    margin: 0px auto;
+    /*height:auto;
+    min-height: 500px;
+    position: relative;
+    margin: 0px auto;*/
+}
+
+footer {
+    /*top:0px;
+    position:relative;
+    margin-bottom:30px;*/
+}
+
+.footer {
+    height: 30px;
+    width: 100%;
+    background-color: black;
+    bottom: 0px;
+    position: fixed;
+}
+
+    .footer .left {
+        float: left;
+        padding-top: 6px;
+        padding-left: 20px;
+    }
+
+        .footer .left a,
+        .footer .left a:hover,
+        .footer .left a:link,
+        .footer .left a:active {
+            color: white;
+            text-decoration: none;
+            font-family: 'Times New Roman';
+        }
+
+    .footer .right {
+        float: right;
+        padding-top: 6px;
+        padding-right: 20px;
+    }
+
+        .footer .right ul {
+            list-style: none;
+            display: inline;
+            top: 0px;
+            position: relative;
+        }
+
+            .footer .right ul li {
+                display: inline;
+                margin-right: 10px;
+                color: white;
+            }
+
+                .footer .right ul li a,
+                .footer .right ul li a:hover,
+                .footer .right ul li a:link,
+                .footer .right ul li a:active {
+                    color: white;
+                    text-decoration: none;
+                }

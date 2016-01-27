@@ -1,0 +1,45 @@
+﻿/*分頁*/
+.page {
+    padding-top: 20px;
+    margin: 0px auto;
+    overflow: auto;
+    text-align: right;
+}
+
+    .page div {
+        border: 1px solid;
+        margin-top: 10px;
+        margin-right: 3px;
+        margin-left: 3px;
+        width: 30px;
+        text-align: center;
+        display: inline-table;
+        padding: 5px;
+    }
+
+    .page .current {
+        background-color: lightgoldenrodyellow;
+    }
+
+    .page a, .page a:active {
+        text-decoration: none;
+        color: black;
+    }
+
+    .page div:hover {
+        background-color: #e7d2a4;
+    }
+
+    .page .display {
+        margin-left: 10px !important;
+        margin-right: 20px !important;
+        border: none 0px !important;
+        width: auto !important;
+    }
+
+#show_number {
+    width: 50px;
+}
+
+
+

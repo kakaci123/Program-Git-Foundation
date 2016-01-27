@@ -1,0 +1,144 @@
+﻿@model List<s26web.Areas.shb.Models.PointModel.PointModelShow>
+@{
+    ViewBag.Title = "點數管理";
+    int p = 1;
+
+    if (ViewData["p"] != null)
+    {
+        p = (int)ViewData["p"];
+    }
+    string keyword = "";
+    if (ViewData["keyword"] != null)
+    {
+        keyword = ViewData["keyword"] as string;
+    }
+    int result = 0;
+    if (ViewData["result"] != null)
+    {
+        result = (int)ViewData["result"];
+    }
+
+    DateTime? SendTime_start = ViewData["SendTime_start"] as DateTime?;
+    DateTime? SendTime_end = ViewData["SendTime_end"] as DateTime?;
+    string ct_start = "";
+    string ct_end = "";
+
+    string err = "";
+    string str_Result = "";
+    string str_CName = "";
+    
+    if (TempData["err"] != null && TempData["err"] != "")
+    {
+        err = TempData["err"] as string;
+    }
+    if (SendTime_start != null)
+    {
+        ct_start = SendTime_start.Value.ToString("yyyy/MM/dd HH:mm:ss");
+    }
+    if (SendTime_end != null)
+    {
+        ct_end = SendTime_end.Value.ToString("yyyy/MM/dd HH:mm:ss");
+    }
+
+}
+@Styles.Render("~/css/AdminPointIndex")
+@Scripts.Render("~/js/AdminPointIndex")
+@if (err != "")
+{
+    @: 操作失敗；錯誤代碼：@Html.Raw(err)
+}
+else
+{
+    <div class="big_title">@ViewBag.Title</div>
+    <div class="search">
+        <form action="" id="search" method="" name="cond"> 
+            <label for="create_time_start">加入會員時間: </label>
+            <input type="text" name="SendTime_start" id="SendTime_start" class="date_search" value="@ct_start" /> ~
+            <input type="text" name="SendTime_end" id="SendTime_end" class="date_search" value="@ct_end" />
+            <br />
+            <label>點數種類: </label>
+            @Html.DropDownList("CategorySelectList","ALL")
+            <br />
+            <label>審核狀態: </label>
+            <label>
+                <input type="radio" value="0" name="result" @if (result == 0) { <text> checked </text>      } />ALL
+            </label>
+            <label>
+                <input type="radio" value="1" name="result" @if (result == 1) { <text> checked </text>     } />發送成功
+            </label>
+            <label>
+                <input type="radio" value="2" name="result" @if (result == 2) { <text> checked </text>     } />發送失敗
+            </label>
+            <br />
+            <label for="keyword">關鍵字: </label>
+            <input type="text" name="keyword" id="keyword" value="@keyword" />
+            <label style="color: #c00000;">( 姓名、手機 )</label>
+            <br />
+            <br />
+            <input type="submit" value="查詢" id="search_button" onclick="searchdata();">
+            &ensp;
+            <input type="submit" value="匯出" id="search_button" onclick="exportexcel();">
+            &ensp;
+            <input type="button" value="手動發送點數" id="search_button" onclick="handpoint();">
+
+        </form>
+    </div>
+
+    <div class="showdata">
+        <div>
+            <ul class="title">
+                @*<li class="check"><label><input type="checkbox" name="all" id="all" />全選</label></li>*@
+                <li class="item2">@Html.DisplayNameFor(model => model[0].Id)</li>
+                <li class="item2">@Html.DisplayNameFor(model => model[0].Name)</li>
+                <li class="item3">@Html.DisplayNameFor(model => model[0].Mobile)</li>
+                <li class="item4">@Html.DisplayNameFor(model => model[0].Category_Name)</li>
+                <li class="item5">@Html.DisplayNameFor(model => model[0].Point)</li>
+                <li class="item6">@Html.DisplayNameFor(model => model[0].Result)</li>
+                <li class="item7">@Html.DisplayNameFor(model => model[0].UserName)</li>
+                <li class="item8">@Html.DisplayNameFor(model => model[0].SendTime)</li>
+                @*<li class="item10">編輯</li>*@
+            </ul>
+        </div>
+
+        <div id="data_area">
+            <form action="@s26web.Models.Method.RootPath/shb/Point" id="action" method="post">
+
+                @foreach (var item in Model)
+                {
+                    if(item.Result)
+                    { str_Result = "成功"; }
+                    else
+                    { str_Result = "失敗 (" + item.FailReason + ")"; }
+                    
+                    if(item.Category == 2)
+                    { str_CName = item.Category_Name + " (原因: " + item.CategoryReason + ")"; }
+                    else { str_CName = item.Category_Name; }
+                    
+                    <ul class="data" id="data_@item.Id">
+                        @*<li class="check"><label><input type="checkbox" name="item" class="delete" value="@Html.DisplayFor(modelItem => item.Id)" /></label></li>*@
+                        <li class="item2">@Html.DisplayFor(model => item.Id)</li>
+                        <li class="item2">@Html.DisplayFor(model => item.Name)</li>
+                        <li class="item3">@Html.DisplayFor(model => item.Mobile)</li>
+                        <li class="item4">@str_CName</li>
+                        <li class="item5">@Html.DisplayFor(model => item.Point)</li>
+                        <li class="item6">@str_Result</li>
+                        <li class="item7">@Html.DisplayFor(model => item.UserName)</li>
+                        <li class="item8">@item.SendTime.ToString("yyyy/MM/dd HH:mm:ss")</li>
+                        @*<li class="item10">@Html.ActionLink("編輯", "Edit", new { id = item.Id, p = p })</li>*@
+                    </ul>
+                }
+                <div class="del_chk">
+                    @*<div class="button">
+                        <select name="edit_action" id="edit_action">
+                            <option value="@s26web.Models.Method.RootPath/shb/Volunteers">處理動作</option>
+                            <option value="@s26web.Models.Method.RootPath/shb/Volunteers/Delete">刪除</option>
+                        </select>
+                        <input id="edit_action_sub" name="edit_action_sub" type="submit" value="送出" onclick="return confirm('確定送出?')" />
+                    </div>*@
+                    @Html.Partial("_PartialPage")
+                </div>
+            </form>
+        </div>
+    </div>
+}
+

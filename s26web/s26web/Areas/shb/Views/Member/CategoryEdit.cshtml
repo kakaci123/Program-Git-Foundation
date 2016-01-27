@@ -1,0 +1,50 @@
+﻿@model s26web.Areas.shb.Models.MemberModel.UserLevelShow
+
+@{
+    ViewBag.Title = "編輯分類";
+    int p = 1;
+    if (ViewData["p"] != null)
+    {
+        p = (int)ViewData["p"];
+    }
+}
+@Styles.Render("~/css/AdminContent")
+@Scripts.Render("~/bundles/jqueryval")
+<div class="big_title">@Html.ActionLink("帳號管理", "/") > 群組權限設定 > 編輯</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>編輯分類</legend>
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        @for (int i = 0; i < Model.Competence.Count(); i++)
+        {
+            <label class="comp">
+                @Html.CheckBoxFor(model => model.Competence[i])
+                @Model.CompetenceName[i]
+            </label>
+            if ((i + 1) % 4 == 0)
+            {<br />}
+
+        }
+        <input type="hidden" name="p" value="@p" />
+        <p>
+            <input type="submit" value="儲存" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("回列表頁", "Category", new { p = p })
+</div>

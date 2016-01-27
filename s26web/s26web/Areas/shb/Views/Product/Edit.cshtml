@@ -1,0 +1,148 @@
+﻿@model s26web.Areas.shb.Models.ProductModel.ProductModelShow
+@{
+    int err = 0;
+    if (TempData["err"] != null)
+    {
+        err = (int)TempData["err"];
+    }
+    string temp_dir = "Product";
+    if (ViewData["temp_dir"] != null)
+    {
+        temp_dir = ViewData["temp_dir"].ToString();
+    }
+}
+<script type="text/javascript">
+    var CKEDITOR_BASEPATH = '@s26web.Models.Method.RootPath/Scripts/plugin/ckeditor/';
+    var temp_dir = '@temp_dir';
+</script>
+@Scripts.Render("~/js/Admin_Introduction")
+@Styles.Render("~/css/AdminContent")
+
+
+<div class="big_title">產品編輯</div>
+
+@if (err == 1)
+{
+    @:找不到資料!
+}
+else
+{
+    using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { @id = "Product_form", @enctype = "multipart/form-data", name = "form2" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>產品編輯</legend>
+
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Name)
+            </div>
+            <div class="editor-field">
+             @Html.DisplayFor(model => model.Name)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Content)<br />
+            </div>
+            <div class="editor-field">
+                @Html.TextAreaFor(model => model.Content, new { @class = "ckeditor" })
+                @Html.ValidationMessageFor(model => model.Content)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.PictureLink)<br />
+            </div>
+            <div class="editor-field">
+                @if (Model.PictureLink != null)
+                {
+                    <img src="@Model.PictureLink" width="800" height="600" />
+                    <div class="clear"></div><input type="file" name="file" id="file" class="upload" /><br />
+                }
+                @if (Model.PictureLink == null)
+                {
+                    <text>無上傳</text><br />
+                    <input type="file" name="file" id="file" class="upload" /><br />
+                }
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Price)<br />
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Price)
+                @Html.ValidationMessageFor(model => model.Price)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Point)<br />
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Point)
+                @Html.ValidationMessageFor(model => model.Point)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Limit)<br />
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Limit)
+                @Html.ValidationMessageFor(model => model.Limit)
+            </div>
+            <div class="editor-label">
+                @Html.EditorFor(model => model.Display)
+                @Html.LabelFor(model => model.Display)                
+                @Html.ValidationMessageFor(model => model.Display)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Link)<br />
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Link)
+                @Html.ValidationMessageFor(model => model.Link)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Memo)<br />
+            </div>
+            <div class="editor-field">
+                @Html.TextAreaFor(model => model.Memo, 5,60,"")
+                @Html.ValidationMessageFor(model => model.Memo)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.ContentPic)<br />
+            </div>
+            <div class="editor-field">
+                @if (Model.ContentPic != null)
+                {
+                    <img src="@Model.ContentPic" />
+                    <div class="clear"></div><input type="file" name="ContentPic" id="ContentPic" class="upload" /><br />
+                }
+                @if (Model.ContentPic == null)
+                {
+                    <text>無上傳</text><br />
+                    <input type="file" name="ContentPic" id="ContentPic" class="upload" /><br />
+                }
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.CreateTime)
+            </div>
+            <div class="editor-field">
+                @Html.DisplayFor(model => model.CreateTime)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.UpdateTime)
+            </div>
+            <div class="editor-field">
+                @Html.DisplayFor(model => model.UpdateTime)
+                @Html.ValidationMessageFor(model => model.UpdateTime)
+            </div>
+
+            <p>
+                <input type="submit" value="儲存" />
+            </p>
+            @if (err == 2)
+            {
+                <div class="error">儲存失敗!</div>
+            }
+        </fieldset>
+    }
+}

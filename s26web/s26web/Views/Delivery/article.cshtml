@@ -1,0 +1,47 @@
+﻿@model s26web.Areas.shb.Models.ProductModel.ProductModelShow
+
+<script>
+    function Set_ID(sValue) {
+        $("#Orders_ID").attr("value", sValue);
+    };
+</script>
+    <!-- content ----------------------------->
+    <div id="main_wrapper">
+        <div id="main">
+            <div class="main_content_d">
+                <h2>
+                    宅配訂購
+                    <p>請選擇您要購買的商品</p>
+                </h2>
+            @using (Html.BeginForm("article", "Delivery", FormMethod.Post, new { @id = "Delivery_from", @enctype = "multipart/form-data" }))
+                {
+                @Html.AntiForgeryToken()
+                <input type="hidden" id="Orders_ID" name="Orders_ID" />
+                <table width="800" class="delivery_table">
+                        <tr>
+                            <td width="197"></td>
+                            <td width="101"></td>
+                            <td width="165"></td>
+                            <td width="128"></td>
+                            <td width="185"></td>
+                        </tr>
+                        <tr>
+                            <td>商品名稱</td>
+                            <td>商品圖片</td>
+                            <td>價格</td>
+                            <td>購買組數</td>
+                            <td>我要購買</td>
+                        </tr>
+                    <tbody>
+                        @Html.Raw(ViewBag.Get_Product)
+                    </tbody>
+                </table>
+                }
+            </div>
+        </div>
+        <div class="blank_a"></div>
+    </div>
+<!-- content end----------------------------->
+
+
+

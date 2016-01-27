@@ -1,0 +1,145 @@
+﻿@{
+    var level = s26web.Models.Method.Get_UserId_Admin(Request.Cookies, Session);
+
+    s26web.Areas.shb.Models.MemberModel d = new s26web.Areas.shb.Models.MemberModel();
+    var competence = d.get_Competence2(level);
+    var config_SiteOption = false;
+    var config_Products = false;
+    var config_Volunteers = false;
+    var config_Point = false;
+    var config_eCRM = false;
+    var config_Questionnaire = false;
+    var config_Order = false;
+    var config_Gift = false;
+    var config_SalesPromotion = false;
+    var config_SalesCode = false;
+    var config_Online = false;
+    var config_ExchangeGift = false;
+    
+    if (level == 0)
+    {
+        config_SiteOption = true;
+        config_Products = true;
+        config_Volunteers = true;
+        config_Point = true;
+        config_eCRM = true;
+        config_Questionnaire = true;
+        config_Order = true;
+        config_Gift = true;
+        config_SalesPromotion = true;
+        config_SalesCode = true;
+        config_Online = true;
+        config_ExchangeGift = true;
+    }
+    else
+    {
+        config_SiteOption = competence.Contains("01");
+        config_Products = competence.Contains("04");
+        config_Volunteers = competence.Contains("02");
+        config_Point = competence.Contains("03");
+        config_eCRM = competence.Contains("12");
+        config_Questionnaire = competence.Contains("11");
+        config_Order = competence.Contains("05");
+        config_Gift = competence.Contains("06");
+        config_SalesPromotion = competence.Contains("09");
+        config_SalesCode = competence.Contains("08");
+        config_Online = competence.Contains("10");
+        config_ExchangeGift = competence.Contains("07");
+    }
+}
+<nav>
+    <ul class="menu">
+        @if (config_SiteOption)
+        {
+            <li @if (Request.Url.LocalPath.StartsWith(s26web.Models.Method.RootPath + "/shb/Member")) { <text> class="underline" </text>    }>
+                @Html.ActionLink("帳號管理", "Index", "Member")
+            </li>
+            @*
+                <li @if (Request.Url.LocalPath.StartsWith(s26web.Models.Method.RootPath + "/shb/Member") || Request.Url.LocalPath.StartsWith(s26web.Models.Method.RootPath + "/shb/SiteOption")) { <text> class="underline" </text>  }>
+
+                    <a href="#" class="parent">系統管理</a>
+                    <ul>
+                        <li @if (Request.Url.LocalPath.StartsWith(s26web.Models.Method.RootPath + "/shb/Member")) { <text> class="underline" </text>  }>
+                            @Html.ActionLink("帳號管理", "Index", "Member")
+                        </li>
+                        <li @if (Request.Url.LocalPath.StartsWith(s26web.Models.Method.RootPath + "/shb/LoginRecord")) { <text> class="underline" </text>  }>
+                            @Html.ActionLink("登入記錄", "Index", "LoginRecord")
+                        </li>
+                        <li @if (Request.Url.LocalPath.StartsWith(s26web.Models.Method.RootPath + "/shb/SiteOption")) { <text> class="underline" </text>  }>
+                            @Html.ActionLink("網站設定", "Index", "SiteOption")
+                        </li>
+                    </ul>
+                </li>*@
+        }
+        @if (config_Products)
+        {
+            <li @if (Request.Url.LocalPath.StartsWith(s26web.Models.Method.RootPath + "/shb/Product")) { <text> class="underline" </text>     }>
+                @Html.ActionLink("產品內容管理", "Index", "Product")
+            </li>
+        }
+        @if (config_Volunteers)
+        {
+            <li @if (Request.Url.LocalPath.StartsWith(s26web.Models.Method.RootPath + "/shb/Volunteers")) { <text> class="underline" </text>      }>
+                @Html.ActionLink("會員管理", "Index", "Volunteers")
+            </li>
+        }
+        @if (config_Point)
+        {
+            <li @if (Request.Url.LocalPath.StartsWith(s26web.Models.Method.RootPath + "/shb/Point")) { <text> class="underline" </text>       }>
+                @Html.ActionLink("點數管理", "Index", "Point")
+            </li>
+        }
+        @if (config_Order)
+        {
+            <li @if (Request.Url.LocalPath.StartsWith(s26web.Models.Method.RootPath + "/shb/Order")) { <text> class="underline" </text>       }>
+                @Html.ActionLink("訂單管理", "Index", "Order")
+            </li>
+        }
+
+        @if (config_eCRM)
+        {
+            <li @if (Request.Url.LocalPath.StartsWith(s26web.Models.Method.RootPath + "/shb/eCRM")) { <text> class="underline" </text>        }>
+                @Html.ActionLink("eCRM管理", "Index", "eCRM")
+            </li>
+        }
+        @if (config_Questionnaire)
+        {
+            <li @if (Request.Url.LocalPath.StartsWith(s26web.Models.Method.RootPath + "/shb/Questionnaire")) { <text> class="underline" </text>         }>
+                @Html.ActionLink("問卷管理", "Index", "Questionnaire")
+            </li>
+        }
+        @if (config_Gift)
+        {
+            <li @if (Request.Url.LocalPath.StartsWith(s26web.Models.Method.RootPath + "/shb/Gift")) { <text> class="underline" </text>        }>
+                @Html.ActionLink("贈品管理", "Index", "Gift")
+            </li>
+        }
+         @if (config_ExchangeGift)
+        {
+            <li @if (Request.Url.LocalPath.StartsWith(s26web.Models.Method.RootPath + "/shb/ExchangeGift")) { <text> class="underline" </text>        }>
+                @Html.ActionLink("贈品兌換管理", "Index", "ExchangeGift")
+            </li>
+        }
+        @if (config_SalesCode)
+        {
+
+            <li @if (Request.Url.LocalPath.StartsWith(s26web.Models.Method.RootPath + "/shb/SalesCode")) { <text> class="underline" </text>           }>
+
+                @Html.ActionLink("促銷碼管理", "Index", "SalesCode")
+            </li>
+        }
+        @if (config_SalesPromotion)
+        {
+            <li @if (Request.Url.LocalPath.StartsWith(s26web.Models.Method.RootPath + "/shb/SalesPromotion")) { <text> class="underline" </text>         }>
+                @Html.ActionLink("促銷碼活動管理", "Index", "SalesPromotion")
+            </li>
+        }
+        @if (config_Online)
+        {
+            <li @if (Request.Url.LocalPath.StartsWith(s26web.Models.Method.RootPath + "/shb/Online"))
+                { <text> class="underline" </text>          }>
+                @Html.ActionLink("線上活動管理", "Index", "Online")
+            </li>
+        }
+    </ul>
+</nav>

@@ -1,0 +1,75 @@
+﻿@model s26web.Areas.shb.Models.GiftModel.GiftModelShow
+@{
+    ViewBag.Title = "Create";
+    string[] MemberType = null;
+    if (ViewData["MemberType"] != null)
+    {
+        MemberType = (string[])ViewBag["MemberType"];
+    }
+}
+@Scripts.Render("~/js/Admin_Introduction")
+@Styles.Render("~/css/AdminContent")
+@using (Html.BeginForm("Create", "Gift", FormMethod.Post, new { @id = "Point_form", @enctype = "multipart/form-data", name = "form1" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>新增贈品</legend>
+
+        <div class="editor-label">
+            <span style="color:red;">*</span>@Html.LabelFor(model => model.MemberType)
+        </div>
+        <div class="editor-field">
+            @*@foreach (var i in ViewBag.Get_MemberType)
+            {
+                <input type="checkbox" value="@i.Id" name="MemberTypelist" /> @i.Name
+            }*@
+            <label><input type="checkbox" value="1" name="MemberTypelist" id="MemberTypelist" class="MemberTypelist" />懷孕中</label>
+            <label><input type="checkbox" value="2" name="MemberTypelist" id="MemberTypelist" class="MemberTypelist" />使用S-26產品</label>
+            <label><input type="checkbox" value="3" name="MemberTypelist" id="MemberTypelist" class="MemberTypelist" />全母乳餵哺</label>
+            <label><input type="checkbox" value="4" name="MemberTypelist" id="MemberTypelist" class="MemberTypelist" />其他</label>
+        </div>
+        <div class="editor-label">
+            <span style="color:red;">*</span>@Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name, new { style = "width: 300px;" })
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <div class="editor-label">
+            <span style="color:red;">*</span>@Html.LabelFor(model => model.Point)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Point, new { style = "width: 300px;" })
+            @Html.ValidationMessageFor(model => model.Point)
+        </div>
+        <div class="editor-label">
+            <span style="color:red;">*</span>@Html.LabelFor(model => model.Amount)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Amount, new { style = "width: 300px;" })
+            @Html.ValidationMessageFor(model => model.Amount)
+        </div>
+        <div class="editor-label">
+            <span style="color:red;">*</span>@Html.LabelFor(model => model.Picture)
+        </div>
+        <div class="editor-field">
+            <div class="clear"></div><input type="file" name="file" id="file" class="upload" accept="image/*" /><br />
+        </div>
+        <div class="editor-label">
+            <span style="color:red;">*</span>@Html.LabelFor(model => model.Display)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Display) <label>顯示</label>
+            @Html.ValidationMessageFor(model => model.Display)
+        </div>
+        <p>
+            <input type="submit" value="確定送出" onclick="Create()" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("回列表頁", "Index")
+</div>

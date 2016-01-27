@@ -1,0 +1,17 @@
+﻿#toPrePage {
+    text-align: right;
+    display: inherit;
+}
+
+#QuestionnaireContent {
+    text-align: center;
+    background-color: rgb(203, 195, 195);
+    height: 30px;
+    line-height: 30px;
+}
+
+.questionList {
+    line-height: 30px;
+}
+
+

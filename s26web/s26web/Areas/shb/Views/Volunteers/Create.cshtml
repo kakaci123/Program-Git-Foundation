@@ -1,0 +1,105 @@
+﻿@model s26web.Models.VolunteersModel.VolunteersShow
+
+@{
+    ViewBag.Title = "新增";
+}
+@Styles.Render("~/css/AdminContent")
+@Scripts.Render("~/js/AdminMemberCreate")
+@Scripts.Render("~/js/AddressAjax")
+<div class="big_title">會員管理 > 新增</div>
+@using (Html.BeginForm("Create", "Volunteers", FormMethod.Post, new { @id = "Volunteers_form", @enctype = "multipart/form-data", name = "form1" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>會員資料</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Mobile)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Mobile, new { style = "width: 300px;" })
+            @Html.ValidationMessageFor(model => model.Mobile)
+        </div>
+        @*<div class="editor-label">
+            @Html.LabelFor(model => model.Password)
+        </div>
+        <div class="editor-field">
+            @Html.PasswordFor(model => model.Password, new { @autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>*@
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name, new { @autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BabyBirthday)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.BabyBirthday)
+            @Html.ValidationMessageFor(model => model.BabyBirthday)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NowBrand)
+        </div>
+        <div class="editor-field">
+            <label><input type="radio" value="1" name="NowBrand" id="NowBrand" class="NowBrand" />懷孕中</label>
+            <label><input type="radio" value="2" name="NowBrand" id="NowBrand" class="NowBrand" />使用S-26產品</label>
+            <label><input type="radio" value="3" name="NowBrand" id="NowBrand" class="NowBrand" />全母乳餵哺</label>
+            <label><input type="radio" value="4" name="NowBrand" id="NowBrand" class="NowBrand" />其他</label>
+            @Html.EditorFor(model => model.BrandName)
+            @Html.ValidationMessageFor(model => model.NowBrand)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Email, new { style = "width: 300px;" })
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Email)
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+        <div class="editor-label">
+            地址
+        </div>
+        <div class="editor-field">
+            @Html.Raw(Html.DropList("CityId", s26web.Models.CityArea.Get_City_Select(0, false)))
+            @Html.Raw(Html.DropList("AreaId", s26web.Models.CityArea.Get_Area_Select(0, 0, false, false)))
+            @Html.EditorFor(model => model.Address)
+        </div>
+        <div class="editor-label">
+            <label>審核狀態: </label>
+            <label><input type="radio" value="1" name="status" id="status1" class="status" checked="checked" />審核中</label>
+            <label><input type="radio" value="2" name="status" id="status2" class="status" />審核通過</label>
+            <label><input type="radio" value="3" name="status" id="status3" class="status" />審核未通過</label>
+            <br />
+        </div>
+        <div class="editor-label">
+            身份確認
+        </div>
+        <label><input type="radio" value="1" name="Identify" id="Identify1" class="Identify" checked="checked" />上傳媽媽手冊、寶寶手冊</label>
+        <br />
+        <div class="editor-field">
+            <div class="clear"></div><input type="file" name="file" id="file" class="upload" /><br />
+        </div>
+        <br />
+        <label><input type="radio" value="2" name="Identify" id="Identify2" class="Identify" />輸入Promotion Code</label>
+        @Html.TextBoxFor(model => model.SerialNo, new { @style = "display:none" })
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Memo)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Memo, 6, 56, "")
+            @Html.ValidationMessageFor(model => model.Memo)
+        </div>
+            <p>
+                <input type="submit" id="submit_btn" value="新增" onclick="return chk_form();" />
+            </p>
+</fieldset>
+}
+
+<div>
+    @Html.ActionLink("回列表頁", "Index")
+</div>

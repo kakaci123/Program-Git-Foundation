@@ -1,0 +1,207 @@
+﻿@model List<s26web.Areas.shb.Models.SalesCodeModel.SalesCodeModelShow>
+@using s26web.Areas.shb.Models
+@{
+    ViewBag.Title = "Index";
+    string err = "";
+    if (TempData["err"] != null && TempData["err"] != "")
+    {
+        err = TempData["err"] as string;
+    }
+    int p = 1;
+    if (ViewData["p"] != null)
+    {
+        p = (int)ViewData["p"];
+    }
+    string keyword = "";
+    if (ViewData["keyword"] != null)
+    {
+        keyword = ViewData["keyword"] as string;
+    }
+    DateTime? volunteers_time_start = ViewData["volunteers_time_start"] as DateTime?;
+    DateTime? volunteers_time_end = ViewData["volunteers_time_end"] as DateTime?;
+    DateTime? exchange_time_start = ViewData["exchange_time_start"] as DateTime?;
+    DateTime? exchange_time_end = ViewData["exchange_time_end"] as DateTime?;
+    string vol_start = "";
+    string vol_end = "";
+    string ex_start = "";
+    string ex_end = "";
+    if (volunteers_time_start != null)
+    {
+        vol_start = volunteers_time_start.Value.ToString("yyyy/MM/dd HH:mm:ss");
+    }
+    if (volunteers_time_end != null)
+    {
+        vol_end = volunteers_time_end.Value.ToString("yyyy/MM/dd HH:mm:ss");
+    }
+    if (exchange_time_start != null)
+    {
+        ex_start = exchange_time_start.Value.ToString("yyyy/MM/dd HH:mm:ss");
+    }
+    if (exchange_time_end != null)
+    {
+        ex_end = exchange_time_end.Value.ToString("yyyy/MM/dd HH:mm:ss");
+    }
+    //促銷活動
+    int Search_SalesPromotionId = 0;
+    if (ViewData["Search_SalesPromotionId"] != null)
+    {
+        Search_SalesPromotionId = (int)ViewData["Search_SalesPromotionId"];
+    }
+    //序號到期
+    int Search_SalesPromotionDeadline = 1;
+    if (ViewData["Search_SalesPromotionDeadline"] != null)
+    {
+        Search_SalesPromotionDeadline = (int)ViewData["Search_SalesPromotionDeadline"];
+    }
+    //兌換狀態
+    int Search_ExchangeStatus = 1;
+    if (ViewData["Search_ExchangeStatus"] != null)
+    {
+        Search_ExchangeStatus = (int)ViewData["Search_ExchangeStatus"];
+    }
+}
+@Styles.Render("~/css/AdminSalesCodeIndex")
+@Scripts.Render("~/js/AdminSalesCodeIndex")
+@*@Styles.Render("~/Content/css")*@
+
+@if (err != "")
+{
+    @: 操作失敗；錯誤代碼：@Html.Raw(err)
+}
+else
+{
+    <div class="big_title">促銷碼管理</div>
+    <div class="func_item">
+        <ul>
+            <li>@Html.ActionLink("新增促銷碼", "Create")</li>
+        </ul>
+    </div>
+    <div class="search">
+        <form action="" id="search" method="" name="cond">
+            <label for="create_time_start">加入會員起訖： </label>
+            <input type="text" name="volunteers_time_start" id="volunteers_time_start" class="date_search" value="@vol_start" /> ~
+            <input type="text" name="volunteers_time_end" id="volunteers_time_end" class="date_search" value="@vol_end" />
+            <br />
+            <label>驗證時間起訖：</label>
+            <input type="text" name="exchange_time_start" id="exchange_time_start" class="date_search" value="@ex_start" /> ~
+            <input type="text" name="exchange_time_end" id="exchange_time_end" class="date_search" value="@ex_end" />
+            <br />
+            <label>促銷活動：</label>
+            @if (Search_SalesPromotionId == 0)
+            {
+                @Html.Raw(Html.DropList("Search_SalesPromotionId", SalesCodeModel.Select_SalesPromotion(0, false)))
+            }
+            else
+            {
+                @Html.Raw(Html.DropList("Search_SalesPromotionId", SalesCodeModel.Select_SalesPromotion(Search_SalesPromotionId, false)))
+            }
+            <br />
+            <label>  序號是否到期：</label>
+            <input type="radio" name="Search_SalesPromotionDeadline" value="1" @if (Search_SalesPromotionDeadline == 1) {  <text> checked="checked" </text>   }>All
+            <input type=radio name="Search_SalesPromotionDeadline" value="2" @if (Search_SalesPromotionDeadline == 2) {  <text> checked="checked" </text>  }>可兌換
+            <input type=radio name="Search_SalesPromotionDeadline" value="3" @if (Search_SalesPromotionDeadline == 3) {  <text> checked="checked" </text>   }>已失效
+
+            <br />
+            <label>  兌換狀態：</label>
+            <input type="radio" name="Search_ExchangeStatus" value="1" @if (Search_ExchangeStatus == 1) {  <text> checked="checked" </text>      }>All
+            <input type=radio name="Search_ExchangeStatus" value="2" @if (Search_ExchangeStatus == 2) {  <text> checked="checked" </text>    }>可兌換
+            <input type=radio name="Search_ExchangeStatus" value="3" @if (Search_ExchangeStatus == 3) {  <text> checked="checked" </text>     }>未兌換
+            <br />
+            <label for="keyword">關鍵字搜尋：</label>
+                <input type="text" name="keyword" id="keyword" value="@keyword" />
+                <label style="color: #c00000;">(搜尋欄位：序號)</label>
+                <br />
+            <br />
+            <input type="submit" value="查詢" id="search_button" onclick="searchdata();">
+            &emsp;
+            <input type="submit" value="匯出" id="search_button" onclick="exportexcel();">
+            &emsp;
+
+            <button data-toggle="modal" id="search_button" data-target="#UploadModal" style="width:130px!important">
+                匯入資料
+            </button>    
+        </form>
+    </div>
+    <br />
+    <div class="showdata">
+        <div>
+            <ul class="title">
+                <li class="item1">@Html.DisplayNameFor(model => model[0].SalesPromotionName)</li>
+                <li class="item2">@Html.DisplayNameFor(model => model[0].Code)</li>
+                <li class="item3">@Html.DisplayNameFor(model => model[0].SalesPromotionDeadline)</li>
+                <li class="item4">@Html.DisplayNameFor(model => model[0].SalesPromotionPoint)</li>
+                <li class="item5">@Html.DisplayNameFor(model => model[0].ExchangeStatus)</li>
+                <li class="item6">@Html.DisplayNameFor(model => model[0].ExchangeTime)</li>
+                <li class="item7">@Html.DisplayNameFor(model => model[0].VolunteersId)</li>
+                <li class="item8">刪除</li>
+                <li class="item9">@Html.DisplayNameFor(model => model[0].CreateTime)</li>
+            </ul>
+        </div>
+
+        <div id="data_area">
+            <form action="@s26web.Models.Method.RootPath/shb/SalesCode" id="action" method="post">
+
+                @foreach (var item in Model)
+                {
+                    <ul class="data" id="data_@item.Id">
+                        <li class="item1">@Html.DisplayFor(model => item.SalesPromotionName)</li>
+                        <li class="item2">@Html.DisplayFor(model => item.Code)</li>
+                        <li class="item3">@item.SalesPromotionDeadline.ToString("yyyy/MM/dd")</li>
+                        <li class="item4">@Html.DisplayFor(model => item.SalesPromotionPoint)</li>
+                        <li class="item5">
+                            @if (item.ExchangeStatus == true)
+                            {
+                                <text>已兌換 </text>
+                            }
+                            else
+                            {
+                                <text>未兌換 </text>
+                            }
+                        </li>
+                        <li class="item6">
+                            @if (item.ExchangeTime != null)
+                            {
+                                @item.ExchangeTime.Value.AddHours(8).ToString("yyyy/MM/dd HH:mm:ss");
+                            }
+
+                        </li>
+                        <li class="item7">
+                            @if (item.VolunteersId != 0)
+                            {
+                                <a href="~/shb/Volunteers/Edit/@item.VolunteersId?p=1">領取會員資訊</a>
+                            }
+                        </li>
+                        <li class="item8">
+                            @if (item.VolunteersId == 0)
+                            {
+                                @Html.ActionLink("刪除", "Delete", new { Id = item.Id, p = p }, new { OnClick = "return confirm(\"確定要刪除?\")" })
+                            }
+                        </li>
+                        <li class="item9">@item.CreateTime.ToString("yyyy/MM/dd HH:mm:ss")</li>
+                    </ul>
+                }
+                <div class="del_chk">
+                    @Html.Partial("_PartialPage")
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    @Html.Partial("_UploadFile")
+    <script src="~/Scripts/Import/bootbox.js"></script>
+    <script src="~/Scripts/Import/jquery.form.js"></script>
+    <script src="~/Scripts/Import/project.js"></script>
+    <script src="~/Scripts/Import/project.extends.js"></script>
+    <script src="~/Scripts/Import/project.ZipCode.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var actionUrls = {
+                @*Upload: '@Url.Action("Upload", "ZipCode")',*@
+                Import: '/shb/SalesCode/Import',
+                @*HasData: '@Url.Action("HasData", "ZipCode")',*@
+            };
+            project.ZipCode.Initialize(actionUrls);
+        });
+    </script>
+    @Scripts.Render("~/bundles/Import")
+}

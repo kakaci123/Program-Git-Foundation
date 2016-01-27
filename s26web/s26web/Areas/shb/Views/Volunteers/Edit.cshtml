@@ -1,0 +1,217 @@
+﻿@model s26web.Models.VolunteersModel.VolunteersShowEdit
+
+@{
+    ViewBag.Title = "編輯";
+
+    //s26web.Models.VolunteersConfig config = ViewData["config"] as s26web.Models.VolunteersConfig;
+    int p = 1;
+    if (ViewData["p"] != null)
+    {
+        p = (int)ViewData["p"];
+    }
+    List<SelectListItem> CategoryItem = new List<SelectListItem>();
+    if (ViewData["CategoryItem"] != null)
+    {
+        CategoryItem = ViewData["CategoryItem"] as List<SelectListItem>;
+
+    }
+}
+@Styles.Render("~/css/AdminContent")
+@Styles.Render("~/css/JQueryui")
+@Scripts.Render("~/js/AdminVolunteerEdit")
+<style>
+    .dialog_th {
+        border: 1px solid #aaa;
+        width: 130px;
+    }
+
+    .dialog_td {
+        border: 1px solid #aaa;
+    }
+
+    .dialog_table {
+        border-collapse: collapse;
+    }
+</style>
+<div class="big_title">會員管理 > 編輯</div>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { name = "form1" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <a id="top"></a><legend>會員資料</legend>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Mobile)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Mobile, new { value = @Model.Mobile })
+            @Html.ValidationMessageFor(model => model.Mobile)
+        </div>
+        @*<div class="editor-label">
+            @Html.LabelFor(model => model.Password)
+        </div>
+        <div class="editor-field">
+            @Html.PasswordFor(model => model.Password, new { @autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>*@
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Email)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Email, new { style = "width: 300px;" })
+        </div>
+        <div class="editor-label">
+        </div>
+        <div class="editor-field">
+            @Html.LabelFor(model => model.BabyBirthday)<br />
+            <input type="text" name="BabyBirthday" id="BabyBirthday" value="@Model.BabyBirthday.ToShortDateString()" />
+            @Html.ValidationMessageFor(model => model.BabyBirthday)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NowBrand)
+        </div>
+        <div class="editor-field">
+            <label><input type="radio" value="1" name="NowBrand" id="NowBrand" class="NowBrand" @if (Model.NowBrand == 1)
+                                                                                                { <text> checked</text>} />懷孕中</label>
+            <label><input type="radio" value="2" name="NowBrand" id="NowBrand" class="NowBrand" @if (Model.NowBrand == 2)
+                                                                                                { <text> checked </text> } />使用S-26產品</label>
+            <label><input type="radio" value="3" name="NowBrand" id="NowBrand" class="NowBrand" @if (Model.NowBrand == 3)
+                                                                                                { <text> checked </text> } />全母乳餵哺</label>
+            <label><input type="radio" value="4" name="NowBrand" id="NowBrand" class="NowBrand" @if (Model.NowBrand == 4)
+                                                                                                { <text> checked </text> } />其他</label>
+            @Html.EditorFor(model => model.BrandName)
+            @Html.ValidationMessageFor(model => model.NowBrand)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.GiftMobile)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Mobile)
+            @Html.ValidationMessageFor(model => model.GiftMobile)
+        </div>
+        <div class="editor-label">
+            地址
+        </div>
+        <div class="editor-field">
+            @Html.Raw(Html.DropList("CityId", s26web.Models.CityArea.Get_City_Select(Model.CityId != 0 ? Model.CityId : 0, false)))
+            @Html.Raw(Html.DropList("AreaId", s26web.Models.CityArea.Get_Area_Select(Model.CityId != 0 ? Model.CityId : 0, Model.AreaId != 0 ? Model.AreaId : 0, false, false)))
+            @Html.EditorFor(model => model.Address)
+        </div>
+        <div class="editor-label">
+            <label>審核結果: </label>
+            <label><input type="radio" value="1" name="status" id="status1" class="status" @if (Model.Status == 1) { <text> checked </text> } />審核中</label>
+            <label><input type="radio" value="2" name="status" id="status2" class="status" @if (Model.Status == 2) { <text> checked </text> } />審核通過</label>
+            <label><input type="radio" value="3" name="status" id="status3" class="status" @if (Model.Status == 3) { <text> checked </text> } />審核未通過</label>
+            <br />
+        </div>
+        <div class="editor-label" id="email_confirm" >
+            <label>是否寄出審核簡訊通知:</label>
+            @Html.RadioButton("email_confirm", "0", new { @checked = "checked", @dataid = "0" })
+            不操作
+            @Html.RadioButton("email_confirm", "1", new { @dataid = "1" })
+            寄出審核通過通知
+            @Html.RadioButton("email_confirm", "2", new { @dataid = "2" })
+            寄出審核失敗通知
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SerialNo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SerialNo)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Photos)
+        </div>
+        <div class="editor-field">
+            @if(Model.Photos != "")
+            {<img src="@Model.Photos" width="800" height="600" />}
+            @if(Model.Photos == "" )
+            {<text>無上傳</text>}
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.MemberNumber) : @Html.DisplayFor(model => model.MemberNumberName)
+        </div>
+        <div class="editor-label">
+            @Html.EditorFor(model => model.FBConnect)@Html.LabelFor(model => model.FBConnect)
+        </div>
+        <div class="editor-label">
+            @Html.EditorFor(model => model.FBFriend)@Html.LabelFor(model => model.FBFriend)
+        </div>
+        <div class="editor-label">
+            <label>會員點數明細: </label><br />
+            <label>目前累積點數: @Model.Point</label>
+            <div class="showdata">
+                <table border="1" style="text-align:center;">
+                        <tr>
+                            <td>點數發送時間</td>
+                            <td>發送原因</td>
+                            <td>發送點數</td>
+                        </tr>
+                    @foreach(var item in Model.Point_List)
+                    {
+                        <tr>
+                                <td>@Html.DisplayFor(model => item.SendTime)</td>
+                                <td>@Html.DisplayFor(model => item.Category_Name)</td>
+                                <td>@Html.DisplayFor(model => item.Point)</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+        
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Memo)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Memo, 6, 56, "")
+            @Html.ValidationMessageFor(model => model.Memo)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CreateTime)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.CreateTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UpdateTime)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.UpdateTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AdminUpdateTime)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.AdminUpdateTime )
+        </div>
+
+        <div class="editor-label">
+        @Html.LabelFor(model => model.LastMember)
+    </div>
+    <div class="editor-field">
+        @Html.DisplayFor(model => model.LastMember)
+    </div>
+
+        <input type="hidden" name="p" value="@p" />
+        <p>
+            <input type="submit" value="儲存" onclick="return confirm('確定送出?')" />
+        </p>
+        <div align="right"><a href="#top">回最上方</a></div>
+    </fieldset>
+}
+<div>
+    @Html.ActionLink("回列表頁", "Index", new { p = p })
+</div>

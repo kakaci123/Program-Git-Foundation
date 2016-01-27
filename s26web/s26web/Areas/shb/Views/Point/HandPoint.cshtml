@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "手動發送點數";
+}
+@Scripts.Render("~/js/Admin_Introduction")
+@Styles.Render("~/css/AdminContent")
+<div class="big_title">手動發送點數</div>
+@using (Html.BeginForm("Create", "Point", FormMethod.Post, new { @id = "Point_form", @enctype = "multipart/form-data", name = "form1" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>手動發送點數</legend>
+        <div class="editor-label">
+            <label>發送原因 : </label>
+        </div>
+        <div class="editor-field">
+            <input type="text" name="CategoryReason" />
+        </div>
+        <div class="editor-label">
+            <label>發送點數 : </label>
+        </div>
+        <div class="editor-field">
+            <input type="text" name="point"/>
+        </div>
+        <div class="editor-label">
+            <label>會員手機號碼 : </label>
+        </div>
+        <div class="editor-field">
+            @Html.TextArea("Phone" ,"",6, 56, "")<br />
+            如要一次發送給多位會員，請使用半形逗號分隔，ex: 0910888999,0911234567
+        </div>
+        <p>
+            <input type="submit" value="確定送出" onclick="Create()"/>
+            <input type="submit" value="取消" onclick="javascript: history.back(1)" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("回列表頁", "Index")
+</div>

@@ -1,0 +1,34 @@
+﻿@using s26web.Models
+@{
+    Method.Paging page = ViewData["page"] as Method.Paging;
+    int number = 10;
+    if (ViewData["number"] != null)
+    {
+        number = (int)ViewData["number"];
+    }
+    string get = "";
+    if (ViewData["get"] != null)
+    {
+        get = ViewData["get"] as string;
+    }
+}
+@Styles.Render("~/css/Page")
+<div class="page">
+    <a href="?p=@page.First@get"><div class="first">|<</div></a>
+    <a href="?p=@page.Back@get"><div class="back"><<</div></a>
+    @{
+        for (int i = page.Start; i <= page.End;i++ )
+        {
+            <a href="?p=@i@get"><div class="number @(page.Now==i ? "current" : "")">@i</div></a>
+        }
+     }
+    <a href="?p=@page.Next@get"><div class="next">>></div></a>
+    <a href="?p=@page.Last@get"><div class="last">>|</div></a>
+
+    <div class="display">
+        <!--<label for="show_number">顯示筆數:</label>
+        <input id="show_number" name="show_number" value="@number" type="number" min ="1" />-->
+        <label>總數:@page.Total</label>
+    </div>
+    <input type="hidden" id="now_page" name="p" value="@page.Now" />
+</div>

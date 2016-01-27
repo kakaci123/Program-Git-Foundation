@@ -1,0 +1,133 @@
+﻿@model List<s26web.Areas.shb.Models.OrdersModel.OrdersModelShow>
+
+@{
+    int p = 1;
+    string keyword = "";
+    string OrdersStates = "0";
+    string Product = "0";
+    string err = "";
+    string t_start = "";
+    string t_end = "";
+    DateTime? time_start = ViewData["time_start"] as DateTime?;
+    DateTime? time_end = ViewData["time_end"] as DateTime?;
+    if (ViewData["p"] != null)
+    {
+        p = (int)ViewData["p"];
+    }
+    
+    if (ViewData["keyword"] != null)
+    {
+        keyword = ViewData["keyword"] as string;
+    }
+
+    if (ViewData["orderselect"] != null)
+    {
+        OrdersStates = ViewData["orderselect"] as string;
+    }
+    
+    if (ViewData["Product"] != null)
+    {
+        Product = ViewData["Product"] as string;
+    }
+
+    if (TempData["err"] != null && TempData["err"] != "")
+    {
+        err = TempData["err"] as string;
+    }
+
+    if (time_start != null)
+    {
+        t_start = time_start.Value.ToString("yyyy/MM/dd HH:mm:ss");
+    }
+    if (time_end != null)
+    {
+        t_end = time_end.Value.ToString("yyyy/MM/dd HH:mm:ss");
+    }
+}
+
+@Styles.Render("~/css/AdminOrdersIndex")
+@Scripts.Render("~/js/AdminOrdersIndex")
+
+@if (err != "")
+{
+    @: 操作失敗；錯誤代碼：@err。
+}
+else
+{
+    <div class="big_title">@ViewBag.Title</div>
+    <div class="showdata">
+        <form action="/shb/Order" method="post" id="search_area">
+            <div class="QueryMethod">
+                <label for="create_time_start">訂單時間: </label>
+                <input type="text" name="time_start" id="time_start" value="@t_start" class="date_search" />
+                 ~ 
+                <input type="text" name="time_end" id="time_end" value="@t_end" class="date_search" />
+                <br>
+                <label for="create_time_start">關鍵字: </label>
+                <input type="text" name="keyword" id="KeywordQuery" value="@keyword" />
+                <label style="color: #c00000;">
+                    ( 訂單編號、訂購會員姓名、手機 )
+                </label>
+                <br>
+                <label for="create_time_start">訂單狀態: </label>
+                <input type="radio" name="StatesSelect" value="0" id="States_0" class="StatesOption" checked="@OrdersStates.Equals("0")" />ALL
+                <input type="radio" name="StatesSelect" value="22" id="States_1" class="StatesOption" checked="@OrdersStates.Equals("22")" />處理中
+                <input type="radio" name="StatesSelect" value="23" id="States_2" class="StatesOption" checked="@OrdersStates.Equals("23")" />已寄送
+                <input type="radio" name="StatesSelect" value="25" id="States_3" class="StatesOption" checked="@OrdersStates.Equals("25")" />取消
+                <input type="text" name="OrdersStates" id="OrdersStatesTemp" value="@OrdersStates" style="display:none" />
+                <br>
+                <label for="create_time_start">訂購產品: </label>
+                <input type="radio" name="ProductSelect" value="0" id="Product_0" class="ProductOption" checked="@Product.Equals("0")" />ALL
+                <input type="radio" name="ProductSelect" value="3" id="Product_1" class="ProductOption" checked="@Product.Equals("3")" />S-26金幼兒樂
+                <input type="radio" name="ProductSelect" value="6" id="Product_2" class="ProductOption" checked="@Product.Equals("6")" />S-26金愛兒樂
+                <input type="radio" name="ProductSelect" value="7" id="Product_3" class="ProductOption" checked="@Product.Equals("7")" />S-26 媽咪DHA藻油膠囊
+                <input type="text" name="Product" id="ProductTemp" value="@Product" style="display:none" />
+                <br />
+                <br />
+                <input type="submit" value="查詢" id="search_button">
+                &ensp;
+                <input type="submit" value="匯出" id="Export_Excel_Button" formaction="/shb/Order/Export3" />
+            </div>
+        </form>
+    </div>
+    <div class="showdata">
+        <div>
+            <ul class="title">
+                <li class="item1">@Html.DisplayNameFor(model => model[0].Osid)</li>
+                <li class="item2">@Html.DisplayNameFor(model => model[0].Vol_Name)</li>
+                <li class="item3">@Html.DisplayNameFor(model => model[0].Vol_Mobile)</li>
+                <li class="item4">@Html.DisplayNameFor(model => model[0].OrdersProductName)</li>
+                <li class="item5">@Html.DisplayNameFor(model => model[0].TotalPrice)</li>
+                <li class="item6">@Html.DisplayNameFor(model => model[0].Name)</li>
+                <li class="item7">@Html.DisplayNameFor(model => model[0].Mobile)</li>
+                <li class="item8">@Html.DisplayNameFor(model => model[0].SharePoint)</li>
+                <li class="item9">@Html.DisplayNameFor(model => model[0].Remarks)</li>
+                <li class="item10">@Html.DisplayNameFor(model => model[0].OrdersStates)</li>
+                <li class="item11">詳細內容</li>
+                <li class="item12">@Html.DisplayNameFor(model => model[0].OrdersTime)</li>
+            </ul>
+        </div>
+        <div id="data_area">
+            @foreach (var item in Model)
+            {
+                <ul class="data" id="data_@item.Id">
+                    <li class="item1">@Html.DisplayFor(modelItem => item.Osid)</li>
+                    <li class="item2">@Html.DisplayFor(modelItem => item.Vol_Name)</li>
+                    <li class="item3">@Html.DisplayFor(modelItem => item.Vol_Mobile)</li>
+                    <li class="item4">@Html.DisplayFor(modelItem => item.OrdersProductName)</li>
+                    <li class="item5">@Html.DisplayFor(modelItem => item.TotalPrice)元</li>
+                    <li class="item6">@Html.DisplayFor(modelItem => item.Name)</li>
+                    <li class="item7">@Html.DisplayFor(modelItem => item.Mobile)</li>
+                    <li class="item8">@Html.DisplayFor(modelItem => item.SharePoint)</li>
+                    <li class="item9">@Html.DisplayFor(modelItem => item.Remarks)</li>
+                    <li class="item10">@Html.DisplayFor(modelItem => item.States)</li>
+                    <li class="item11">@Html.ActionLink("詳細內容", "OrderView", new { id = item.Osid })</li>
+                    <li class="item12">@item.OrdersTime.AddHours(8).ToString("yyyy/MM/dd HH:mm:ss")</li>
+                </ul>
+            }
+            <div class="del_chk">
+                @Html.Partial("_PartialPage")
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,65 @@
+﻿@model List<s26web.Areas.shb.Models.OrdersModel.OrdersModelShow>
+
+@{
+    ViewBag.Title = "Delivery_Exchange";
+    string Osid = "";
+    if (ViewData["Osid"] != null)
+    {
+        Osid = (string)ViewData["Osid"];
+    }
+}
+
+<div id="main_wrapper">
+    <div id="main">
+        <div class="main_content_d">
+            <h2>
+                會員資料
+                <p>宅配訂購記錄</p>
+            </h2>
+            <table width="800" class="delivery_table">
+                <thead>
+                    <tr>
+                        <td width="119"></td>
+                        <td width="161"></td>
+                        <td width="71"></td>
+                        <td width="110"></td>
+                        <td width="122"></td>
+                        <td width="86"></td>
+                        <td width="99"></td>
+                    </tr>
+                </thead>
+                <thead>
+                    <tr>
+                        <td>訂購日期</td>
+                        <td>訂購商品</td>
+                        <td>組數</td>
+                        <td>單項小計</td>
+                        <td>金額總計</td>
+                        <td>處理狀態</td>
+                        <td>詳細資料</td>
+                    </tr>
+                </thead>
+                <tbody>                    
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>2015/03/09</td>
+                                <td align="left" valign="middle" class="golden">@Html.DisplayFor(model => item.OrdersProductName) </td>
+                                <td>@Html.DisplayFor(model => item.Quantity)組</td>
+                                <td>$@Html.DisplayFor(model => item.Price)/組</td>
+                                <td>$@Html.DisplayFor(model => item.TotalPrice)</td>
+                                <td class="red">@Html.DisplayFor(model => item.States)</td>
+                                <td><a class="btn_m" href="Delivery_Order/@item.Id">瀏覽</a></td>
+                            </tr>
+                        }
+                    
+                </tbody>
+            </table>
+            <a class="btn_bottom" href="Javascript:history.go(-1)">回列表頁</a>
+        </div>
+    </div>
+    <div class="blank_m"></div>
+</div>
+
+
+

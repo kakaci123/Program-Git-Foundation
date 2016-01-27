@@ -1,0 +1,166 @@
+﻿@model s26web.Models.DeliveryModel.OrdersModel
+@{
+    int iniCityId = 0;
+    int iniAreaId = 0;
+    if (Model != null)
+    {
+        if (Model.CityId != null)
+        {
+            iniCityId = Model.CityId;
+        }
+        if (Model.AreaId != null)
+        {
+            iniAreaId = Model.AreaId;
+        }
+    }
+}
+@Scripts.Render("~/js/DeliveryRecipient")
+<script src="~/Scripts/Validate/jquery-1.6.2.js"
+        type="text/javascript"></script>
+<script src="~/Scripts/Validate/jquery.validate2.js"
+        type="text/javascript"></script>
+<script src="~/Scripts/Validate/jquery.validate.unobtrusive2.js"
+        type="text/javascript"></script>
+<script>
+    $(function () {
+        $("#Recipient_form").validate();
+    });
+</script>
+<style>
+    .Check_InvoiceName, .Check_InvoiceNo {
+        color: red;
+        display: none;
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: -30px;
+        margin-left: 150px;
+    }
+
+    #box, #box_Product, .address {
+        margin-bottom: 10px !important;
+    }
+</style>
+
+<!-- content ----------------------------->
+<div id="main_wrapper">
+    <div id="main">
+        <div class="main_content_r">
+            <h2>
+                宅配訂單
+                <p>請確認您的收件人資訊</p>
+            </h2>
+            <!--top line-->
+            <span class="box_head_reg"></span>
+            <!--line-->
+            <div class="reg">
+
+                <!--text wrapper-->
+                @using (Html.BeginForm("Recipient", "Delivery", FormMethod.Post, new { @id = "Recipient_form", @enctype = "multipart/form-data" }))
+                {
+
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
+                    @Html.HiddenFor(model => model.ProductId, new { @Value = @Session["Product_Id"] })
+                    @Html.HiddenFor(model => model.Order_Quantity, new { @Value = @Session["Order_Quantity"] })
+                    @Html.HiddenFor(model => model.TotalPrice, new { @Value = @Session["Total_Price"] })
+                    <div class="reg_text">
+                        <table width="600" border="0" id="table_box">
+                            <tbody>
+                                <tr>
+                                    <td><p class="cell">收件人</p></td>
+                                    <td>
+                                        <input type="text" id="box" name="Name" data-val="true" data-val-required="請輸入收件人的姓名"  placeholder="請輸入收件人的姓名" />
+                                        <span data-valmsg-for="Name"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><p class="cell">收件人手機</p></td>
+                                    <td>
+                                        <input type="text" id="box" name="Mobile" data-val="true" data-val-required="請輸入收件人的手機" data-val-number="請輸入有效的數字" placeholder="請輸入收件人的手機，格式：09XXXXXXXX" data-val-length="手機號碼為10位數" data-val-length-min="10" data-val-length-max="10" />
+                                        <span data-valmsg-for="Mobile"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><p class="cell">收件人地址</p></td>
+                                    <td>
+                                        <span class="year">105</span>
+                                        @Html.Raw(Html.DropList("CityId", s26web.Models.CityArea.Get_City_Select(iniCityId, false), new { id = "CityId", @class = "address" }))
+
+
+                                        @Html.Raw(Html.DropList("AreaId", s26web.Models.CityArea.Get_Area_Select(iniCityId, iniAreaId, false, false), new { id = "AreaId", @class = "address" }))<br>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" id="box" name="Address" data-val="true" data-val-required="請輸入收件人的地址" placeholder="請輸入收件人的地址" />
+                                        <span data-valmsg-for="Address"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height:20px;"><p class="cell">發票格式</p></td>
+                                    <td style="height:20px;">
+                                        <input name="InvoiceCategory" type="radio" id="male" value="12" checked />
+                                        <span class="note">二聯式</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <input name="InvoiceCategory" type="radio" id="male" value="13" />
+                                        <span class="note">三聯式&nbsp;:&nbsp;公司抬頭</span>
+                                        <span>
+                                            <input name="InvoiceName" id="box_Product" type="text" value="" size="23" />
+                                        </span>
+                                        <font class="Check_InvoiceName">
+                                            <br>
+                                            請輸入公司抬頭。
+                                        </font>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span class="numbers">統一編號</span>
+                                        <span>
+                                            <input name="InvoiceNo" id="box_Product" type="text" size="23" value="" />
+                                        </span>
+                                        <font class="Check_InvoiceNo">
+                                            <br>
+                                            請輸入統一編號。
+                                        </font>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" valign="top"><p class="cell">備註</p></td>
+                                    <td>
+                                        <span>
+                                            <textarea name="Remarks" cols="" rows="6"></textarea>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="line"></div>
+                        <table border="0" id="table_text">
+                            <tbody>
+                                <tr>
+                                    <td class="check"><span>*</span>付款方式為貨到付款,到貨日為訂單送出後3-5個工作日 </td>
+                                </tr>
+                                <tr>
+                                    <td class="check"><span>*</span>若您對產品訂單有任何問題,請撥打服務專線0800-026-888 </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <input type="submit" class="btn_bottom" value="下一步&nbsp;確認送" style="cursor:pointer" onmouseover="Check()" />
+                    </div>
+                }
+            </div>
+            <div class="reg_footer"> </div>
+            <div class="pd"></div>
+        </div>
+    </div>
+</div>
+<!-- content end----------------------------->

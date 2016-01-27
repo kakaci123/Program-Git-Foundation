@@ -1,0 +1,128 @@
+/*** ESSENTIAL STYLES ***/
+.menu, .menu * {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+    .menu li {
+        position: relative;
+    }
+
+    .menu ul {
+        position: absolute;
+        display: none;
+        top: 100%;
+        left: 0;
+        z-index: 99;
+    }
+
+    .menu > li {
+        float: left;
+    }
+
+    .menu li:hover > ul,
+    .menu li.sfHover > ul {
+        display: block;
+    }
+
+    .menu a, .menu label {
+        display: block;
+        position: relative;
+    }
+
+    .menu ul ul {
+        top: 0;
+        left: 100%;
+    }
+
+
+/*** DEMO SKIN ***/
+.menu {
+    font-size: 18px;
+    float: left;
+    margin-bottom: 1em;
+}
+
+    .menu ul {
+        min-width: 10em; /* allow long menu items to determine submenu width */
+        *width: 10em; /* no auto sub width for IE7, see white-space comment below */
+    }
+
+    .menu a, .menu label {
+        padding: 10px 10px;
+        text-decoration: none;
+        zoom: 1; /* IE7 */
+    }
+
+    .menu a, .menu label {
+        color: white;
+    }
+
+    .menu li {
+        background: #b6862a;
+        border: 1px outset #d2b47c;
+        /*background-color: green;*/
+        border-radius: 10px;
+        margin-right: 10px;
+    }
+
+    .menu ul li {
+        /*background: #AABDE6;*/
+    }
+
+    .menu ul ul li {
+        /*background: #9AAEDB;*/
+    }
+
+    .menu li:hover,
+    .menu li.sfHover {
+        background: #d7b567;
+        /*background-color: limegreen;*/
+        /* only transition out, not in */
+        -webkit-transition: none;
+        transition: none;
+    }
+
+/*** arrows (for all except IE7) **/
+.arrows .with-ul {
+    padding-right: 2.5em;
+    *padding-right: 1em; /* no CSS arrows for IE7 (lack pseudo-elements) */
+}
+    /* styling for both css and generated arrows */
+    .arrows .with-ul:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: 1em;
+        margin-top: -3px;
+        height: 0;
+        width: 0;
+        /* order of following 3 rules important for fallbacks to work */
+        border: 5px solid transparent;
+        border-top-color: #dFeEFF; /* edit this to suit design (no rgba in IE8) */
+        border-top-color: rgba(255,255,255,.5);
+    }
+
+.arrows > li > .with-ul:focus:after,
+.arrows > li:hover > .with-ul:after,
+.arrows > .sfHover > .with-ul:after {
+    border-top-color: white; /* IE8 fallback colour */
+}
+/* styling for right-facing arrows */
+.arrows ul .with-ul:after {
+    margin-top: -5px;
+    margin-right: -3px;
+    border-color: transparent;
+    border-left-color: #dFeEFF; /* edit this to suit design (no rgba in IE8) */
+    border-left-color: rgba(255,255,255,.5);
+}
+
+.arrows ul li > .with-ul:focus:after,
+.arrows ul li:hover > .with-ul:after,
+.arrows ul .sfHover > .with-ul:after {
+    border-left-color: white;
+}
+.func_item ul {
+  margin-left: -40px;
+}

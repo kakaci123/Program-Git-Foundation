@@ -1,0 +1,65 @@
+﻿.content .showdata .item1
+{
+    width: 10%;
+    min-width: 10%;
+}
+
+.content .showdata .item2
+{
+    width: 10%;
+    min-width: 10%;
+}
+
+.content .showdata .item3
+{
+    width: 10%;
+    min-width: 10%;
+}
+
+.content .showdata .item4
+{
+    width: 25%;
+    min-width: 25%;
+}
+
+.content .showdata .item5
+{
+    width: 15%;
+    min-width: 15%;
+}
+
+.content .showdata .item6
+{
+    width: 10%;
+    min-width: 10%;
+}
+
+.content .showdata .item7
+{
+    width: 15%;
+    min-width: 15%;
+}
+
+/*QueryMethod Css Start*/
+
+.content .showdata .QueryMethod .item1
+{
+    width: 20%;
+    min-width: 20%;
+}
+
+.content .showdata .QueryMethod .item2
+{
+    width: 50%;
+    min-width: 50%;
+    text-align: left;
+}
+
+.content .showdata .QueryMethod .title
+{
+    border-bottom: solid 3px rgb(210, 198, 198);
+    padding-bottom: 5px;
+}
+/*QueryMethod Css End*/
+
+

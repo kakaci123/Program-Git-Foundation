@@ -1,0 +1,86 @@
+﻿@using CaptchaMvc.HtmlHelpers
+@model s26web.Models.VolunteersModel.LoginModel
+
+@if (TempData["err"] != null)
+{
+    <script>
+        alert('@TempData["err"].ToString()');
+    </script>
+}
+else
+{
+    if (TempData["success"] != null)
+    {
+        <script>
+            alert('@TempData["success"].ToString()');
+        </script>
+    }
+}
+<style>
+    #CaptchaInputText {
+        margin-top: -100px;
+        float: left;
+    }
+</style>
+@Scripts.Render("~/js/MemberForgotPassword")
+    <div id="header_wrapper">
+        <!-- content ----------------------------->
+        <div id="main_wrapper">
+            <div id="main">
+                <div class="main_content_r">
+                    <!--sign in area-->
+                    <div class="sign_in">
+                        <div class="sign_top">
+                            <h2>密碼查詢</h2>
+                            <table width="500" border="0" id="table_fortgot">
+                                <tbody>
+                                @using (Html.BeginForm("forgot_Sign_in", "Login", FormMethod.Post, new { @id = "password_form", @class = "search" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <tr>
+                                        <td width="147">
+                                            <p class="title">手機號碼</p>
+                                        </td>
+                                        <td width="443">
+                                            <span>
+                                                <input name="mobile" id="box" placeholder="&nbsp;請輸入您的手機號碼" type="text" />
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <p class="title">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</p>
+                                        </td>
+                                        <td>
+                                            <span>
+                                                <input name="username" id="box" placeholder="&nbsp;請輸入您的姓名" @*type="password"*@ />
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td valign="top">
+                                            <p class="title">認&nbsp;證&nbsp;&nbsp;碼</p>
+                                        </td>
+                                        <td>
+                                            @*<input name="" id="box_01" placeholder="&nbsp;請輸入驗證碼" type="text" />*@
+                                            @*<div class="Verification-code"></div><span class="Refresh"></span>*@
+                                            <span id="test">
+                                                @Html.Captcha("換一張", "", 5, "Is required field.", true)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                        <a class="sign_bottom" href="javascript:void(0);">確認送出</a>
+                        <!--sign in area end-->
+                        <div class="blank_m"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content end----------------------------->
+    </div>

@@ -1,0 +1,11 @@
+/*labelªí³æ¹ï»ô*/
+
+.labelform{
+	width: 120px;
+	float: left;
+	text-align: right; 
+}
+
+.ml {
+    margin-left: 40px;
+}

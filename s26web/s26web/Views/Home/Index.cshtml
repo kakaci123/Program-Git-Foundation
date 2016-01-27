@@ -1,0 +1,309 @@
+﻿@model s26web.Models.VolunteersModel.RegisterModel
+@using s26web.Areas.shb.Models;
+@{
+    int year = new int();
+    int month = new int();
+    int date = new int();
+
+    List<OnlineModel.OnlineModelShow> OnlineList = new List<OnlineModel.OnlineModelShow>();
+    if (ViewData["OnlineList"] != null)
+    {
+        OnlineList = ViewData["OnlineList"] as List<OnlineModel.OnlineModelShow>;
+    }
+}
+<script type="text/javascript" src="/Scripts/Web/Index_Popup.js"></script>
+<!-- content ----------------------------->
+@if (s26web.Models.Method.Is_Login(Request.Cookies))
+{
+    <!--登入-->
+    if (s26web.Models.Method.Is_Popup(Session))
+    {
+    <!--Login Form -->
+        <div id="logindiv">
+            @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @id = "login", @enctype = "multipart/form-data", @class = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <img src="~/Images/sprite.png" class="img" id="cancel" />
+                <h3>
+                    親愛的會員，<br />
+                    您所填寫的預產日期已經到了喔!請問您寶寶的生日是哪一天，<br />
+                    以即您是使用以下哪一種哺乳方式呢?
+                </h3>
+                <br />
+
+                <table width="625" border="0" id="logging_box">
+                    <tbody>
+                        <tr>
+                            <td><p class="cell_log">寶寶生日 / 預產期</p></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select name="year" class="b" data-val="@year" tabindex="2"></select>
+                                <span class="year">年</span>
+                                <select name="month" class="default" data-val="@month" tabindex="2"></select>
+                                <span class="year">月</span>
+                                <select name="date" class="default" data-val="@date" tabindex="2"></select>
+                                <span class="year">日</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><p class="cell_log">哺乳方式</p></td>
+                        </tr>
+                    </tbody>
+                    <tr>
+                        <td>
+                            <input name="Product" type="radio" id="male" value="2" checked />
+                            <span class="note">母乳哺餵</span>
+                            <input name="Product" type="radio" id="male" value="3" />
+                            <span class="note">有意願或目前使用S-26配方產品</span>
+                            <input name="Product" type="radio" id="male" value="4" />
+                            <span class="note">使用他牌配方產品</span> <span>
+                                <input name="BrandName" id="box_01" placeholder="&nbsp;請填入品牌名稱" type="text" />
+                            </span>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <br><br><input type="submit" class="btn_bottom" onclick="return vaild();" value="確定送出" />
+                        </td>
+                    </tr>
+                </table>
+            }
+        </div>
+
+    <!--Login Form end-->
+    }
+}
+
+
+<div id="main">
+    @if (s26web.Models.Method.Is_Login(Request.Cookies))
+    {
+             <!--LEFT-->
+
+        <ul>
+            <li class="text_num">
+                <span><img src="/Images/next.png" align="absmiddle" onclick="mini_shop_change('M')" /></span>
+                <strong id='mini_shop_num'>1</strong>/3
+                <img src="/Images/block.png" align="absmiddle" onclick="mini_shop_change('P')" />
+            </li>
+        </ul>
+        <div class="main_left">
+
+
+            <p class="text_m">線上活動</p>
+
+            <div class="main_content">
+                <div class="mini_shop_goods" index="1">
+
+                    <div class="mini_shop_goods_box">
+                        <dl class="clearFloat">
+                            <dt class="floatL">
+                                <a href="" title="">
+                                    <p class="photo_0"></p>
+                                </a>
+                            </dt>
+                            <dd class="floatR">
+                                <div class="floatL_text">
+
+                                    <a href="" title="">
+                                        <p class="photo_a">產後媽咪問卷大</p>
+                                    </a>
+
+                                    <p class="text_a">只要填寫問券，並完成身份認證就能獲得100<span class="money_m"></span></p>
+                                    <a href="~/Online2/Q_vouchers">
+
+                                        <p class="btn_a">立即參與<span class="arrow_a"></span></p>
+                                    </a>
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+
+                @for (int i = 0; i < OnlineList.Count(); i++)
+                {
+                    int j = @i + 2;
+                    string url = "http://" + Request.Url.Authority + @OnlineList[@i].Banner_PC;
+                    <div class="mini_shop_goods" index="@j" style='display:none;'>
+
+                        <div class="mini_shop_goods_box">
+                            <dl class="clearFloat">
+                                <dt class="floatL">
+                                    <a href="" title="">
+                                        <p class="photo_1"><img src="@url" style="margin-top:1px;margin-left:2px"></p>
+                                    </a>
+                                </dt>
+                                <dd class="floatR">
+                                    <div class="floatL_text">
+
+                                        <a href="" title="">
+                                            <p class="photo_a">@OnlineList[@i].Name</p>
+                                        </a>
+
+                                        <p class="text_a">@Html.Raw(HttpUtility.HtmlDecode(@OnlineList[@i].Content))<span class="money_m"></span></p>
+                                        <a href="Q_vouchers.html">
+                                            <p class="btn_a">立即參與<span class="arrow_a"></span></p>
+                                        </a>
+                                    </div>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+        <div class="main_left">
+            <p class="text_m">產品介紹</p>
+            <div class="main_content">
+                <p class="photo_3"></p>
+                <a href="Product.html">
+                    <div class="main_content_text">
+                        <p class="Product"></p>
+                        <p class="Product_a"></p>
+                        <p class="text_p"> S-26金幼兒樂&nbsp;&nbsp;S-26DHA藻油</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+
+          <!--LEFT  end-->
+          <!--RIGHT---->
+
+        <div class="main_right">
+            <p class="text_m">宅配訂購</p>
+
+            <div class="main_content">
+                <p class="photo_2"></p>
+
+                <div class="main_content_text">
+                    <p class="text_a">
+                        針對會員提供宅配訂購服務貼心<br />
+                        協助忙於照顧小寶寶的媽咪，<br />
+                        將產品送達您的手中換!
+                    </p>
+                    <a href="Delivery.html">
+                        <p class="btn">立即訂購<span class="arrow"></span></p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="main_right">
+            <p class="text_m">兌換贈品</p>
+            <div class="main_content">
+                <p class="photo_4"></p>
+                <div class="main_content_text">
+                    <p class="text_a">
+                        親愛的媽咪，快來瞧瞧本期有<br />
+                        哪些精選贈品可以兌換!
+                    </p>
+                    <a href="Premiums.html">
+                        <p class="btn">立即兌換<span class="arrow"></span></p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="blank"> </div>
+
+    }
+    else
+    {
+            <!--LEFT-->
+        <div class="main_right">
+            <p class="text_m">最新消息</p>
+            <div class="main_content">
+                <p class="photo_9"></p>
+                <div class="main_content_text">
+                    <p class="text_b">2015/03/01</p>
+                    <p class="blue">會員集點大放送</p>
+                    <p class="text_a">
+                        即日起，會員只要參與<br />
+                        線上問券活動即可獲得100<span class="money_m"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+            <!--LEFT  end-->
+            <!--RIGHT---->
+        <div class="main_right">
+            <p class="text_m">產品介紹</p>
+            <div class="main_content">
+                <p class="photo_3"></p>
+                <a href="Product.html">
+                    <div class="main_content_text">
+                        <p class="Product"></p>
+                        <p class="Product_a"></p>
+                        <p class="text_p">S-26金幼兒樂&nbsp;&nbsp; S-26DHA藻油</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="blank">
+        </div>
+    }
+
+</div>
+
+<script type="text/javascript">
+    $(function () {
+
+        var d = new Date();
+        var year = d.getFullYear();
+        addcount = 0;
+        amount = 1;
+        $(".b[name=year]").append(Get_Number(year - 7, year + 1, false));
+        $(".default[name=month]").append(Get_Number(1, 12, false));
+        var y = parseInt($("select[name=year] option:selected").val(), 10);
+        var m = parseInt($("select[name=month] option:selected").val(), 10);
+        $(".default[name=date]").append(Get_Number(1, Get_Days(y, m), false));
+
+        $(".b[name=year]").change(function () {
+            $(this).next().next().empty();
+            $(this).next().next().append(Get_Number(1, 12, false));
+            $(this).next().next().next().next().empty();
+            $(this).next().next().next().next().append(Get_Number(1, Get_Days(y, m), false));
+        });
+        $(".default[name=month]").change(function () {
+            y = parseInt($(this).prev().val(), 10);
+            m = parseInt($(this).val(), 10);
+            $(this).next().next().empty();
+            $(this).next().next().append(Get_Number(1, Get_Days(y, m), false));
+        });
+
+        function Get_Days(y, m) {
+            if (y % 4 == 0 && m == 2) {
+                return 29;
+            }
+            if (m == 2) {
+                return 28;
+            }
+            if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12) {
+                return 31;
+            }
+            if (m == 4 || m == 6 || m == 9 || m == 11) {
+                return 30;
+            }
+            return 0;
+        }
+
+        function Get_Number(start, end, select) {
+            var selected = "selected=\"selected\"";
+            var html = "<option value=\"\" " + (select == 0 ? selected : "") + ">請選擇</option>";
+            for (var i = start; i <= end; i++) {
+                html += "<option value=\"" + i + "\" " + (select == i ? selected : "") + ">" + i + "</option>";
+            }
+            return html;
+        }
+
+    }
+    )
+
+
+</script>
+
+<!-- content end--------->

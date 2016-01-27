@@ -1,0 +1,30 @@
+﻿.content .showdata .item1 {
+    width: 15%;
+    min-width: 145px;
+    text-align: right;
+    background-color: rgb(221, 218, 218);
+}
+
+.content .showdata .item2 {
+    width: 10%;
+    min-width: 100px;
+}
+
+.content .showdata .item3 {
+    width: 20%;
+    min-width: 200px;
+}
+
+.content .showdata .item4 {
+    width: 10%;
+    min-width: 100px;
+}
+
+.content .showdata .item5 {
+    width: 40%;
+    min-width: inherit;
+}
+
+.InuptBox {
+    width: 100%;
+}

@@ -1,0 +1,92 @@
+﻿.content .showdata .item1
+{
+    background-color: rgb(194, 194, 194);
+    width: 15%;
+    min-width: 15%;
+}
+
+.content .showdata .item2
+{
+    width: 35%;
+    min-width: 35%;
+}
+
+.content .showdata .item3
+{
+    background-color: rgb(194, 194, 194);
+    width: 15%;
+    min-width: 15%;
+}
+
+.content .showdata .item4
+{
+    width: 25%;
+    min-width: 25%;
+}
+.content .ordersdetail
+{
+    text-align:center;border:4px solid;
+    width:90%;
+margin: 0 auto;
+margin-bottom: 15px;
+margin-top: 15px;
+   
+}
+
+.content .ordersdetail div .title
+{
+    border-bottom: solid 3px brown;
+    background-color: brown;
+    color: white;
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+.content .ordersdetail div ul
+{
+    list-style: none;
+    padding-left: 0px;
+    border-bottom: dashed 1px black;
+    /*padding-bottom:5px;*/
+    margin: 0;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+    .content .ordersdetail div ul li
+    {
+        display: inline-block;
+        text-align: center;
+        word-wrap: break-word;
+        vertical-align: middle;
+    }
+
+.content .ordersdetail .item1
+{
+    width: 15%;
+    min-width: 15%;
+}
+
+.content .ordersdetail .item2
+{
+    width: 30%;
+    min-width: 30%;
+}
+
+.content .ordersdetail .item3
+{
+    width: 15%;
+    min-width: 15%;
+}
+
+.content .ordersdetail .item4
+{
+    width: 17%;
+    min-width: 17%;
+}
+
+.content .ordersdetail .item5
+{
+    width: 17%;
+    min-width: 17%;
+}

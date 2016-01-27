@@ -1,0 +1,61 @@
+﻿@model List<s26web.Areas.shb.Models.GiftModel.GiftModelShow>
+@{
+    ViewBag.Title = "Index";
+    string err = "";
+    if (TempData["err"] != null && TempData["err"] != "")
+    {
+        err = TempData["err"] as string;
+    }
+    int p = 1;
+    if (ViewData["p"] != null)
+    {
+        p = (int)ViewData["p"];
+    }
+}
+@Styles.Render("~/css/AdminGiftIndex")
+@Scripts.Render("~/js/AdminGiftIndex")
+@if (err != "")
+{
+    @: 操作失敗；錯誤代碼：@Html.Raw(err)
+}
+else
+{
+    <a href="/shb/Gift/Create">新增贈品</a>
+    <br />
+<div class="showdata">
+    <div>
+        <ul class="title">
+            <li class="item1">@Html.DisplayNameFor(model => model[0].MemberType)</li>
+            <li class="item2">@Html.DisplayNameFor(model => model[0].Name)</li>
+            <li class="item3">@Html.DisplayNameFor(model => model[0].Amount)</li>
+            <li class="item4">@Html.DisplayNameFor(model => model[0].Picture)</li>
+            <li class="item5">@Html.DisplayNameFor(model => model[0].Display)</li>
+            <li class="item6">編輯</li>
+            <li class="item7">@Html.DisplayNameFor(model => model[0].CreateTime)</li>
+        </ul>
+    </div>
+
+    <div id="data_area">
+        <form action="@s26web.Models.Method.RootPath/shb/Gift" id="action" method="post">
+
+            @foreach (var item in Model)
+            {
+                item.MemberType = item.MemberType.Remove(item.MemberType.LastIndexOf(","), 1);
+                <ul class="data" id="data_@item.Id">
+                    <li class="item1">@Html.DisplayFor(model => item.MemberType)</li>
+                    <li class="item2">@Html.DisplayFor(model => item.Name)</li>
+                    <li class="item3">@Html.DisplayFor(model => item.Amount)</li>
+                    <li class="item4">@Html.Raw(@item.Picture == "" ? "尚無" : "<img src=\"" + @item.Picture + "\" width=\"45\" height=\"45\" class=\"preview\"><br />") </li>
+                    <li class="item5">@Html.DisplayFor(model => item.Display)</li>                    
+                    <li class="item6">@Html.ActionLink("編輯", "Edit", new { id = item.Id, p = p })</li>
+                    <li class="item7">@Html.DisplayFor(model => item.CreateTime)</li>
+                </ul>
+            }
+            <div class="del_chk">
+                @Html.Partial("_PartialPage")
+            </div>
+        </form>
+    </div>
+</div>
+}
+

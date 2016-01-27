@@ -1,0 +1,152 @@
+﻿@model List<s26web.Areas.shb.Models.ExchangeGiftModel.ExchangeGiftShow>
+
+@{
+    int p = 1;
+    string keyword = "";
+    string States = "0";
+    string err = "";
+    string t_start = "";
+    string t_end = "";
+    string U_Id = "";
+    string U_State = "";
+
+    DateTime? time_start = ViewData["time_start"] as DateTime?;
+    DateTime? time_end = ViewData["time_end"] as DateTime?;
+    List<s26web.Areas.shb.Models.ExchangeGiftModel.MyList> ExchangeGiftStatesOption = null;
+
+
+    if (ViewData["p"] != null)
+    {
+        p = (int)ViewData["p"];
+    }
+
+    if (ViewData["keyword"] != null)
+    {
+        keyword = ViewData["keyword"] as string;
+    }
+
+    if (ViewData["States"] != null)
+    {
+        States = ViewData["States"] as string;
+    }
+
+    if (ViewData["StateOption"] != null)
+    {
+        ExchangeGiftStatesOption = ViewData["StateOption"] as List<s26web.Areas.shb.Models.ExchangeGiftModel.MyList>;
+    }
+
+    if (TempData["err"] != null && TempData["err"] != "")
+    {
+        err = TempData["err"] as string;
+    }
+
+    if (time_start != null)
+    {
+        t_start = time_start.Value.ToString("yyyy/MM/dd HH:mm:ss");
+    }
+    if (time_end != null)
+    {
+        t_end = time_end.Value.ToString("yyyy/MM/dd HH:mm:ss");
+    }
+}
+
+@Styles.Render("~/css/AdminExchangeGiftIndex")
+@Scripts.Render("~/js/AdminExchangeGiftIndex")
+
+@if (err != "")
+{
+    @: 操作失敗；錯誤代碼：@err。
+}
+else
+{
+    <div class="big_title">@ViewBag.Title</div>
+    <div class="showdata">
+        <form action="/shb/ExchangeGift" method="post" id="search_area">
+            <div class="QueryMethod">
+                <ul class="title">
+                    <li class="item1">兌換時間</li>
+                    <li class="item2">
+                        <input type="text" name="time_start" id="time_start" value="@t_start" class="date_search" />
+                        &nbsp-&nbsp   
+                        <input type="text" name="time_end" id="time_end" value="@t_end" class="date_search" />
+                </ul>
+                <ul class="title">
+                    <li class="item1">寄送狀態</li>
+                    <li class="item2">
+                        <input type="radio" name="StatesSelect" value="0" id="States_0" class="StatesOption" checked="@States.Equals("0")"/>ALL
+                       <input type="radio" name="StatesSelect" value="29" id="States_1" class="StatesOption" checked="@States.Equals("29")"/>處理中
+                       <input type="radio" name="StatesSelect" value="30" id="States_2" class="StatesOption" checked="@States.Equals("30")"/>已寄送
+                       <input type="radio" name="StatesSelect" value="31" id="States_3" class="StatesOption" checked="@States.Equals("31")"/>退件
+                       <input type="radio" name="StatesSelect" value="32" id="States_4" class="StatesOption" checked="@States.Equals("32")"/>取消
+                       <input type="text" name="States" id="OrdersStatesTemp" value="@States" style="display:none"/>
+                    </li>
+                </ul>
+                <ul class="title">
+                    <li class="item1">關鍵字</li>
+                    <li class="item2">
+                        <input type="text" name="keyword" id="KeywordQuery" value="@keyword" />
+                        &nbsp(兌換編號、會員姓名、手機、收件人、收件人手機)</li>
+                </ul>
+                <ul class="title">
+                    <li class="item1">
+                        <input type="submit" value="查詢" id="search_button">
+                    <li class="item2">
+                        <input type="submit" value="匯出資料" id="Export_Excel_Button" formaction="/shb/ExchangeGift/Export3" />
+                        @Html.ActionLink("新增資料", "MemberCheck", null, null, new { @id = "Insert_button" })
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+    <div class="showdata">
+        <div>
+            <ul class="title">
+                <li class="item1">@Html.DisplayNameFor(model => model[0].Egid)</li>
+                <li class="item2">@Html.DisplayNameFor(model => model[0].Vol_Name)</li>
+                <li class="item3">@Html.DisplayNameFor(model => model[0].Vol_Mobile)</li>
+                <li class="item4">@Html.DisplayNameFor(model => model[0].Name)</li>
+                <li class="item5">@Html.DisplayNameFor(model => model[0].Mobile)</li>
+                <li class="item6">@Html.DisplayNameFor(model => model[0].Address)</li>
+                <li class="item7">@Html.DisplayNameFor(model => model[0].ExchangeGiftName)</li>
+                <li class="item8">@Html.DisplayNameFor(model => model[0].Remarks)</li>
+                <li class="item9">@Html.DisplayNameFor(model => model[0].States)</li>
+                <li class="item10">@Html.DisplayNameFor(model => model[0].UpdateUserName)</li>
+                <li class="item11">@Html.DisplayNameFor(model => model[0].SubmitTime)</li>
+            </ul>
+        </div>
+        <div id="data_area">
+            @foreach (var item in Model)
+            {
+                <ul class="data" id="data_@item.Id">
+                    <li class="item1">@Html.DisplayFor(modelItem => item.Egid)</li>
+                    <li class="item2">@Html.DisplayFor(modelItem => item.Vol_Name)</li>
+                    <li class="item3">@Html.DisplayFor(modelItem => item.Vol_Mobile)</li>
+                    <li class="item4">@Html.DisplayFor(modelItem => item.Name)</li>
+                    <li class="item5">@Html.DisplayFor(modelItem => item.Mobile)</li>
+                    <li class="item6">@Html.DisplayFor(modelItem => item.Address)</li>
+                    <li class="item7">@Html.DisplayFor(modelItem => item.ExchangeGiftName)</li>
+                    <li class="item8">@Html.DisplayFor(modelItem => item.Remarks)</li>
+                    <li class="item9">
+                        <select id="@item.Egid" class="ExchangeGiftStates">
+                            @foreach (var b in ExchangeGiftStatesOption)
+                            { 
+                                <option value="@b.Id" selected="@item.ExchangeGiftStates.Equals(b.Id)">@b.Name</option>
+                            }
+                        </select>
+                    </li>
+                    <li class="item10">@Html.DisplayFor(modelItem => item.UpdateUserName)</li>
+                    <li class="item11">@item.SubmitTime.AddHours(8).ToString("yyyy/MM/dd HH:mm:ss")</li>
+                </ul>
+            }
+            <form style="text-align: center;">
+                <input type="text" name="Update_Id" id="Update_Id" value="@U_Id" style="display:none"/>
+                <input type="text" name="Update_State" id="Update_State" value="@U_State" style="display:none"/>
+                <hr />
+                <input type="submit" value="資料更新" id="Update_Button" formaction="/shb/ExchangeGift/UpdateScore" />
+            </form>
+            <div class="del_chk">
+                @Html.Partial("_PartialPage")
+            </div>
+        </div>
+    </div>
+}

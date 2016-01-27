@@ -1,0 +1,165 @@
+﻿@model s26web.Models.QuestionnaireModel2.QuestionnaireModelShow
+@{
+    ViewBag.Title = "Q_vouchers";
+}
+<style>
+    .Check_Q2, .Check_Q3, .Check_Q7, .Check_Q8 {
+        color: red;
+        display: none;
+        font-size: 16px;
+        font-weight: bold;
+
+    }
+</style>
+<script src="~/Scripts/Front/Q_vouchers.js"></script>
+<div id="main_wrapper">
+    <div id="main">
+        <div class="main_content_r">
+            <h2>
+                線上活動
+                <p>孕期媽咪問卷大調查</p>
+            </h2>
+            <!--top line-->
+            <span class="box_head_reg"></span>
+            <!-- line-->
+            <div class="reg">
+
+                <!--text wrapper-->
+                @using (Html.BeginForm("Q_vouchers", "Online2", FormMethod.Post, new { @id = "Point_form", @enctype = "multipart/form-data", name = "form1" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(model => model.CategoryId, new { @Value = 10 })
+                    <div class="Q_text">
+                        <h3>產前招募問卷</h3>
+
+                        <p class="list">1.&nbsp;&nbsp;目前懷孕第幾週</p>
+                        <p class="Q_title">
+                            <input name="Q1" type="radio" id="male" value="12週以內" checked />
+                            <span class="note">12週以內 </span><br />
+                            <input name="Q1" type="radio" id="male" value="13-24週" />
+                            <span class="note">13-24週 </span><br />
+                            <input name="Q1" type="radio" id="male" value="25-32週" />
+                            <span class="note">25-32週</span><br />
+                            <input name="Q1" type="radio" id="male" value="33週以上" />
+                            <span class="note">33週以上</span>
+                        </p>
+
+
+                        <p class="list">2.&nbsp;&nbsp;請問您是如何知道此活動舉辦訊息</p>
+                        <p class="Q_title">
+                            <input name="Q2" type="radio" id="male" value="FB 文章" checked />
+                            <span class="note">FB 文章</span><br />
+                            <input name="Q2" type="radio" id="male" value="親朋好友介紹" />
+                            <span class="note">親朋好友介紹</span><br />
+                            <input name="Q2" type="radio" id="male" value="網站" />
+                            <span class="note">網站</span>
+                            <input name="Q2_Note" id="box_note" placeholder="請輸入網址" type="text" size="80" onmouseout="Hide_Q2()" />
+                            <font class="Check_Q2" style=" margin-left: 70px;">
+                                請輸入網址。
+                            </font>
+                        </p>
+
+
+                        <p class="list">3.&nbsp;&nbsp;目前是否有補充DHA相關的營養品?</p>
+                        <p class="Q_title">
+                            <input name="Q3" type="radio" id="male" value="有。品牌" checked />
+                            <span class="note">有。品牌</span>
+                            <input name="Q3_Note" id="box" placeholder="請輸入品牌" type="text" size="30" onmouseout="Hide_Q3()" />
+                            <font class="Check_Q3" style="margin-left: 100px;">
+                                請輸入品牌。
+                            </font>
+                            <br />
+                            <input name="Q3" type="radio" id="male" value="沒有" />
+                            <span class="note">沒有</span><br />
+                        </p>
+
+
+                        <p class="list">4.&nbsp;&nbsp;DHA是人體很重要的長鏈多元不飽和脂肪酸，DHA對寶寶及媽媽的影響為何？</p>
+                        <p class="Q_title">
+                            <input name="Q4" type="radio" id="male" value="對日後寶寶在認知、手眼協調與視網膜發展都具有相當的重要性" checked />
+                            <span class="note">對日後寶寶在認知、手眼協調與視網膜發展都具有相當的重要性</span><br />
+                            <input name="Q4" type="radio" id="male" value="媽媽如果不適當攝取DHA，懷孕期體內DHA會減少40%，哺乳期更會減少60%" />
+                            <span class="note">媽媽如果不適當攝取DHA，懷孕期體內DHA會減少40%，哺乳期更會減少60%</span><br />
+                            <input name="Q4" type="radio" id="male" value="DHA可達到穩定情緒的作用，降低產前及產後憂鬱發生的機率" />
+                            <span class="note">DHA可達到穩定情緒的作用，降低產前及產後憂鬱發生的機率</span><br />
+                            <input name="Q4" type="radio" id="male" value="植物性DHA可一直使用到生產及哺乳期間" />
+                            <span class="note">植物性DHA可一直使用到生產及哺乳期間</span><br />
+                            <input name="Q4" type="radio" id="male" value="以上皆是" />
+                            <span class="note">以上皆是</span><br />
+                        </p>
+
+
+                        <p class="list">
+                            5.&nbsp;&nbsp;世界衛生組織及聯合國糧農組織建議DHA的一日攝取量為200mg，而日常飲食較難<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;達到每日攝取足量DHA的原因有何？
+                        </p>
+                        <p class="Q_title">
+                            <input name="Q5" type="radio" id="male" value="深海魚攝取不足，且有海洋性污染問題" checked />
+                            <span class="note">深海魚攝取不足，且有海洋性污染問題 </span><br />
+                            <input name="Q5" type="radio" id="male" value="攝取動物肝臟，會有膽固醇高的問題" />
+                            <span class="note">攝取動物肝臟，會有膽固醇高的問題</span><br />
+                            <input name="Q5" type="radio" id="male" value="攝取多樣堅果類，但DHA轉換率不高" />
+                            <span class="note">攝取多樣堅果類，但DHA轉換率不高</span><br />
+                            <input name="Q5" type="radio" id="male" value="以上皆是" />
+                            <span class="note">以上皆是</span><br />
+                        </p>
+
+
+                        <p class="list">6.&nbsp;&nbsp;媽咪們知道S-26媽咪DHA藻油一顆剛好為200mg，符合建議攝取量嗎?</p>
+                        <p class="Q_title">
+                            <input name="Q6" type="radio" id="male" value="知道" checked />
+                            <span class="note">知道</span><br />
+                            <input name="Q6" type="radio" id="male" value="惠氏S-26是一家具有近百年的母嬰營養經驗的專業廠商，未來是否考慮使用S-26的產品?" />
+                            <span class="note">不知道</span>
+                        </p>
+
+
+                        <p class="list">
+                            7.&nbsp;&nbsp;惠氏S-26是一家具有近百年的母嬰營養經驗的專業廠商，未來是否考慮使用S-26的<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;產品?
+                        </p>
+                        <p class="Q_title">
+                            <input name="Q7" type="radio" id="male" value="會" checked />
+                            <span class="note">會</span><br />
+                            <input name="Q7" type="radio" id="male" value="不會。原因" />
+                            <span class="note">不會。原因</span>
+                            <input name="Q7_Note" id="box" placeholder="請輸入原因" type="text" size="70" onmouseout="Hide_Q7()" />
+                            <font class="Check_Q7" style=" margin-left: 110px;">
+                                請輸入原因。
+                            </font>
+                        </p>
+
+
+                        <p class="list">8.&nbsp;&nbsp;會吸引您參加S26媽媽教室的主要原因有什麼?</p>
+                        <p class="Q_title">
+                            <input name="Q8" type="radio" id="male" value="知名度高形象好" checked />
+                            <span class="note">知名度高形象好</span><br />
+                            <input name="Q8" type="radio" id="male" value="過去活動好口碑" />
+                            <span class="note">過去活動好口碑</span><br />
+                            <input name="Q8" type="radio" id="male" value="主題吸引人" />
+                            <span class="note">主題吸引人</span><br />
+                            <input name="Q8" type="radio" id="male" value="親友推薦" />
+                            <span class="note">親友推薦</span><br />
+                            <input name="Q8" type="radio" id="male" value="廣告 / 宣傳" />
+                            <span class="note">廣告 / 宣傳</span><br />
+                            <input name="Q8" type="radio" id="male" value="其他" />
+                            <span class="note">其他</span>
+                            <input name="Q8_Note" id="box" placeholder="請輸入原因" type="text" size="80" onmouseout="Hide_Q8()" />
+                            <font class="Check_Q8" style=" margin-left: 70px;">
+                                
+                                請輸入原因。
+                            </font>
+                        </p>
+                        <p></p>
+                        <div class="line"></div>
+                        <input type="submit" value="確認送出" class="btn_bottom" style="cursor:pointer" onmouseover="Check()">
+                        @*<a class="btn_bottom" href="ECRM_complete">確認送出</a>*@
+                    </div>
+                }
+            </div>
+            <div class="reg_footer"></div>
+            <div class="pd"></div>
+        </div>
+    </div>
+</div>

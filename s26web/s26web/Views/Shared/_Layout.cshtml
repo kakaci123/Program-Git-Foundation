@@ -1,0 +1,110 @@
+﻿@using System.Web.Optimization
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--取消相容性-->
+    <title>s26</title>
+    <!--引入JQuery套件-->
+    <script type="text/javascript" src="~/Scripts/Web/jquery-1.10.1.min.js"></script>
+    <!-- carousel js-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <!--carousel end-->
+    <!--Login Form js-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/Web/jquery_popup.js"></script>
+    <!--Login Form js end-->
+
+    @*@Scripts.Render("~/js/Validate")*@
+    @Styles.Render("~/css/Index")
+    <!--[if lt IE 7]>
+    <div style=' clear: both; height: 550px; padding:0 0 0 15px; position: relative; background:#000'>
+    <p><本網站建議使用瀏覽器IE 7以上版本><p>您正使用瀏覽器版本為IE 6，此版本十分老舊將無法正確瀏覽網頁，<font color="#CC0000">同時安全性不足會使您的電腦暴露在病毒、被入侵終至損壞的危險中。
+    </font></p>
+    <p>建議您升級到以下這些更安全、先進以及快速的「免費」瀏覽器，下載且更新後，方可正常瀏覽本網站。感謝您配合更新，謝謝！
+    </p>
+    <p><a href="http://moztw.org/firefox/download/latest-win.html" target="_blank"><img src="mages/firefox.gif" width="244" height="60" title="下載FireFox瀏覽器"/></a>
+    <a href="http://www.google.com/chrome/index.html" target="_blank"><img src="images/google.gif"  width="244" height="60" title="下載google瀏覽器"/></a>
+    <a href="http://windows.microsoft.com/zh-TW/internet-explorer/products/ie/home" target="_blank"><img src="images/ie.gif"  width="244" height="60" title="下載ie8瀏覽器"/></a>
+
+    </p>
+    <![endif]-->
+</head>
+
+<body>
+    <!-- HEADER ------------------>
+    <div id="header_wrapper">
+        <div id="header">
+            @Html.Partial("_PartialMenu")
+
+            <!--member account-->
+            @if (s26web.Models.Method.Is_Login(Request.Cookies))
+            {
+                <!--登入-->
+                <div id="content">
+                    <div class="content_bg">
+                        <p class="text">親愛的會員<span class="blue"> @s26web.Models.Method.Get_UserName(Request.Cookies, Session)</span>，您目前累積<span class="blue"> @s26web.Models.Method.Get_Point(Request.Cookies, Session)<span class="money"></span></span></p>
+                        <p class="text">歡迎聯繫您的專屬諮詢服務人員 <span class="fb"><span class="fb_a"></span> <span class="fb_b">范諾娜</span></span></p>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <!--未登入-->
+                <div id="content">
+                    <div class="logging_bg">
+                        <a href="/Login/Register" onfocus="this.blur()">
+                            <div class="logging_left"> </div>
+                        </a>
+                        <a href="/Login/Index" onfocus="this.blur()">
+                            <div class="logging_right"> </div>
+                        </a>
+                    </div>
+                </div>
+            }
+            <!--member account end-->
+
+        </div>
+    </div>
+    <!-- HEADER end -------------------------->
+    @RenderBody()
+
+    <script type="text/javascript">
+        function mini_shop_change(operator) {
+            var total = 3;  //文章呈現數量
+            var num = parseInt($("#mini_shop_num").text());
+            var next_num = num;
+            if (operator == "P") {
+                next_num++;
+            } else {
+                next_num--;
+            }
+
+            if (next_num > total) {
+                next_num = 1;
+            } else if (next_num == 0) {
+                next_num = total;
+            }
+
+            $("#mini_shop_num").text(next_num);
+            $(".mini_shop_goods:visible").hide();
+            $(".mini_shop_goods[index=" + next_num + "]").show();
+        }
+
+        $(document).ready(function () {
+            var mini_shop_change = setInterval("mini_shop_change('P')", 3000);
+
+            $('div.main_bottom .left').hover(function () {
+                clearInterval(mini_shop_change);
+            }, function () {
+                mini_shop_change = setInterval("mini_shop_change('P')", 3000);
+            });
+        });
+    </script>
+
+</body>
+<foorer>
+    @Html.Partial("_Footer")
+</foorer>
+</html>

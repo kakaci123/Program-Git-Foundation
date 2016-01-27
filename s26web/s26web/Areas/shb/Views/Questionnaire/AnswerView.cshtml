@@ -1,0 +1,29 @@
+﻿@using s26web.Models;
+@model List<s26web.Areas.shb.Models.QuestionnaireModel.QuestionnaireDetail>
+
+@{
+    ViewBag.Title = "問卷內容查看";
+}
+
+@Styles.Render("~/css/AdminQuestionnaireView")
+
+<div class="big_title">@ViewBag.Title</div>
+<div class="showdata">
+    <label style="line-height: 50px">
+        會員姓名：@ViewData["UserName"]
+    </label>
+    <br />
+    <div id="QuestionnaireContent">問卷內容</div>
+    <ol type="1" start="1">
+        @foreach (var item in Model)
+        {
+            <li class="questionList" style="padding-top:10px">
+                <label>
+                    <b>@Html.DisplayFor(modelItem => item.QuestionId)</b><br />@Html.DisplayFor(modelItem => item.UserAns)
+                </label>
+            </li>
+        }      
+    </ol>
+    <hr />
+    @Html.ActionLink("回上一頁", "Index", null, new { @id = "toPrePage" })
+</div>

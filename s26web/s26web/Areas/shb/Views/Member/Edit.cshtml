@@ -1,0 +1,84 @@
+﻿@model s26web.Areas.shb.Models.MemberModel.MemberShow
+
+@{
+    ViewBag.Title = "編輯";
+    int p = 1;
+    if (ViewData["p"] != null)
+    {
+        p = (int)ViewData["p"];
+    }
+    IEnumerable<SelectListItem> user_level = null;
+    if (ViewData["user_level"] != null)
+    {
+        user_level = ViewData["user_level"] as IEnumerable<SelectListItem>;
+    }
+}
+@Styles.Render("~/css/AdminContent")
+@Scripts.Render("~/bundles/jqueryval")
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>帳戶資料</legend>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Level)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("Level", user_level)
+            @Html.ValidationMessageFor(model => model.Level)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Account_Phone)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.Account_Phone)
+            @Html.ValidationMessageFor(model => model.Account_Phone)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Password)
+        </div>
+        <div class="editor-field">
+            @Html.PasswordFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Enable)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Enable)
+            @Html.ValidationMessageFor(model => model.Enable)
+        </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CreateTime)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.CreateTime)
+        </div>
+
+        <input type="hidden" name="p" value="@p" />
+        <p>
+            <input type="submit" value="儲存" onclick="return confirm('確定送出?')" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("回列表頁", "Index", new { p=p})
+</div>

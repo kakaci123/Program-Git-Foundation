@@ -1,0 +1,75 @@
+﻿@{
+    /*
+    var level = false;
+    if (Request.Cookies["Shb_Level_admin"] != null) { 
+        level = Convert.ToInt32(Request.Cookies["Shb_Level_admin"].Value) > 0;
+    }
+     * */
+    //var level = s26web.Models.Method.Get_UserId_Admin(Request.Cookies, Session);
+}
+
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=8" /> 
+        @*<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>*@
+        <title>後台管理系統</title>
+        <link href="/Images/icon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/css/AdminIndex")
+        @Scripts.Render("~/js/AdminIndex")
+       
+    </head>
+    <body>
+        <header>
+            <div class="header">
+                <div class="header1">
+                    <div class="left">
+                        <ul>
+                            <li>
+                                @*<a target="_blank" href="http://blog.soohoobook.com/">&copy; @DateTime.UtcNow.Year - SOOHOOBOOK!!</a>*@
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="right">
+                        <section id="login">
+                                @Html.Partial("_LoginPartial")
+                        </section>
+                    </div>
+                </div>
+                
+                <div class="header2">
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="logo">
+                                    <a href="/shb"><img src="/Images/logo.png" alt="soohoobook" title="soohoobook" /></a>
+                                </div>
+                            </td>
+                            @if (s26web.Models.Method.Is_Login_Admin(Request.Cookies))
+                            {
+                               <td>
+                                    <div class="menu_item">
+                                        @Html.Partial("_PartialMenu")
+                                    </div>
+                               </td>
+                            }
+                        </tr>
+                    </table>
+               </div>
+            </div>
+        </header>
+        <div id="body">
+            <div class="content">
+            @RenderBody()
+            </div>
+        </div>
+        <footer>
+            @*<div class="footer">
+                <div class="left">
+                   <a target="_blank" href="http://blog.soohoobook.com/">&copy; @DateTime.UtcNow.Year - SOOHOOBOOK!!</a>
+                </div>
+            </div>*@
+        </footer>
+    </body>
+</html>

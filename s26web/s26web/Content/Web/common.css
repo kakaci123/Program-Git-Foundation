@@ -1,0 +1,131 @@
+ @charset "utf-8";
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, input, button, textarea, option table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	
+}
+ol, ul {
+	list-style: none;
+}
+a {
+	color:#636363;
+	text-decoration:none;
+	outline: none;
+}
+/*정렬관련*/
+.wrapper_size {
+	width:1050px;
+	margin:0 auto;
+}
+.auto {
+	margin:0 auto;
+}
+.align_left {
+	text-align:left;
+}
+.align_right {
+	text-align:right;
+}
+.align_center {
+	text-align:center;
+}
+.position_R {
+	position:relative;
+}
+.position_A {
+	position:absolute;
+}
+.input_valign_this {
+	vertical-align:-2px;
+	vertical-align:-3px \9;
+}
+.input_valign input {
+	vertical-align:-2px;
+}
+.floatL {
+	float:left;
+	
+}
+.floatL_text{
+padding:10px 7px;	
+	
+	
+}
+.floatR {
+	float:left;
+}
+.float01 {
+	float:left;
+}
+.float02 {
+	float:right;
+}
+.float_li_none li {
+	float:none !important;
+}
+.table_fix {
+	table-layout:fixed;
+}
+.clearFloat:after {
+	
+	clear:both;
+	content:"";
+	display:block;
+}
+.paging_mini clearFloat{
+	width:45px;
+	height:30px;
+	
+	
+}
+.floatBox:after {
+	clear:both;
+	content:"";
+	display:block;
+}
+.line_font_0 {
+	line-height:0;
+	font-size:0;
+}
+.line_font_0 li {
+	line-height:0;
+	font-size:0;
+}
+.border_no {
+	border:0 none !important;
+}
+.clear {
+	clear:both;
+	font-size:0;
+	line-height:0;
+}
+.vt {
+	vertical-align:top;
+}
+.vm {
+	vertical-align:middle;
+}
+.vb {
+	vertical-align:bottom;
+}
+.word_all {
+	word-break:break-all;
+}
+.block {
+	display:block;
+}
+.dis-table {
+	display:table;
+}
+.dis-td {
+	display:table-cell;
+}
+.inline-block {
+	display:inline-block;
+	zoom:1;
+*display:inline;
+}
+.oh {
+	overflow:hidden;
+}

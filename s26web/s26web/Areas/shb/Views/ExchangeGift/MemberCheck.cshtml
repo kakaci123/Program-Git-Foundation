@@ -1,0 +1,33 @@
+﻿@{
+    string err = "";
+    string mobile = "";
+    if (TempData["err"] != null)
+    {
+        err = (string)TempData["err"];
+    }
+}
+
+@Styles.Render("~/css/AdminContent")
+@Scripts.Render("~/bundles/jqueryval")
+
+<div class="big_title">@Html.ActionLink("贈品兌換管理", "/") > @ViewBag.Title</div>
+@if (TempData["err"] != null)
+{
+    <script>alert('@err');</script>       
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>會員資料查找</legend>
+        <div class="editor-label">
+            請輸入會員手機：<input type="text" class="InuptBox" name="mobile"  value="@mobile">
+        </div>
+        <p>
+            <input type="submit" id="Insert_button" value="確認送出" class="ml" onclick="return;" />
+            @Html.ActionLink("取消", "Index", null, null, new { @id = "Cancel_Button" })
+        </p>
+    </fieldset>
+}

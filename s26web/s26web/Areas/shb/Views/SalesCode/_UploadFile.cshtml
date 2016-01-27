@@ -1,0 +1,64 @@
+﻿@using s26web.Areas.shb.Models
+<script>
+    function setfilename(val) {
+        var fileName = val.substr(val.lastIndexOf("\\") + 1, val.length);
+        document.getElementById("filename").value = fileName;
+    }
+    function Check() {
+            if ($("#SalesPromotionId").val() == 0) {
+                alert("請選擇促銷碼活動！");
+                return false;
+            }
+            if ($("#filename").val() == "" || $("#filename").val() == null) {
+                alert("請匯入檔案！");
+                return false;
+            }
+    }
+    //function Import() {
+    //    if ($("#SalesPromotionId").val() == 0) {
+    //        alert("請選擇促銷碼活動！");
+    //        return false;
+    //    }
+    //    else {
+    //        document.UploadForm.action = "/shb/SalesCode/Upload";
+    //        document.UploadForm.method = "post";
+    //        UploadForm.submit();
+    //    }
+    //};
+</script>
+<!-- UploadModal -->
+<div class="modal fade" id="UploadModal" tabindex="-1" role="dialog" aria-labelledby="UploadModalLabel" aria-hidden="true">
+    <form id="UploadForm" action="/shb/SalesCode/Upload" method="post" enctype="multipart/form-data">
+    @*<form  id="UploadForm"  name="UploadForm">*@
+
+        <div class="modal-dialog" style=" width: 600px;padding-top:100px!important">
+
+            <div class="modal-content">
+                <div class="modal-body">
+                    <span>
+                        <font style="color:red">*</font>促銷碼活動
+                        &emsp;
+                        @Html.Raw(Html.DropList("SalesPromotionId", SalesCodeModel.Select_SalesPromotion(0, false)))
+                        <br><br>
+                    </span>
+                    <font style="color:red">*</font>   匯入檔案
+                    &emsp; &ensp;
+                    <input type="text" id="filename" onchange="test()" />
+                    <input type="file" id="file" name="file" onchange="setfilename(this.value);"  />
+                    @*<input type="button" value="匯入" id="ButtonSubmit" onclick="Import();">*@
+                    <input type="submit" id="ButtonSubmit" name="ButtonSubmit" value="匯入" onmouseover="Check()">
+                    <br><br>
+                    <font style="color:red">&emsp;&emsp;※</font>
+                    確認檔案符合匯入格式及類型(.csv檔案)<br>
+                    <font style="color:red">&emsp;&emsp;※ </font>
+                    確認序號為14字元英數字，且不含空白或特殊字元
+                </div>
+                <div class="modal-footer">
+                    <input type="button" id="ButtonCancel" data-dismiss="modal" value="關閉">
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>

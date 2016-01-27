@@ -1,0 +1,181 @@
+﻿.editor-label
+{
+    margin-top: 20px;
+}
+
+    .editor-label input[type=text], .editor-field input[type=text],
+    .editor-label input[type=url], .editor-field input[type=url]
+    {
+        width: 300px;
+    }
+
+.button2
+{
+    display: block;
+    background: #4E9CAF;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.content
+{
+    margin: 0px auto;
+    background-color: white;
+    height: auto;
+    width: auto;
+    padding: 20px 20px 20px 20px;
+    box-shadow: gray 0px 0px 40px 10px;
+    -moz-box-shadow: gray 0px 0px 40px 10px;
+    -webkit-box-shadow: gray 0px 0px 40px 10px;
+    max-width: 1200px;
+    /*margin: 0px auto;
+    width: 840px;
+    min-width:840px;
+    background-color:white;
+    box-shadow: gray 0px 0px 40px 10px;
+    height:auto;
+    min-height: 500px;
+    padding : 20px 20px 20px 20px;*/
+}
+
+    .content .big_title,
+    .content .big_title a,
+    .content .big_title a:active
+    {
+        font-size: 26px;
+        color: #d7b567;
+        font-weight: bold;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        text-decoration: none;
+    }
+
+        .content .big_title a:hover
+        {
+            text-decoration: underline;
+        }
+
+    .content .error
+    {
+        color: red;
+        font-weight: bold;
+    }
+
+.func_item ul li
+{
+    list-style: none;
+    display: inline;
+    margin-right: 20px;
+}
+
+.content .search
+{
+    font-size: 18px;
+    width: auto;
+}
+
+.content .showdata
+{
+    font-size: 18px;
+}
+
+    .content .showdata div .title
+    {
+        border-bottom: solid 3px #a52a2a;
+        padding-bottom: 5px;
+    }
+
+    .content .showdata div ul
+    {
+        list-style: none;
+        padding-left: 0px;
+        border-bottom: dashed 1px black;
+        /*padding-bottom:5px;*/
+        margin: 0;
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+
+        .content .showdata div ul li
+        {
+            display: inline-block;
+            text-align: center;
+            word-wrap: break-word;
+            vertical-align: middle;
+        }
+
+        .content .showdata div ul.data:hover
+        {
+            background-color: lightgray;
+        }
+
+        .content .showdata div ul li a,
+        .content .showdata div ul li a:hover,
+        .content .showdata div ul li a:link,
+        .content .showdata div ul li a:active
+        {
+            color: blue;
+            text-decoration: none;
+        }
+
+    .content .showdata .check
+    {
+        width: 7%;
+        min-width: 7%;
+    }
+
+.content .del_chk
+{
+    display: block;
+    margin-top: 10px;
+    overflow: auto;
+}
+
+    .content .del_chk .button
+    {
+        float: left;
+    }
+
+    .content .del_chk .page
+    {
+        text-align: right;
+    }
+
+.content .field-validation-error span
+{
+    color: red;
+    font-weight: bold;
+}
+
+#search_button, #Export_Excel_Button, #Insert_button, #Update_Button, #Cancel_Button
+{
+    font-weight: bold;
+    font-size: 18px;
+    font-style: normal;
+    text-decoration: none;
+    color: #fff;
+    background: #a52a2a;
+    border: 1px outset #b92f2f;
+    text-shadow: 0 -1px 1px #6e6e6e;
+    box-shadow: 0 0 1px 1px lightgray;
+    -moz-box-shadow: 0 0 1px 1px lightgray;
+    -webkit-box-shadow: 0 0 1px 1px lightgray;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    width: auto;
+    padding: 6px 20px 6px 20px;
+    cursor: pointer;
+    margin: 0 auto;
+}
+
+
+    #search_button:hover, #Export_Excel_Button:hover, #Insert_button:hover, #Update_Button:hover, #Cancel_Button:hover
+    {
+        background: #b92f2f;
+        cursor: pointer;
+        position: relative;
+        top: 1px;
+    }

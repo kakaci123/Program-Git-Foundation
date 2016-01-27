@@ -1,0 +1,11 @@
+﻿@if(Request.IsAuthenticated) {
+    <text>Welcome <strong>@User.Identity.Name</strong>!
+        @Html.ActionLink("Log Off", "LogOff", "Account")</text>
+}
+else {
+    <ul>
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "layoutRegisterLink", data_dialog_title = "Registration", @class = "popupLink" })</li>
+        <li>@Html.ActionLink("Log on", "LogOn", "Account", routeValues: null, htmlAttributes: new { id = "layoutLogonLink", data_dialog_title = "Identification", @class = "popupLink" })</li>
+
+    </ul>
+}

@@ -1,0 +1,43 @@
+﻿@model s26web.Areas.shb.Models.MemberModel.UserLevelShow
+
+@{
+    ViewBag.Title = "新增分類";
+}
+@Styles.Render("~/css/AdminContent")
+@Scripts.Render("~/bundles/jqueryval")
+@*<div class="big_title">@Html.ActionLink("帳號管理", "/") > @Html.ActionLink("群組權限設定", "/C") > 新增</div>*@
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>新增分類</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+
+            @for (int i = 0; i < Model.CompetenceName.Count(); i++)
+            {
+                <label class="comp">
+                    @Html.CheckBoxFor(model => model.Competence[i])
+                    @Html.DisplayFor(model => model.CompetenceName[i])
+                </label>
+            }
+        </div>
+        <p>
+            <input type="submit" value="新增" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("回列表頁", "Category")
+</div>

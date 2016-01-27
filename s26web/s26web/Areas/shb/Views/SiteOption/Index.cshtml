@@ -1,0 +1,174 @@
+﻿@model s26web.Areas.shb.Models.SiteOptionModel.SiteOptionShow
+
+@{
+    ViewBag.Title = "網站設定";
+    int err = 0;
+    if(TempData["err"]!=null)
+    {
+        err = (int)TempData["err"];
+    }
+}
+@Scripts.Render("~/bundles/jqueryval")
+@Styles.Render("~/css/AdminContent")
+<div class="big_title">網站設定</div>
+
+@using (Html.BeginForm("Index", "SiteOption", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>網站設定</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.WebTitle)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.WebTitle)
+            @Html.ValidationMessageFor(model => model.WebTitle)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.WebIcon)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.WebIcon, new { @type="file" })
+            @Html.ValidationMessageFor(model => model.WebIcon)
+            @if (Model != null)
+            {
+                if (Model.WebIcon != null && Model.WebIcon != "")
+                {
+                    <img src="@Model.WebIcon?@DateTime.UtcNow.Ticks" width="165" height="75" />
+                }
+            }
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.WebLogo)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.WebLogo, new { @type="file" })
+            @Html.ValidationMessageFor(model => model.WebLogo)
+            @if (Model != null)
+            {
+                if (Model.WebLogo != null && Model.WebLogo != "")
+                {
+                    <img src="@Model.WebLogo?@DateTime.UtcNow.Ticks" width="165" height="75" />
+                }
+            }
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.WebSEO)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.WebSEO)
+            @Html.ValidationMessageFor(model => model.WebSEO)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.WebDescription)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.WebDescription)
+            @Html.ValidationMessageFor(model => model.WebDescription)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SMTP_Server)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SMTP_Server)
+            @Html.ValidationMessageFor(model => model.SMTP_Server)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SMTP_Port)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SMTP_Port)
+            @Html.ValidationMessageFor(model => model.SMTP_Port)
+        </div>
+        
+        <div class="editor-label">
+            @Html.EditorFor(model => model.SMTP_SSL)@Html.LabelFor(model => model.SMTP_SSL)
+            @Html.ValidationMessageFor(model => model.SMTP_SSL)
+        </div>
+
+         <div class="editor-label">
+            @Html.EditorFor(model => model.SMTP_Login)@Html.LabelFor(model => model.SMTP_Login)
+            @Html.ValidationMessageFor(model => model.SMTP_Login)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SMTP_Account)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SMTP_Account)
+            @Html.ValidationMessageFor(model => model.SMTP_Account)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SMTP_Password)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SMTP_Password)
+            @Html.ValidationMessageFor(model => model.SMTP_Password)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Service_Mail)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Service_Mail)
+            @Html.ValidationMessageFor(model => model.Service_Mail)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FromName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FromName)
+            @Html.ValidationMessageFor(model => model.FromName)
+        </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ExportMail)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ExportMail)
+            @Html.ValidationMessageFor(model => model.ExportMail)
+        </div>
+
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.OrdersMail)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.OrdersMail)
+            @Html.ValidationMessageFor(model => model.OrdersMail)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Android_Version)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Android_Version)
+            @Html.ValidationMessageFor(model => model.Android_Version)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.iOS_Version)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.iOS_Version)
+            @Html.ValidationMessageFor(model => model.iOS_Version)
+        </div>
+        <p>
+            <input type="submit" value="儲存" />
+        </p>
+        @if (err == 1)
+        {
+            <div class="error">儲存失敗!</div> 
+        }
+    </fieldset>
+}
+

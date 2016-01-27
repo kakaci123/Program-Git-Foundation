@@ -1,0 +1,63 @@
+﻿@model List<s26web.Areas.shb.Models.SalesPromotionModel.SalesPromotionModelShow>
+@{
+    ViewBag.Title = "Index";
+    string err = "";
+    if (TempData["err"] != null && TempData["err"] != "")
+    {
+        err = TempData["err"] as string;
+    }
+    int p = 1;
+    if (ViewData["p"] != null)
+    {
+        p = (int)ViewData["p"];
+    }
+}
+@Styles.Render("~/css/AdminSalesPromotionIndex")
+@Scripts.Render("~/js/AdminSalesPromotionIndex")
+@if (err != "")
+{
+    @: 操作失敗；錯誤代碼：@Html.Raw(err)
+}
+else
+{
+    <div class="big_title">促銷碼活動管理</div>
+
+    <div class="func_item">
+        <ul>
+            <li>@Html.ActionLink("新增促銷碼活動", "Create")</li>
+        </ul>
+    </div>
+<div class="showdata">
+    <div>
+        <ul class="title">
+            <li class="item1">@Html.DisplayNameFor(model => model[0].Code)</li>
+            <li class="item2">@Html.DisplayNameFor(model => model[0].Name)</li>
+            <li class="item3">@Html.DisplayNameFor(model => model[0].Point)</li>
+            <li class="item4">@Html.DisplayNameFor(model => model[0].Deadline)</li>
+            <li class="item5">刪除</li>
+            <li class="item6">@Html.DisplayNameFor(model => model[0].CreateTime)</li>
+        </ul>
+    </div>
+
+    <div id="data_area">
+        <form action="@s26web.Models.Method.RootPath/shb/SalesPromotion" id="action" method="post">
+
+            @foreach (var item in Model)
+            {
+                <ul class="data" id="data_@item.Id">
+                    <li class="item1">@Html.DisplayFor(model => item.Code)</li>
+                    <li class="item2">@Html.DisplayFor(model => item.Name)</li>
+                    <li class="item3">@Html.DisplayFor(model => item.Point)</li>
+                    <li class="item4">@item.Deadline.ToString("yyyy/MM/dd")</li>                    
+                    <li class="item5">@Html.ActionLink("刪除", "Delete", new { Id = item.Id, p = p }, new { OnClick = "return confirm(\"確定要刪除?\")" })</li>
+                    <li class="item6">@item.CreateTime.ToString("yyyy/MM/dd HH:mm:ss")</li>
+                </ul>
+            }
+            <div class="del_chk">
+                @Html.Partial("_PartialPage")
+            </div>
+        </form>
+    </div>
+</div>
+}
+

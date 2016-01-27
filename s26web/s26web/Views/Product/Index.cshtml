@@ -1,0 +1,48 @@
+﻿@model List<s26web.Areas.shb.Models.ProductModel.ProductModelShow>
+<div id="main_wrapper">
+    <div id="main">
+        <div class="main_content_d">
+
+            <table width="800" class="delivery_table">
+                <thead>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </thead>
+                <thead>
+                    <tr>
+                        <td><h2>產品介紹</h2></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+
+                            @for (int i = 0; i < Model.Count; i++) { 
+                           <div class="pr">
+                               <div class="product_left" style="background: url(@Model[i].PictureLink) 5px 35px no-repeat; ">
+                                   <h1>@Model[i].Name </h1>
+                                   <a href="View/@Model[i].Id "><div class="product_btn"></div></a>
+                               </div>
+                                @*<div class="product_right">
+                                    <h1>@Html.DisplayFor(model => item.Name)</h1>
+                                    <img src="@item.PictureLink" width="198" height="225" />
+                                    <a href="Product_dha.html"> <div class="product_btn"></div></a>
+                                </div>*@
+                            </div>
+                                if (Model.Count - i != 1) { 
+                               <div class="line_5"></div>  
+                                }
+                              
+                            }                                                        
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="blank_m"></div>
+    </div>
+
+</div>
+

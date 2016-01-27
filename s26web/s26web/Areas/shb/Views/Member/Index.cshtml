@@ -1,0 +1,99 @@
+﻿@using s26web.Models;
+@model List<s26web.Areas.shb.Models.MemberModel.MemberShow>
+
+@{
+    ViewBag.Title = "帳號管理";
+    int p = 1;
+    if (ViewData["p"] != null)
+    {
+        p = (int)ViewData["p"];
+    }
+    IQueryable<UserLevel> user_level = null;
+    if (ViewData["user_level"] != null)
+    {
+        user_level = ViewData["user_level"] as IQueryable<UserLevel>;
+    }
+    string keyword = "";
+    if (ViewData["keyword"] != null)
+    {
+        keyword = ViewData["keyword"] as string;
+    }
+
+    int[] user_level_value = null;
+    if (ViewData["user_level_value"] != null)
+    {
+        user_level_value = ViewData["user_level_value"] as int[];
+    }
+        
+    int enable = 0;
+    if (ViewData["enable"] != null)
+    {
+        enable = (int)ViewData["enable"];
+    }
+    int disable = 0;
+    if (ViewData["disable"] != null)
+    {
+        disable = (int)ViewData["disable"];
+    }
+
+    string err = "";
+    if (TempData["err"] != null && TempData["err"] != "")
+    {
+        err = TempData["err"] as string;
+    }
+
+}
+@Styles.Render("~/css/AdminMemberIndex")
+@Scripts.Render("~/js/AdminMemberIndex")
+@if (err != "")
+{
+    @: 操作失敗；錯誤代碼：@err。
+}
+else
+{
+    <div class="big_title">帳號管理</div>
+    <div class="func_item">
+        <ul>
+            <li>@Html.ActionLink("新增帳號", "Create")</li>
+            <li>@Html.ActionLink("群組權限設定", "Category")</li>
+        </ul>
+    </div>
+    <div class="showdata">
+        <div>
+            <ul class="title">
+                @*<li class="check">
+                    <label>
+                        <input type="checkbox" name="all" id="all" />全選
+                    </label>
+                </li>*@
+                <li class="item1">@Html.DisplayNameFor(model => model[0].Account_Phone)</li>
+                <li class="item2">@Html.DisplayNameFor(model => model[0].Name)</li>
+                <li class="item3">@Html.DisplayNameFor(model => model[0].Level_Name)</li>
+                <li class="item4">@Html.DisplayNameFor(model => model[0].Enable)</li>
+                <li class="item5">編輯</li>
+                <li class="item6">刪除</li>
+                <li class="item7">資料建立時間</li>
+            </ul>
+        </div>
+        <div id="data_area">
+            <form action="@s26web.Models.Method.RootPath/shb/Member" id="action" method="post">
+                @foreach (var item in Model)
+                {
+                    <ul class="data">
+                        <li class="item1">@Html.DisplayFor(modelItem => item.Account_Phone)</li>
+                        <li class="item2">@Html.DisplayFor(modelItem => item.Name)</li>
+                        <li class="item3">@Html.DisplayFor(modelItem => item.Level_Name)</li>
+                        <li class="item4">@if (item.Enable)
+                                          {<text>V</text> }
+                                          else
+                                          {<text>X</text> }</li>
+                        <li class="item5">@Html.ActionLink("編輯", "Edit", new { id = item.Id, p = p })</li>
+                        <li class="item6">@Html.ActionLink("刪除", "Delete", new { item = item.Id, p = p }, new { OnClick = "return confirm(\"確定要刪除?\")" })</li>
+                        <li class="item7">@item.CreateTime.ToString("yyyy/MM/dd HH:mm:ss")</li>
+                    </ul>
+                }
+            </form>
+        </div>
+        @Html.Partial("_PartialPage")
+    </div>
+}

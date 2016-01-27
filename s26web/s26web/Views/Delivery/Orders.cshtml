@@ -1,0 +1,144 @@
+﻿@model s26web.Areas.shb.Models.ProductModel.ProductModelShow
+<!-- content ----------------------------->
+<div id="main_wrapper">
+    <div id="main">
+        <div class="main_content_d">
+            <h2>
+                會員資料
+                <p>您購買的產品如下</p>
+            </h2>
+            <table class="member_info_table">
+                <thead>
+                    <tr>
+                        <td width="206"></td>
+                        <td width="582"></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="member_info_left">名稱</td>
+                        <td class="member_info_right">
+                            @*惠氏S-26金幼兒樂 (1-3個月專用)*@
+                            @Html.DisplayFor(Model => Model.Name)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="member_info_left">組數</td>
+                        <td class="member_info_right">
+                            @Session["Order_Quantity"]
+                            組
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="member_info_left">內容物</td>
+                        <td class="member_info_right">
+                            @*買3罐900克，送2罐400克*@
+                            @Html.DisplayFor(Model => Model.Content)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="member_info_left">商品價格</td>
+                        <td class="member_info_right">
+                            NT$
+                            @Html.DisplayFor(Model => Model.Price)
+                            / 組
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="member_info_left">總計</td>
+                        <td class="member_info_right">
+                            NT$
+                            @Session["Total_Price"]
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div id="form">
+                <!-- content left----------------------------->
+                <div class="Empty"></div>
+                <div class="form_fb_left">
+                    <h2>STEP 1</h2>
+                    <p>
+                        立即分享S-26媽咪俱樂部的<br />
+                        好康訊息至您的Facebook塗鴉牆
+                    </p>
+                    <a href="#">
+                        <p class="share" onclick="postToFeed()"></p>
+                        </a>
+                </div>
+                <!-- content left end----------------------------->
+                <!-- content right----------------------------->
+                <div class="Empty"></div>
+                <div class="form_fb_right">
+                    <h2>STEP 2</h2>
+                    <p>領取您的FB 分享紅利點數 </p>
+                    <a href="#">
+                        <p class="share_fb" id="share_fb" style="display:none" onclick="GetPoint()"></p>
+                    </a>
+                </div>
+                <!-- content right end----------------------------->
+            </div>
+        <div class="btn_form"> <a href="/Delivery/article">取消訂單</a> <a href="/Delivery/Recipient">填寫收件資料</a> </div>
+    </div>
+</div>
+<div class="pd"></div>
+</div>
+
+<!-- content end----------------------------->
+
+
+<div id="fb-root"></div>
+<script>
+(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=1396861977224095";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div id="fb-root"></div>
+<script type='text/javascript'>
+    function postToFeed() {
+        FB.ui(
+            {
+                method: 'feed',
+                name: 'S-26媽咪俱樂部',
+                link: 'https://www.facebook.com/s26mamaclub',
+                picture: '',
+                caption: '',
+                description: '金質會員集利 GO!'
+            },
+        function (response) {
+            if (response && response.post_id) {
+                $("#share_fb").show();
+            }
+        }
+        );
+    };
+    $(function () {
+        $("#share_fb").click(function () {
+            $.ajax({
+                type: "get",
+                traditional: true,
+                async: true,
+                url: "/shb/Point/GetPoint",
+                data: { mobile: $(this).val() },
+                success: function (data) {
+                    alert("恭喜獲得100點");
+                }
+            });
+        })
+    });
+    function GetPoint() {
+        $("#share_fb").hide();
+        alert('恭喜獲得100點');
+    };
+</script>

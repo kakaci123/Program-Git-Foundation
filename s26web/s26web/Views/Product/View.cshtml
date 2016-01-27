@@ -1,0 +1,21 @@
+﻿@model s26web.Areas.shb.Models.ProductModel.ProductModelShow
+@{
+    ViewBag.Title = "View";
+}
+
+<div id="main_wrapper">
+    <div id="main">
+        <div class="main_content_d">
+            <h2>產品介紹 - @Html.DisplayFor(model => model.Name) </h2>
+            <div class="product_content">
+                <img src="@Model.ContentPic"/>@*<div class="product_bg"></div>*@
+                <p>@Model.Memo</p>
+                <a href="@Model.Link" target="_blank"><div class="search"></div></a>
+                <p> <span class="icon_cell">宅配電話0800-026-888</span></p>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+

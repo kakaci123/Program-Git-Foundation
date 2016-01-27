@@ -1,0 +1,23 @@
+diff a/s26web/s26web/App_Start/BundleConfig.cs b/s26web/s26web/App_Start/BundleConfig.cs	(rejected hunks)
+@@ -212,6 +212,21 @@
+                                                                          "~/Content/Admin/Web/OrdersIndex.css"));
+             //==================================================================================================
+ 
++            bundles.Add(new StyleBundle("~/js/AdminExchangeGiftIndex").Include("~/Scripts/Admin/Content.js",
++                                                                    "~/Scripts/Web/StatesOptionSelect.js",
++                                                                    "~/Scripts/jQuery/jquery-ui-1.10.3.js",
++                                                                            "~/Scripts/Admin/Web/ExchangeGiftIndex.js",
++                                                                            "~/Scripts/plugin/TimePicker/jquery-ui-timepicker-addon.js",
++                                                                            "~/Scripts/plugin/TimePicker/jquery.ui.datepicker-zh-TW.js",
++                                                                            "~/Scripts/plugin/TimePicker/jquery-ui-timepicker-zh-TW.js"));
++
++
++             bundles.Add(new StyleBundle("~/css/AdminExchangeGiftIndex").Include("~/Content/Admin/Content.css",
++                                                                          "~/Scripts/plugin/TimePicker/jquery-ui-1.8.16.custom.css",
++                                                                          "~/Scripts/plugin/TimePicker/jquery-ui-timepicker-addon.css",
++                                                                         "~/Content/Admin/Web/ExchangeGiftIndex.css"));
++            //==================================================================================================
++            
+             bundles.Add(new StyleBundle("~/css/AdminOrdersView").Include("~/Content/Admin/Content.css",
+                                                         "~/Content/Admin/Web/OrdersView.css"));
+ 

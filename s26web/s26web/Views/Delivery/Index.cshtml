@@ -1,0 +1,109 @@
+﻿@model s26web.Models.VolunteersModel.RegisterModel
+@{
+    //int year = new int();
+    string year = (string)ViewData["Bir_year"];
+    string month = (string)ViewData["Bir_month"];
+    string date = (string)ViewData["Bir_date"];
+}
+<!-- content ----------------------------->
+<div id="main">
+    <div class="main_content_a">
+        <h2>宅配訂購</h2>
+        @using (Html.BeginForm("Index", "Delivery", FormMethod.Post, new { @id = "Recipient_form", @enctype = "multipart/form-data" }))
+        {
+            <table width="480" class="delivery_table">
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>請再次確認您的寶寶生日 / 預產期及商品適合寶寶現在階段</td>
+                </tr>
+                <tbody>
+                    <tr>
+                        <td>
+                            <p class="title_D">寶寶生日 / 預產期</p>
+
+                            <select name="year" class="b" tabindex="2" data-val="@year"></select> 
+                            <span class="year">年</span>
+                            <select name="month" class="default" tabindex="2" data-val="@month"></select> 
+                            <span class="year">月</span>
+                            <select name="date" class="default" tabindex="2" data-val="@date"></select> 
+                            <span class="year">日</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="submit" class="btn_bottom_m">
+            @*<a class="" href="/Delivery/article">立即前往訂購</a>*@
+        }
+        <!--LEFT-->
+        <div class="main_left">
+            <div class="main_content">
+                <p class="photo_5"></p>
+                <div class="main_content_title">
+                    <p class="text_aa">
+                        線上宅配訂購S-26金幼兒樂<br />
+                        並將優惠資訊分享至<span class="blue">Facebook</span>即送您100<span class="money_m"></span>
+                    </p>
+                </div>
+            </div>
+            <div class="blank_m"></div>
+            <!--LEFT  end-->
+        </div>
+    </div>
+
+</div>
+<!-- content end----------------------------->
+
+<script type="text/javascript">
+    $(function () {
+        var d = new Date();
+        var year = d.getFullYear();
+        addcount = 0;
+        amount = 1;
+        $(".b[name=year]").append(Get_Number(year - 7, year + 1, @Html.Raw(Json.Encode(ViewData["Bir_year"]))));
+        $(".default[name=month]").append(Get_Number(1, 12, @Html.Raw(Json.Encode(ViewData["Bir_month"]))));
+        var y = parseInt($("select[name=year] option:selected").val(), 10);
+        var m = parseInt($("select[name=month] option:selected").val(), 10);
+        $(".default[name=date]").append(Get_Number(1, Get_Days(y, m), @Html.Raw(Json.Encode(ViewData["Bir_date"]))));
+
+        $(".b[name=year]").change(function () {
+            $(this).next().next().empty();
+            $(this).next().next().append(Get_Number(1, 12, false));
+            $(this).next().next().next().next().empty();
+            $(this).next().next().next().next().append(Get_Number(1, Get_Days(y, m), false));
+        });
+        $(".default[name=month]").change(function () {
+            y = parseInt($(this).prev().val(), 10);
+            m = parseInt($(this).val(), 10);
+            $(this).next().next().empty();
+            $(this).next().next().append(Get_Number(1, Get_Days(y, m), false));
+        });
+
+        function Get_Days(y, m) {
+            if (y % 4 == 0 && m == 2) {
+                return 29;
+            }
+            if (m == 2) {
+                return 28;
+            }
+            if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12) {
+                return 31;
+            }
+            if (m == 4 || m == 6 || m == 9 || m == 11) {
+                return 30;
+            }
+            return 0;
+        }
+
+        function Get_Number(start, end, select) {
+            var selected = "selected=\"selected\"";
+            var html = "<option value=\"\" " + (select == 0 ? selected : "") + ">請選擇</option>";
+            for (var i = start; i <= end; i++) {
+                html += "<option value=\"" + i + "\" " + (select == i ? selected : "") + ">" + i + "</option>";
+            }
+            return html;
+        }
+    }
+    )
+</script>
