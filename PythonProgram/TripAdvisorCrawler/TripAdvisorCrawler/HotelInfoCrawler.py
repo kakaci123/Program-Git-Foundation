@@ -1,10 +1,19 @@
-﻿import requests
-import urllib.request
+﻿import urllib.request
 import re
 from bs4 import BeautifulSoup
-import os
-import time
-from selenium import webdriver
+import threading
+
+class myThread(threading.Thread):
+    def __init__(self, ThreadID, Name,list):
+        threading.Thread.__init__(self)
+        self.ThreadID = ThreadID
+        self.Name = Name
+        self.list = list
+    def run(self):
+        print('Starting : ' + self.name)
+        for i in range(0,len(self.list),1):
+            main_crawler(self.list[i].Href)
+        print('Exiting : ' + self.name)
 
 class HotelInfoElement:
     #data structure
@@ -25,20 +34,19 @@ class HotelInfoElement:
         self.hSolo = '-1'
         self.hBusiness = '-1'
         self.hFrineds = '-1'
-        self.hMarMay='-1'
-        self.hJunAug='-1'
-        self.hSepNov='-1'
-        self.hDecFeb='-1'
-        self.hLocation = '-1'
-        self.hSleepQuality = '-1'
-        self.hRooms = '-1'
-        self.hService = '-1'
-        self.hValue = '-1'
-        self.hCleanliness = '-1'
+        self.hMarMay = '-1'
+        self.hJunAug = '-1'
+        self.hSepNov = '-1'
+        self.hDecFeb = '-1'
+        #self.hLocation = '-1'
+        #self.hSleepQuality = '-1'
+        #self.hRooms = '-1'
+        #self.hService = '-1'
+        #self.hValue = '-1'
+        #self.hCleanliness = '-1'
 
 
-    def setInfo(self,_Id,_hRank,_hRating,_hStarClass,_hRoomNum,_hReviewNum,_excellent,_verygood,_average,_poor,_terrible,_hFamilies,_hCouples,_hSolo,_hBusiness,_hFrineds,_hMarMay,_hJunAug,_hSepNov,_hDecFeb,_hLocation,_hSleepQuality,_hRooms,
-_hService,_hValue,_hCleanliness):
+    def setInfo(self,_Id,_hRank,_hRating,_hStarClass,_hRoomNum,_hReviewNum,_excellent,_verygood,_average,_poor,_terrible,_hFamilies,_hCouples,_hSolo,_hBusiness,_hFrineds,_hMarMay,_hJunAug,_hSepNov,_hDecFeb):
         self.Id = _Id
         self.hRank = _hRank
         self.hRating = _hRating
@@ -58,30 +66,38 @@ _hService,_hValue,_hCleanliness):
         self.hBusiness = _hBusiness
         self.hFrineds = _hFrineds
 
-        self.hMarMay=_hMarMay
-        self.hJunAug=_hJunAug
-        self.hSepNov=_hSepNov
-        self.hDecFeb=_hDecFeb
+        self.hMarMay = _hMarMay
+        self.hJunAug = _hJunAug
+        self.hSepNov = _hSepNov
+        self.hDecFeb = _hDecFeb
 
-        self.hLocation = _hLocation
-        self.hSleepQuality = _hSleepQuality
-        self.hRooms = _hRooms
-        self.hService = _hService
-        self.hValue = _hValue
-        self.hCleanliness = _hCleanliness
+        #self.hLocation = _hLocation
+        #self.hSleepQuality = _hSleepQuality
+        #self.hRooms = _hRooms
+        #self.hService = _hService
+        #self.hValue = _hValue
+        #self.hCleanliness = _hCleanliness
+def run_program(hotellist):
+    threads = []
+    SubList = [hotellist[x:x + 10] for x in range(0,len(hotellist),10)]
+    for i in range(0,len(SubList),1):
+            TempThread = myThread(i, 'Thread-' + str(i),SubList[i])
+            TempThread.start()
+            threads.append(TempThread)
+    for t in threads:
+            t.join()
 
-def run_program(url):
-    print(':::HotelInfoCrawler Start:::')
-    driver.get(url)
-    HotelInfo = main_crawler()
-    return HotelInfo
+    global ResultList
+    return ResultList
  
-def main_crawler():
-    soup = BeautifulSoup(driver.page_source,"html.parser")
+def main_crawler(url):
+    req = urllib.request.urlopen(url)
+    content = req.read().decode(req.info().get_content_charset())
+    soup = BeautifulSoup(content,"html.parser")
 
     Temp_Info = HotelInfoElement()
 
-    ID = re.findall('-d(.*?)-',driver.current_url)[0]
+    ID = re.findall('-d(.*?)-',url)[0]
 
     Temp_Element = soup.find('b',attrs={ 'class' : 'rank'})
     if Temp_Element is not None:
@@ -123,11 +139,11 @@ def main_crawler():
         poor = re.findall('Poor(.*?)Terrible',Temp_Rating)[0]
         terrible = re.findall('Terrible(.*?)$',Temp_Rating)[0]
     else:
-        excellent='0'
-        verygood='0'
-        average='0'
-        poor='0'
-        terrible='0'
+        excellent = '0'
+        verygood = '0'
+        average = '0'
+        poor = '0'
+        terrible = '0'
 
     Temp_Element = soup.find('div',attrs={'class':'col segment '})
     if Temp_Element is not None: 
@@ -138,50 +154,85 @@ def main_crawler():
         hBusiness = re.findall('Business(.*?)Friends',Temp_Rating)[0]
         hFrineds = re.findall('Friends(.*?)$',Temp_Rating)[0]
     else:
-        hFamilies='0'
-        hCouples='0'
-        hSolo='0'
-        hBusiness='0'
-        hFrineds='0'
+        hFamilies = '0'
+        hCouples = '0'
+        hSolo = '0'
+        hBusiness = '0'
+        hFrineds = '0'
     
     Temp_Element = soup.find('div',attrs={'class':'col season '})
     if Temp_Element is not None: 
         Temp_Rating = Temp_Element.text.replace('\n','').replace('Time of year','').replace('(','').replace(')','').replace(' ','')
-        hMarMay=re.findall('Mar-May(.*?)Jun-Aug',Temp_Rating)[0]
-        hJunAug=re.findall('Jun-Aug(.*?)Sep-Nov',Temp_Rating)[0]
-        hSepNov=re.findall('Sep-Nov(.*?)Dec-Feb',Temp_Rating)[0]
-        hDecFeb=re.findall('Dec-Feb(.*?)$',Temp_Rating)[0]
+        hMarMay = re.findall('Mar-May(.*?)Jun-Aug',Temp_Rating)[0]
+        hJunAug = re.findall('Jun-Aug(.*?)Sep-Nov',Temp_Rating)[0]
+        hSepNov = re.findall('Sep-Nov(.*?)Dec-Feb',Temp_Rating)[0]
+        hDecFeb = re.findall('Dec-Feb(.*?)$',Temp_Rating)[0]
     else:
-        hMarMay='0'
-        hJunAug='0'
-        hSepNov='0'
-        hDecFeb='0'
+        hMarMay = '0'
+        hJunAug = '0'
+        hSepNov = '0'
+        hDecFeb = '0'
 
-    #turn into CH page and get the information
-    driver.get(driver.current_url.replace('http://www.tripadvisor.com/','http://www.tripadvisor.com.tw/'))
-    soup = BeautifulSoup(driver.page_source,"html.parser")
+    #################################################################################
 
-    Temp_Element=soup.find('div',attrs={'id':'SUMMARYBOX'})
-    if Temp_Element is not None:
-        Temp_Rating = str(Temp_Element).replace('\n','').replace('分','')
-        hLocation = re.findall('<img alt="(.*?)"',Temp_Rating)[0]
-        hSleepQuality = re.findall('<img alt="(.*?)"',Temp_Rating)[1]
-        hRooms = re.findall('<img alt="(.*?)"',Temp_Rating)[2]
-        hService = re.findall('<img alt="(.*?)"',Temp_Rating)[3]
-        hValue = re.findall('<img alt="(.*?)"',Temp_Rating)[4]
-        hCleanliness = re.findall('<img alt="(.*?)"',Temp_Rating)[5]
-    else:
-        hLocation='0'
-        hSleepQuality='0'
-        hRooms='0'
-        hService='0'
-        hValue='0'
-        hCleanliness='0'
+    ##turn into CH page and get the information
+
+    #req =
+    #urllib.request.urlopen(url.replace('http://www.tripadvisor.com/','http://www.tripadvisor.com.tw/'))
+    #content = req.read().decode(req.info().get_content_charset())
+    #soup = BeautifulSoup(content,"html.parser")
+
+    #Temp_Element = soup.find('div',attrs={'id':'SUMMARYBOX'})
+    #if Temp_Element is not None:
+    #    Temp_Rating = str(Temp_Element).replace('\n','').replace('分','')
+    #    Score_Rating = re.findall('<img alt="(.*?)"',Temp_Rating)
+    #    try:
+    #         hLocation = Score_Rating[0]
+    #    except:
+    #         print(url)
+    #         hLocation = '-1'
+    #    try:
+             
+    #         hSleepQuality = Score_Rating[1]
+    #    except:
+    #         print(url)
+    #         hSleepQuality = '-1'
+    #    try:
+    #         hRooms = Score_Rating[2]
+    #    except:
+    #         print(url)
+    #         hRooms = '-1'
+    #    try:
+           
+    #         hService = Score_Rating[3]
+    #    except:
+    #         print(url)
+    #         hService = '-1'
+    #    try:
+    #         hValue = Score_Rating[4]
+    #    except:
+    #         print(url)
+    #         hValue = '-1'
+    #    try:
+    #         hCleanliness = Score_Rating[5]
+    #    except:
+    #         print(url)
+    #         hCleanliness = '-1'
+    #else:
+    #    hLocation = '0'
+    #    hSleepQuality = '0'
+    #    hRooms = '0'
+    #    hService = '0'
+    #    hValue = '0'
+    #    hCleanliness = '0'
   
-    Temp_Info.setInfo(ID,hRank,hRating,hStarClass,hRoomNum,hReviewNum,excellent,verygood,average,poor,terrible,hFamilies,hCouples,hSolo,hBusiness,hFrineds,hMarMay,hJunAug,hSepNov,hDecFeb,hLocation,hSleepQuality,hRooms,hService,hValue,hCleanliness)
+    #Temp_Info.setInfo(ID,hRank,hRating,hStarClass,hRoomNum,hReviewNum,excellent,verygood,average,poor,terrible,hFamilies,hCouples,hSolo,hBusiness,hFrineds,hMarMay,hJunAug,hSepNov,hDecFeb,hLocation,hSleepQuality,hRooms,hService,hValue,hCleanliness)
+    
+    #################################################################################
 
-    return Temp_Info
+    Temp_Info.setInfo(ID,hRank,hRating,hStarClass,hRoomNum,hReviewNum,excellent,verygood,average,poor,terrible,hFamilies,hCouples,hSolo,hBusiness,hFrineds,hMarMay,hJunAug,hSepNov,hDecFeb)
+    ResultList.append(Temp_Info)
+    print("=== " + ID + " is done and url is " + url + " ====")
 
-cwd = os.getcwd() + '/'
-webdriver.DesiredCapabilities.PHANTOMJS['phantomjs.page.customHeaders.Accept-Language'] = 'en'
-driver = webdriver.PhantomJS(cwd + 'phantomjs') 
+ResultList = list()
+
