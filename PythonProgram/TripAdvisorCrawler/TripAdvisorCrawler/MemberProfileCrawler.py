@@ -139,7 +139,7 @@ def get_crawlerinfo(url):
     return 'http://www.tripadvisor.com/members/' + soup.find('h3',attrs={'class' : 'username'}).text,soup.find('span',attrs={'class' : 'numbersText'}).text.replace('(','').replace(')',''),soup.find('h3',attrs={'class' : 'username'}).text
 
 #Browser Setting
-cwd = os.getcwd() + '/'
-webdriver.DesiredCapabilities.PHANTOMJS['phantomjs.page.customHeaders.Accept-Language'] = 'en'
-driver = webdriver.PhantomJS(cwd + 'phantomjs') 
+#cwd = os.getcwd() + '/'
+#webdriver.DesiredCapabilities.PHANTOMJS['phantomjs.page.customHeaders.Accept-Language'] = 'en'
+#driver = webdriver.PhantomJS(cwd + 'phantomjs') 
 #driver = webdriver.Chrome(cwd + 'chromedriver') # Start chromedriver

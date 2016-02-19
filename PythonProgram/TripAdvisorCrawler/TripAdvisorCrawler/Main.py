@@ -6,9 +6,10 @@ import MemberProfileCrawler #step 5
 import threading
 import time
 import datetime
-
 import pypyodbc
-
+from bs4 import BeautifulSoup
+import urllib.request
+import re
 
 class myThread(threading.Thread):
     def __init__(self, ThreadID, Name, FunctionName,Parameter):
@@ -65,7 +66,6 @@ def Start_HotelListCrawler(url):
 #+ '\t' + HotelInfo.hDecFeb + '\t' + HotelInfo.hLocation + '\t' +
 #HotelInfo.hSleepQuality + '\t' + HotelInfo.hRooms + '\t' + HotelInfo.hService
 #+ '\t' + HotelInfo.hValue + '\t' + HotelInfo.hCleanliness)
-
 def Start_HotelInfoCrawler(list):
     print(':::HotelInfoCrawler Start:::')
     HotelInfoList = HotelInfoCrawler.run_program(list)
@@ -73,35 +73,54 @@ def Start_HotelInfoCrawler(list):
         print(':::::Hotel ' + str(index + 1) + ' :::::')
         print(i.Id + '\t' + i.hRank + '\t' + i.hRating + '\t' + i.hStarClass + '\t' + i.hRoomNum + '\t' + i.hReviewNum + '\t' + i.excellent + '\t' + i.verygood + '\t' + i.average + '\t' + i.poor + '\t' + i.terrible + '\t' + i.hFamilies + '\t' + i.hCouples + '\t' + i.hSolo + '\t' + i.hBusiness + '\t' + i.hFrineds + '\t' + i.hMarMay + '\t' + i.hJunAug + '\t' + i.hSepNov + '\t' + i.hDecFeb)
    
-        #print(HotelInfo.Id + '\t' + HotelInfo.hRank + '\t' + HotelInfo.hRating + '\t' + HotelInfo.hStarClass + '\t' + HotelInfo.hRoomNum + '\t' + HotelInfo.hReviewNum + '\t' + HotelInfo.excellent + '\t' + HotelInfo.verygood + '\t' + HotelInfo.average + '\t' + HotelInfo.poor + '\t' + HotelInfo.terrible + '\t' + HotelInfo.hFamilies + '\t' + HotelInfo.hCouples + '\t' + HotelInfo.hSolo + '\t' + HotelInfo.hBusiness + '\t' + HotelInfo.hFrineds + '\t' + HotelInfo.hMarMay + '\t' + HotelInfo.hJunAug + '\t' + HotelInfo.hSepNov + '\t' + HotelInfo.hDecFeb)
-        #print(HotelInfo.Id + '\t' + HotelInfo.hRank + '\t' + HotelInfo.hRating + '\t' + HotelInfo.hStarClass + '\t' + HotelInfo.hRoomNum + '\t' + HotelInfo.hReviewNum + '\t' + HotelInfo.excellent + '\t' + HotelInfo.verygood + '\t' + HotelInfo.average + '\t' + HotelInfo.poor + '\t' + HotelInfo.terrible + '\t' + HotelInfo.hFamilies + '\t' + HotelInfo.hCouples + '\t' + HotelInfo.hSolo + '\t' + HotelInfo.hBusiness + '\t' + HotelInfo.hFrineds + '\t' + HotelInfo.hMarMay + '\t' + HotelInfo.hJunAug + '\t' + HotelInfo.hSepNov + '\t' + HotelInfo.hDecFeb + '\t' + HotelInfo.hLocation + '\t' + HotelInfo.hSleepQuality + '\t' + HotelInfo.hRooms + '\t' + HotelInfo.hService + '\t' + HotelInfo.hValue + '\t' + HotelInfo.hCleanliness)
+        #print(HotelInfo.Id + '\t' + HotelInfo.hRank + '\t' + HotelInfo.hRating
+        #+ '\t' + HotelInfo.hStarClass + '\t' + HotelInfo.hRoomNum + '\t' +
+        #HotelInfo.hReviewNum + '\t' + HotelInfo.excellent + '\t' +
+        #HotelInfo.verygood + '\t' + HotelInfo.average + '\t' + HotelInfo.poor
+        #+ '\t' + HotelInfo.terrible + '\t' + HotelInfo.hFamilies + '\t' +
+        #HotelInfo.hCouples + '\t' + HotelInfo.hSolo + '\t' +
+        #HotelInfo.hBusiness + '\t' + HotelInfo.hFrineds + '\t' +
+        #HotelInfo.hMarMay + '\t' + HotelInfo.hJunAug + '\t' +
+        #HotelInfo.hSepNov + '\t' + HotelInfo.hDecFeb)
+        #print(HotelInfo.Id + '\t' + HotelInfo.hRank + '\t' + HotelInfo.hRating
+        #+ '\t' + HotelInfo.hStarClass + '\t' + HotelInfo.hRoomNum + '\t' +
+        #HotelInfo.hReviewNum + '\t' + HotelInfo.excellent + '\t' +
+        #HotelInfo.verygood + '\t' + HotelInfo.average + '\t' + HotelInfo.poor
+        #+ '\t' + HotelInfo.terrible + '\t' + HotelInfo.hFamilies + '\t' +
+        #HotelInfo.hCouples + '\t' + HotelInfo.hSolo + '\t' +
+        #HotelInfo.hBusiness + '\t' + HotelInfo.hFrineds + '\t' +
+        #HotelInfo.hMarMay + '\t' + HotelInfo.hJunAug + '\t' +
+        #HotelInfo.hSepNov + '\t' + HotelInfo.hDecFeb + '\t' +
+        #HotelInfo.hLocation + '\t' + HotelInfo.hSleepQuality + '\t' +
+        #HotelInfo.hRooms + '\t' + HotelInfo.hService + '\t' + HotelInfo.hValue
+        #+ '\t' + HotelInfo.hCleanliness)
 
     return HotelInfoList
 #=================================================================================================================================================================
 
-#_______________________________________________________________________step 3____________________________________________________________________________________
+#_______________________________________________________________________step
+#3____________________________________________________________________________________
 #=================================================================================================================================================================
 
+#Read Review Link =
+#http://www.tripadvisor.com/ShowUserReviews-g34439-d120360-r2148901-Hawaii_Hotel-Miami_Beach_Florida.html#CHECK_RATES_CONT
 #print('===HotelReviewCrawler Start====')
-url='http://www.tripadvisor.com/Hotel_Review-g34439-d120360-Reviews-Hawaii_Hotel-Miami_Beach_Florida.html'
-
-
-SystemTime=str(datetime.datetime.now())
-HotelReivewList=HotelReviewCrawler.run_program(url,SystemTime)
-for index,j in enumerate(HotelReivewList):
-    print(str(index + 1) +' '+j.ReivewId+' '+j.UserId+' '+j.AtPage+' '+j.TimeStamp)
-
+#url='http://www.tripadvisor.com/Hotel_Review-g34439-d120360-Reviews-Hawaii_Hotel-Miami_Beach_Florida.html'
+#HotelReivewList=HotelReviewCrawler.run_program(url,SystemTime)
+#for index,j in enumerate(HotelReivewList):
+#    print(str(index + 1) +' '+j.ReviewId+' '+j.UserId+' '+j.AtPage+'
+#    '+j.TimeStamp)
 def Start_HotelReviewCrawler(list):
     print(':::HotelReviewCrawler Start:::')
-    print('System Time = '+SystemTime)
+    print('System Time = ' + SystemTime)
     for index, i in enumerate(list): 
-        print('The hotel is = '+i.Name+" and the url is "+i.Href)
-        TempList=HotelReviewCrawler.run_program(i.Href,SystemTime) 
+        print('The hotel is = ' + i.Name + " and the url is " + i.Href)
+        TempList = HotelReviewCrawler.run_program(i.Href,SystemTime) 
         if TempList is not None:
             print('Hotel = ' + i.Name) 
             print('Count = ' + str(len(HotelReivewList)))
             for index,j in enumerate(TempList): 
-                print(str(index + 1) +'\t'+j.ReivewId+'\t'+j.UserId+'\t'+j.AtPage+'\t'+j.TimeStamp)
+                print(str(index + 1) + '\t' + j.ReviewId + '\t' + j.UserId + '\t' + j.AtPage + '\t' + j.TimeStamp)
             HotelReivewList.append(TempList)
         else:
             break
@@ -136,7 +155,7 @@ def Start_HotelReviewCrawler(list):
 
 #print('Count = '+str(len(HotelReivewList)))
 #for index,i in enumerate(HotelReivewList):
-#    print(str(index + 1) +' '+i.UserId+' '+i.ReivewId)
+#    print(str(index + 1) +' '+i.UserId+' '+i.ReviewId)
 #=================================================================================================================================================================
 
 #_______________________________________________________________________step
@@ -154,28 +173,76 @@ def Start_HotelReviewCrawler(list):
 #    str(i.Helpful)+ ' ' + i.Hyperlink)
 #=================================================================================================================================================================
 
+#*****************Main Program****************
+SystemTime = str(datetime.datetime.now())
 
-#SystemTime=str(datetime.datetime.now())
-#Step 1
-#cityUrl =
-#'http://www.tripadvisor.com/Hotels-g60763-New_York_City_New_York-Hotels'
-#cityUrl = 'http://www.tripadvisor.com/Hotels-g45963-Las_Vegas_Nevada-Hotels'
-#cityUrl = 'http://www.tripadvisor.com/Hotels-g34515-Orlando_Florida-Hotels'
-#cityUrl = 'http://www.tripadvisor.com/Hotels-g35805-Chicago_Illinois-Hotels'
-#cityUrl = 'http://www.tripadvisor.com/Hotels-g34438-Miami_Florida-Hotels'
-#cityUrl =
-#'http://www.tripadvisor.com/Hotels-g34439-Miami_Beach_Florida-Hotels.html'
+#Sql connection
+IPAddress = '140.123.174.167'
+UserName = 'kakaci123'
+PassWord = 'zaza5201314'
+DataBase = 'TripAdvisor_ChenWei'
 
-##miami_beach_florida
-#CityUrl = 'http://www.tripadvisor.com/Hotels-g34439-Miami_Beach_Florida-Hotels.html'
-#HotelList = Start_HotelListCrawler(CityUrl)
+connection = pypyodbc.connect('Driver={SQL Server};'
+                                'Server=' + IPAddress + ';'
+                                'Database=' + DataBase + ';'
+                                'uid=' + UserName + ';pwd=' + PassWord + '')
+print('===Database is connected===')
+cursor = connection.cursor()
+
+#Step 1 (Get Hotel List From Current Area)
+NY = 'http://www.tripadvisor.com/Hotels-g60763-New_York_City_New_York-Hotels'
+LV = 'http://www.tripadvisor.com/Hotels-g45963-Las_Vegas_Nevada-Hotels'
+OF = 'http://www.tripadvisor.com/Hotels-g34515-Orlando_Florida-Hotels'
+CI = 'http://www.tripadvisor.com/Hotels-g35805-Chicago_Illinois-Hotels'
+MF = 'http://www.tripadvisor.com/Hotels-g34438-Miami_Florida-Hotels'
+MFB = 'http://www.tripadvisor.com/Hotels-g34439-Miami_Beach_Florida-Hotels.html'
+
+CityArray = [('New York',NY),('Las Vagas',LV),('Orlando Florida',OF),('Chicago Illinois',CI),('Miami Florida',MF),('Miami Beach Florida',MFB)]
+
+for CityElement in CityArray:
+    cursor.execute("SELECT * FROM AreaList WHERE AreaName='" + CityElement[0] + "'")
+    row = cursor.fetchone()
+    #row=(1, 'New York', '60763')
+
+    AreaId = str(row[0])
+    CityUrl = CityElement[1]
+
+    print("Now is ["+row[1]+"] running")
+
+    req = urllib.request.urlopen(CityUrl)
+    content = req.read().decode(req.info().get_content_charset())
+    soup = BeautifulSoup(content,"html.parser")
+    HotelCnt = int(re.findall('#.* (.*?) hotels',soup.find('div',attrs={'class' : 'slim_ranking'}).text)[0])
+    cursor.execute("SELECT * FROM HotelList WHERE AreaId='" + AreaId + "'")
+    row = cursor.fetchall()
+
+    if HotelCnt > len(row):
+        HotelList = Start_HotelListCrawler(CityUrl)
+        for index in HotelList:
+            cursor.execute("SELECT * FROM HotelList WHERE HotelId='" + index.Id + "'")
+            CheckQuery=cursor.fetchone()
+            if CheckQuery is None:
+                _HotelId = index.Id.replace(',','@[CMA]').replace("'","''")
+                _HotelName = index.Name.replace(',','@[CMA]').replace("'","''")
+                _HotelHref = index.Href.replace(',','@[CMA]').replace("'","''")
+                cursor.execute("INSERT INTO HotelList(AreaId, HotelId,HotelName,HotelHref,inService) values ('" + AreaId + "', '" + _HotelId + "','" + _HotelName + "','" + _HotelHref + "','1')")
+                connection.commit()
+        HotelList.clear()
+
+    else:
+        if HotelCnt<len(row):
+            print('Hotel was may out of service')
+        HotelList = HotelListCrawler.BuildElement(row)
 
 ## Create new threads
 #thread1 = myThread(1, 'Thread-HotelInfoCrawler', 'HotelInfoCrawler',HotelList)
-#thread2 = myThread(2, 'Thread-HotelReviewCrawler','HotelReviewCrawler',HotelList)
+#thread2 = myThread(2,
+#'Thread-HotelReviewCrawler','HotelReviewCrawler',HotelList)
 
 ## Start new Threads
 #thread1.start()
 #thread2.start()
 #ReturnHotelInfoCrawler=thread1.join()
 #print(len(ReturnHotelInfoCrawler))
+connection.close()
+print('===Connection is closed===')

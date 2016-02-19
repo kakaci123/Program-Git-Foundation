@@ -13,7 +13,7 @@ class myThread(threading.Thread):
     def run(self):
         print('Starting : ' + self.name)
         for link in self.list:
-            req = urllib.request.urlopen(DomainName + link.get('href'))
+            req = urllib.request.urlopen(DomainName + link)
             content = req.read().decode(req.info().get_content_charset())  
             soup = BeautifulSoup(content,"html.parser")
             main_crawler(HotelList,ScoreList,soup)
@@ -30,7 +30,15 @@ class HotelListElement:
          self.Id = _Id
          self.Name = _Name
          self.Href = _Href
-         
+
+def BuildElement(SourceList):
+    ResultList=[]
+    for index in SourceList:
+        NewElement = HotelListElement()
+        NewElement.setInfo(index[2],index[3],index[4])
+        ResultList.append(NewElement)
+    return ResultList   
+
 def run_program(url):
     t1 = time.time()
     req = urllib.request.urlopen(url)
@@ -43,8 +51,28 @@ def run_program(url):
    
     TempList = soup.find_all('a',attrs={'class' : 'pageNum'})
     if TempList is not None:
+
+        #Build the List of Href
+        HrefList=[] 
+        for i in range(0 , len(TempList)-1,1):
+            HrefList.append(TempList[i].get('href'))
+        HrefListLast=HrefList[len(HrefList)-1]
+        TempListLast=TempList[len(TempList)-1].get('href')
+        test=re.findall('-oa(.*?)-',HrefListLast)[0]
+        IndexPage=int(test)
+        SplitString=HrefListLast.split('-oa'+str(IndexPage)+'-')
+        while True:
+            IndexPage+=30
+            UrlTemp=SplitString[0]+'-oa'+str(IndexPage)+'-'+SplitString[1]
+            if UrlTemp==TempListLast:
+               break
+            else:
+               HrefList.append(UrlTemp)        
+        HrefList.append(TempListLast)
+        #Build is finished
+
         threads = []
-        SubList = [TempList[x:x + 2] for x in range(0,len(TempList),2)]
+        SubList = [HrefList[x:x + 2] for x in range(0,len(HrefList),2)]
         for i in range(0,len(SubList),1):
             TempThread = myThread(i, 'Thread-' + str(i),SubList[i])
             TempThread.start()

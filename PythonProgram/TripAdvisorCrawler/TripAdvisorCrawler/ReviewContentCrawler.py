@@ -69,9 +69,3 @@ def main_crawler(UserId):
         return Temp_Info
     else:
         print('Can not find the review')
-
-#Browser Setting
-cwd = os.getcwd() + '/'
-webdriver.DesiredCapabilities.PHANTOMJS['phantomjs.page.customHeaders.Accept-Language'] = 'en'
-driver = webdriver.PhantomJS(cwd + 'phantomjs') 
-#driver = webdriver.Chrome(cwd + 'chromedriver') # Start chromedriver

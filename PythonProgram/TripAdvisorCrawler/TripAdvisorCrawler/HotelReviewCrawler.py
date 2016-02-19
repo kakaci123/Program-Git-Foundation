@@ -1,24 +1,20 @@
-﻿import requests
-import urllib.request
+﻿import urllib.request
 import re
-from bs4 import BeautifulSoup
 import os
-import time
 import urllib
-import datetime
-
+from bs4 import BeautifulSoup
 from selenium import webdriver
 
 
 class ReviewElement:
     def __init__(self):         
-         self.ReivewId = '-1'
+         self.ReviewId = '-1'
          self.UserId = '-1'
          self.AtPage = '-1'
          self.TimeStamp = '-1'
 
-    def setInfo(self,_ReivewId,_UserId,_AtPage,_TimeStamp):         
-         self.ReivewId = _ReivewId
+    def setInfo(self,_ReviewId,_UserId,_AtPage,_TimeStamp):         
+         self.ReviewId = _ReviewId
          self.UserId = _UserId
          self.AtPage = _AtPage
          self.TimeStamp = _TimeStamp
@@ -58,16 +54,19 @@ def run_program(url,SystemTime):
                  print('Page ' + str(i + 1) + ' : Done And Count= ' + str(len(HotelReviewList) - ReviewCnt))
                  ReviewCnt = len(HotelReviewList)
 
+    #Check result is right
     for index in HotelReviewList:
         if index.UserId == '-1':
-            CheckUrl=SplitTempLink[0].replace('Reviews','r').replace('Hotel_Review','ShowUserReviews').replace('r-','r') + index.ReivewId +  SplitTempLink[1].replace('REVIEWS','CHECK_RATES_CONT')
-            req = urllib.request.urlopen(CheckUrl)
-            content = req.read().decode(req.info().get_content_charset())
-            soup = BeautifulSoup(content,"html.parser")
-            UserTemp = str(soup.find_all('div',attrs={'class':'member_info'})[0]).replace('\n','')
-            index.UserId=re.findall('"UID_(.*?)-SRC_(.*?)"',UserTemp)[0][0]
-            #正規式下這
-            print(index.ReivewId+"\t"+index.UserId+'\t'+index.AtPage+'\t'+index.TimeStamp)
+            CheckUrl=SplitTempLink[0].replace('Reviews','r').replace('Hotel_Review','ShowUserReviews').replace('r-','r') + index.ReviewId +  SplitTempLink[1].replace('REVIEWS','CHECK_RATES_CONT')
+            driver.get(CheckUrl)
+            soup = BeautifulSoup(driver.page_source,"html.parser") 
+            CheckPool = soup.find_all('div',attrs={'class':'memberOverlayLink'})
+            for index2 in CheckPool:
+                _UserId= index2.get('id')
+                if index.ReviewId in _UserId:
+                  SetUserId=_UserId.split('-')[0].replace('UID_','')
+                  index.UserId=SetUserId
+                  break
    
     return HotelReviewList
 
@@ -92,3 +91,7 @@ DomainName = 'http://www.tripadvisor.com'
 HotelReviewList = list()
 content = ""
 SplitTempLink = []
+
+cwd = os.getcwd() + '/'
+webdriver.DesiredCapabilities.PHANTOMJS['phantomjs.page.customHeaders.Accept-Language'] = 'en'
+driver = webdriver.PhantomJS(cwd + 'phantomjs') 
