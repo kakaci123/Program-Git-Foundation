@@ -693,8 +693,23 @@ public class AprioriTFPclass extends PartialSupportTree {
 	        	tenthDataSets[index][tenthIndex] = dataArray[inputDataIndex];
 				}
 	    	}
-		}
 
+		
+		//test here!!!!
+    	System.out.println("show me!!!!!");
+    	System.out.println(tenthDataSets.length);
+    	System.out.println(tenthDataSets[9][0].length);
+    	
+    	for(int i = 0 ;i <tenthDataSets.length;i++)    	{
+    		for(int j=0;j<tenthDataSets[i].length;j++){
+    			for(int k = 0 ;k<tenthDataSets[i][j].length;k++){
+        		//	System.out.println(tenthDataSets[i][j][k]+"\t");
+        			}
+    			}
+    		//System.out.println();
+    	}System.exit(0);
+    	
+		}
     /*------------------------------------------------------------------ */
     /*                                                                   */
     /*                       START CLASSIFICATION                        */

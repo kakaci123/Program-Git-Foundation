@@ -47,7 +47,7 @@ public class ClassCBA_App10 {
 		double time1 = (double) System.currentTimeMillis();
 		// Create instance of class ClassificationCMAR 
 
-		String [] myVariable={"-FpimaIndians.D42.N768.C2.num","-N2","-S1","-C50"};
+		String [] myVariable={"-Fnursery.num","-N5","-S1","-C50"};
 		AprioriTFP_CBA newClassification = new AprioriTFP_CBA(myVariable);
 		
 		// Read data to be mined from file (method in AssocRuleMining class)

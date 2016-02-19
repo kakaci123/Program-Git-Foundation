@@ -195,7 +195,7 @@ public class AssocRuleMining extends JFrame {
 	    	    fileName = argument;
 		    break;
 		case 'N':  // Number of classes
-		    numClasses =  Integer.parseInt(argument);
+		        numClasses =  Integer.parseInt(argument);
 		    break;
 		case 'O':  // Output file name (various potential uses)
 	    	    outputFileName = argument;
@@ -285,7 +285,6 @@ public class AssocRuleMining extends JFrame {
     public void inputDataSet() {
         // Read the file
 	readFile();
-	System.out.println("OK");
 
 	// Check ordering (only if input format is OK)
 	if (inputFormatOkFlag) {
@@ -560,7 +559,7 @@ public class AssocRuleMining extends JFrame {
     protected void openFileName(String nameOfFile) {
 	try {
 	    // Open file
-	    FileReader file = new FileReader(nameOfFile);
+	    FileReader file = new FileReader("D:/Program-Git-Foundation/JavaProjects/CBA/src/"+nameOfFile);
 	    fileInput = new BufferedReader(file);
 	    }
 	catch(IOException ioException) {
@@ -2648,7 +2647,6 @@ public class AssocRuleMining extends JFrame {
 
 		// Check whether there is a itemSet to copy
 		if (itemSets == null) return(null);
-
 		// Do copy and return
 		short[][] newItemSets = new short[itemSets.length][];
 		for(int index1=0;index1<itemSets.length;index1++) {

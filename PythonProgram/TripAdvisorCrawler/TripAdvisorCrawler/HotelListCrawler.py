@@ -1,7 +1,6 @@
 ﻿import urllib.request
 import re
 from bs4 import BeautifulSoup
-import time
 import threading
 
 class myThread(threading.Thread):
@@ -10,6 +9,7 @@ class myThread(threading.Thread):
         self.ThreadID = ThreadID
         self.Name = Name
         self.list = list
+
     def run(self):
         print('Starting : ' + self.name)
         for link in self.list:
@@ -32,7 +32,7 @@ class HotelListElement:
          self.Href = _Href
 
 def BuildElement(SourceList):
-    ResultList=[]
+    ResultList = []
     for index in SourceList:
         NewElement = HotelListElement()
         NewElement.setInfo(index[2],index[3],index[4])
@@ -40,7 +40,7 @@ def BuildElement(SourceList):
     return ResultList   
 
 def run_program(url):
-    t1 = time.time()
+
     req = urllib.request.urlopen(url)
     content = req.read().decode(req.info().get_content_charset())
     city_info = re.findall('Hotels-g(.*?)-(.*?)-Hotels',content)[0]
@@ -53,18 +53,18 @@ def run_program(url):
     if TempList is not None:
 
         #Build the List of Href
-        HrefList=[] 
-        for i in range(0 , len(TempList)-1,1):
+        HrefList = [] 
+        for i in range(0 , len(TempList) - 1,1):
             HrefList.append(TempList[i].get('href'))
-        HrefListLast=HrefList[len(HrefList)-1]
-        TempListLast=TempList[len(TempList)-1].get('href')
-        test=re.findall('-oa(.*?)-',HrefListLast)[0]
-        IndexPage=int(test)
-        SplitString=HrefListLast.split('-oa'+str(IndexPage)+'-')
+        HrefListLast = HrefList[len(HrefList) - 1]
+        TempListLast = TempList[len(TempList) - 1].get('href')
+        test = re.findall('-oa(.*?)-',HrefListLast)[0]
+        IndexPage = int(test)
+        SplitString = HrefListLast.split('-oa' + str(IndexPage) + '-')
         while True:
             IndexPage+=30
-            UrlTemp=SplitString[0]+'-oa'+str(IndexPage)+'-'+SplitString[1]
-            if UrlTemp==TempListLast:
+            UrlTemp = SplitString[0] + '-oa' + str(IndexPage) + '-' + SplitString[1]
+            if UrlTemp == TempListLast:
                break
             else:
                HrefList.append(UrlTemp)        
@@ -79,9 +79,8 @@ def run_program(url):
             threads.append(TempThread)
         for t in threads:
             t.join()
-    t2 = time.time()
-    print(t2 - t1)
-    return HotelList, city_info[0]
+
+    return HotelList
 
 def main_crawler(list,ScoreList,soup):
     SoupTemp = soup.find_all('a',attrs={'class' : 'property_title'})
@@ -96,5 +95,4 @@ def main_crawler(list,ScoreList,soup):
 DomainName = 'http://www.tripadvisor.com'
 
 HotelList = list()
-#Avoid Duplicate
 ScoreList = list()

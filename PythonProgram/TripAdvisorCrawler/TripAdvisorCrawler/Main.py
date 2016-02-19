@@ -37,22 +37,22 @@ class myThread(threading.Thread):
 #connection_string =''
 #connection=pypyodbc.connect(connection_string)
 
-#_______________________________________________________________________step
-#1____________________________________________________________________________________
+#_______________________________________________________________________step 1____________________________________________________________________________________
 #=================================================================================================================================================================
 def Start_HotelListCrawler(url):
-    print('===HotelListCrawler Start====')
-    Temp = HotelListCrawler.run_program(CityUrl)
-    HotelCrawlerList = Temp[0]
-    AreaId = Temp[1]
+    print(':::HotelListCrawler Start:::')
 
+    Temp = HotelListCrawler.run_program(CityUrl)
+    HotelCrawlerList = Temp
+
+    print(':::HotelListCrawler is finished:::')
     for index, i in enumerate(HotelCrawlerList):
         print(str(index + 1) + '\t' + i.Id + '\t' + i.Name + '\t' + i.Href)
+
     return HotelCrawlerList
 #=================================================================================================================================================================
 
-#_______________________________________________________________________step
-#2____________________________________________________________________________________
+#_______________________________________________________________________step 2____________________________________________________________________________________
 #=================================================================================================================================================================
 #HotelInfo=HotelInfoCrawler.run_program('http://www.tripadvisor.com/Hotel_Review-g34439-d547627-Reviews-The_Browns_Hotel-Miami_Beach_Florida.html')
 #HotelInfo=HotelInfoCrawler.run_program(url)
@@ -218,6 +218,8 @@ for CityElement in CityArray:
 
     if HotelCnt > len(row):
         HotelList = Start_HotelListCrawler(CityUrl)
+
+        #Insert to Database
         for index in HotelList:
             cursor.execute("SELECT * FROM HotelList WHERE HotelId='" + index.Id + "'")
             CheckQuery=cursor.fetchone()
@@ -227,20 +229,23 @@ for CityElement in CityArray:
                 _HotelHref = index.Href.replace(',','@[CMA]').replace("'","''")
                 cursor.execute("INSERT INTO HotelList(AreaId, HotelId,HotelName,HotelHref,inService) values ('" + AreaId + "', '" + _HotelId + "','" + _HotelName + "','" + _HotelHref + "','1')")
                 connection.commit()
+
         HotelList.clear()
 
     else:
         if HotelCnt<len(row):
             print('Hotel was may out of service')
         HotelList = HotelListCrawler.BuildElement(row)
+    
+    thread1 = myThread(1, 'Thread-HotelInfoCrawler', 'HotelInfoCrawler',HotelList)
+    thread1.start()
+
 
 ## Create new threads
-#thread1 = myThread(1, 'Thread-HotelInfoCrawler', 'HotelInfoCrawler',HotelList)
 #thread2 = myThread(2,
 #'Thread-HotelReviewCrawler','HotelReviewCrawler',HotelList)
 
 ## Start new Threads
-#thread1.start()
 #thread2.start()
 #ReturnHotelInfoCrawler=thread1.join()
 #print(len(ReturnHotelInfoCrawler))
