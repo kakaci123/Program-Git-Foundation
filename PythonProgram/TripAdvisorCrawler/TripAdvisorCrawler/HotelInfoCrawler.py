@@ -125,7 +125,7 @@ def main_crawler(url):
        
     Temp_Element = soup.find('a',attrs={'class':'more taLnk'})
     if Temp_Element is not None:
-        hReviewNum = Temp_Element.text.replace(' Reviews','')
+        hReviewNum = Temp_Element.text.replace(' Reviews','').replace(' Review','')
     else:
         hReviewNum = '-1'
 
@@ -139,11 +139,11 @@ def main_crawler(url):
         poor = re.findall('Poor(.*?)Terrible',Temp_Rating)[0]
         terrible = re.findall('Terrible(.*?)$',Temp_Rating)[0]
     else:
-        excellent = '0'
-        verygood = '0'
-        average = '0'
-        poor = '0'
-        terrible = '0'
+        excellent = '-1'
+        verygood = '-1'
+        average = '-1'
+        poor = '-1'
+        terrible = '-1'
 
     Temp_Element = soup.find('div',attrs={'class':'col segment '})
     if Temp_Element is not None: 
@@ -154,11 +154,11 @@ def main_crawler(url):
         hBusiness = re.findall('Business(.*?)Friends',Temp_Rating)[0]
         hFrineds = re.findall('Friends(.*?)$',Temp_Rating)[0]
     else:
-        hFamilies = '0'
-        hCouples = '0'
-        hSolo = '0'
-        hBusiness = '0'
-        hFrineds = '0'
+        hFamilies = '-1'
+        hCouples = '-1'
+        hSolo = '-1'
+        hBusiness = '-1'
+        hFrineds = '-1'
     
     Temp_Element = soup.find('div',attrs={'class':'col season '})
     if Temp_Element is not None: 
@@ -168,10 +168,10 @@ def main_crawler(url):
         hSepNov = re.findall('Sep-Nov(.*?)Dec-Feb',Temp_Rating)[0]
         hDecFeb = re.findall('Dec-Feb(.*?)$',Temp_Rating)[0]
     else:
-        hMarMay = '0'
-        hJunAug = '0'
-        hSepNov = '0'
-        hDecFeb = '0'
+        hMarMay = '-1'
+        hJunAug = '-1'
+        hSepNov = '-1'
+        hDecFeb = '-1'
 
     #################################################################################
 
@@ -232,7 +232,7 @@ def main_crawler(url):
 
     Temp_Info.setInfo(ID,hRank,hRating,hStarClass,hRoomNum,hReviewNum,excellent,verygood,average,poor,terrible,hFamilies,hCouples,hSolo,hBusiness,hFrineds,hMarMay,hJunAug,hSepNov,hDecFeb)
     ResultList.append(Temp_Info)
-    print("=== " + ID + " is done and url is " + url + " ====")
+    print("=== " + ID + " is done  ====")
 
 ResultList = list()
 
